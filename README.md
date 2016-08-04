@@ -11,3 +11,20 @@ Serves as the backend for [music genie](https://github.com/bxute/musicgenie).
 pip install -r requirements.txt
 python app.py
 ```
+
+### API
+
+##### Get audio url from video
+
+Send a GET request to `/g/<video_id>` where `video_id` is youtube video id. (Example `/g/8oGZTbeEhv4`)
+
+A successful response is of the following format.
+
+```js
+{
+  "status": 0,
+  "url": "https://some.com/long/url"
+}
+```
+
+The error response follows the same format but sets `status` to non-zero value.
