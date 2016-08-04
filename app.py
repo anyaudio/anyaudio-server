@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from subprocess import check_output
+from os import environ
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -25,4 +26,7 @@ def get_link(vid_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(
+        host=environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1'),
+        port=environ.get('OPENSHIFT_PYTHON_PORT', 5000)
+    )
