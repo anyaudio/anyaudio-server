@@ -1,3 +1,2 @@
 Flask
 youtube-dl
-gunicorn
