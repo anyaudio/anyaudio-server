@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Written by Priyend Somaroo, 06 Jun 2016, Vardaan Enterpises, www.vardaan.com
+#
+# This will execute pip install but using no caching in order to fix broken
+# cache problems with python-2.7 cartridge as at 06 Jun 2016
+#
+#   Ref: http://stackoverflow.com/questions/29913677/openshift-app-with-flask-sqlalchemy-and-sqlite-problems-with-database-reverti
+#   Ref: http://stackoverflow.com/questions/21691202/how-to-create-file-execute-mode-permissions-in-git-on-windows
+#
+#
+# *** Very important *** : this file must be marked executable using 'chmod +x'.
+# In Windows this is a problem so we simply mark it in the git repo as executable as follows.
+# - In Windows open command prompt and change to the folder with this build file
+# - Then run 'git update-index --chmod=+x build'
+# - Ten check the permissions aer 0755 using 'git ls-files --stage' .
+#
+# Normal commits and push's occur after that.
+
+# This build hook gets executed at the end of the build cycle before delpoy
+
+# Change to repo directory and run pip install with no caching
+cd ${OPENSHIFT_REPO_DIR}
+pip install -r requirements.txt --no-cache-dir
