@@ -5,6 +5,11 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 
+@app.route('/')
+def home():
+    return 'Hello'
+
+
 @app.route('/g/<string:vid_id>')
 def get_link(vid_id):
     """
