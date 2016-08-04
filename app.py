@@ -16,7 +16,7 @@ def get_link(vid_id):
     """
     Uses youtube-dl to fetch the direct link
     """
-    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f bestaudio -g' % vid_id
+    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio -g' % vid_id
     try:
         retval = check_output(command.split())
         retval = retval.strip()
