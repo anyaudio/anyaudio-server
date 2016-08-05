@@ -1,6 +1,10 @@
-from flask import Flask, jsonify
+import requests
+from flask import Flask, jsonify, request
 from subprocess import check_output
 from os import environ
+
+from helpers.search import get_videos, get_video_attrs
+
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -23,6 +27,25 @@ def get_link(vid_id):
         return jsonify({'status': 0, 'url': retval})
     except Exception:
         return jsonify({'status': 1, 'url': None})
+
+
+@app.route('/search')
+def search():
+    """
+    Search youtube and return results
+    """
+    search_term = request.args.get('q')
+    r = requests.get(
+        'https://www.youtube.com/results?search_query=%s' % search_term,
+        allow_redirects=True
+    )
+    vids = get_videos(r.content)
+    ret_vids = []
+    for _ in vids:
+        temp = get_video_attrs(_)
+        if temp:
+            ret_vids.append(temp)
+    return jsonify(ret_vids)
 
 
 if __name__ == '__main__':
