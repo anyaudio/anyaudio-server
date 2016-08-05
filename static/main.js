@@ -40,6 +40,8 @@ function get_download_link(event){
 			return;
 		}
 		elem.text('Download');
-		elem.attr('href', data['url']);
+		elem.click(function(){
+			window.location.href = data['url'];
+		});
 	});
 }
