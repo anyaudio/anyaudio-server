@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
   <title>Youtube MP3 Downloader</title>
 </head>
 <body>
-Website in progress
+
+<input type="text" required="required" name="search" id="search" placeholder="Enter your search query" />
+<button id="searchBtn">Go</button>
+
+<br><br>
+
+<div id="container">
+  <div class="search_result" style="display: none;">
+  <img src="http://aviaryan.in/images/profile.png" class="thumb"><br>
+  <span class="title">Song Title</span><br>
+  <span class="length">Song Length</span><br>
+  <span class="uploader">Song Uploader</span><br>
+  <span class="time">Song Added</span><br>
+  <span class="views">Song Views</span><br>
+  <button class="download" data-video="video_id">Get Link</button>
+  </div>
+</div>
+
+<!-- js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+
 </body>
 </html>
