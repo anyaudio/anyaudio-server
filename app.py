@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from subprocess import check_output
 from os import environ
 
@@ -12,7 +12,7 @@ app.config['DEBUG'] = True
 
 @app.route('/')
 def home():
-    return 'Hello'
+    return render_template('/home.html')
 
 
 @app.route('/g/<string:vid_id>')
