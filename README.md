@@ -5,14 +5,16 @@ Serves as the backend for [music genie](https://github.com/bxute/musicgenie).
 
 [![Launch on OpenShift](http://launch-shifter.rhcloud.com/button.svg)](https://openshift.redhat.com/app/console/application_type/custom?cartridges%5B%5D=python-2.7&initial_git_url=https%3A%2F%2Fgithub.com%2Faviaryan%2Fyoutube%2Dmp3%2Dserver.git&name=youtube%2Dmp3%2Dserver)
 
-### Running
+## Running
 
 ```
 pip install -r requirements.txt
 python app.py
 ```
 
-### API
+----
+
+## API
 
 #### Get audio url from video
 
