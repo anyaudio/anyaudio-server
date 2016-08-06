@@ -32,6 +32,12 @@ body {
 	margin-left: auto;  /** pull right **/
 }
 
+#loading_text {
+	font-size: 2em;
+	opacity: 0.7;
+	margin-bottom: 1.5em;
+}
+
 .search_result {
 	display: flex;
 	flex-direction: row;

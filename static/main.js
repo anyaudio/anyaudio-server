@@ -3,12 +3,13 @@
 $('#searchBtn').click(function(){
 	search_text = $('#search').val();
 	console.log(search_text);
+	$('#loading_text').show();
+	// remove old data
+	search_temp = $('.search_result').first().clone();
+	search_temp.show();
+	$('.search_result').remove();
+	// get new results
 	$.getJSON('/search?q=' + search_text, success=function(data, textStatus, jqXHR){
-		// display `data`
-		// remove old data
-		search_temp = $('.search_result').first().clone();
-		search_temp.show();
-		$('.search_result').remove();
 		// create new
 		for (i=0; i<data.length; i++){
 			search_x = search_temp.clone();
@@ -28,6 +29,8 @@ $('#searchBtn').click(function(){
 			$(search_x).addClass('flex_force'); // just flex doesn't work
 			search_x.appendTo('#container');
 		}
+		// hide loading
+		$('#loading_text').hide();
 	});
 });
 
