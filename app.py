@@ -22,6 +22,7 @@ def get_link(vid_id):
     """
     command = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio -g' % vid_id
     try:
+        print command
         retval = check_output(command.split())
         retval = retval.strip()
         return jsonify({'status': 0, 'url': retval})
