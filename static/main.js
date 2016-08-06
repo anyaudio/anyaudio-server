@@ -6,7 +6,12 @@ $('#searchBtn').click(function(){
 	$('#loading_text').show();
 	// remove old data
 	search_temp = $('.search_result').first().clone();
+	// reset
 	search_temp.show();
+	search_temp.find('.download').text('Get Link');
+	search_temp.find('.download').attr('href', '#');
+	search_temp.unbind('click');
+	// delete
 	$('.search_result').remove();
 	// get new results
 	$.getJSON('/search?q=' + search_text, success=function(data, textStatus, jqXHR){
@@ -24,7 +29,6 @@ $('#searchBtn').click(function(){
 			$(search_x).find('.download').attr('data-video', data[i]['id']);
 			$(search_x).find('.download').click(get_download_link);
 			// set d/l filename
-			$(search_x).find('.download').text('Get Link');
 			$(search_x).find('.download').attr('download', data[i]['title']);
 			// console.log(search_x);
 			$(search_x).addClass('flex_force'); // just flex doesn't work
