@@ -21,4 +21,4 @@
 
 # Change to repo directory and run pip install with no caching
 cd ${OPENSHIFT_REPO_DIR}
-pip install -r requirements.txt --no-cache-dir
+pip install --upgrade -r requirements.txt --no-cache-dir
