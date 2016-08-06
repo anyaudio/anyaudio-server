@@ -2,3 +2,9 @@
 	max-width: 200px;
 	max-height: 200px;
 }
+
+.download {
+	border-radius: 0.2em;
+	background: #DDDDDD;
+	padding: 0.3em;
+}

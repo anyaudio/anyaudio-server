@@ -22,6 +22,8 @@ $('#searchBtn').click(function(){
 			$(search_x).find('.views').text(data[i]['views']);
 			$(search_x).find('.download').attr('data-video', data[i]['id']);
 			$(search_x).find('.download').click(get_download_link);
+			// set d/l filename
+			$(search_x).find('.download').attr('download', data[i]['title']);
 			// console.log(search_x);
 			search_x.appendTo('#container');
 		}
@@ -37,11 +39,11 @@ function get_download_link(event){
 		$(elem).unbind('click');
 		if (data['status'] != 0){
 			elem.text('Failed');
+			elem.removeAttr('href');
 			return;
 		}
 		elem.text('Download');
-		elem.click(function(){
-			window.location.href = data['url'];
-		});
+		elem.attr('href', data['url']);
+		elem.attr('target', '_blank');
 	});
 }
