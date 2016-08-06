@@ -31,9 +31,19 @@ body {
 }
 
 .search_result {
+	display: flex !important;  /** important for dynamic html created **/
+	flex-direction: row;
 	padding: 1em;
 	background: #eeeeee;
 	margin-bottom: 1.5em;
+}
+
+.result_image {
+}
+
+.result_text {
+	margin-left: 2em;
+	margin-top: 1em;
 }
 
 .search_result .thumb {
@@ -41,12 +51,23 @@ body {
 	max-height: 200px;
 }
 
-.download {
-	border-radius: 0.2em;
-	background: #DDDDDD;
-	padding: 0.3em;
-}
-
 .title {
 	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.uploader {
+	font-size: 1.1em;
+}
+
+a.download {
+	text-decoration: none;
+	color: black;
+	font-size: 1.1em;
+	border: 1px solid;
+
+	min-width: 100px;
+	border-radius: 0.2em;
+	background: #F5F5F5;
+	padding: 0.3em;
 }
