@@ -33,7 +33,7 @@ body {
 }
 
 .search_result {
-	display: flex !important;  /** important for dynamic html created **/
+	display: flex;
 	flex-direction: row;
 	padding: 1em;
 	background: #eeeeee;
@@ -76,4 +76,13 @@ a.download {
 	min-width: 100px;
 	background: #F5F5F5;
 	padding: 0.3em;
+}
+
+
+/**
+ * HELPERS
+ */
+
+.flex_force {
+	display: flex !important;
 }

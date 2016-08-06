@@ -25,6 +25,7 @@ $('#searchBtn').click(function(){
 			// set d/l filename
 			$(search_x).find('.download').attr('download', data[i]['title']);
 			// console.log(search_x);
+			$(search_x).addClass('flex_force'); // just flex doesn't work
 			search_x.appendTo('#container');
 		}
 	});
