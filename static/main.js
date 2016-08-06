@@ -32,18 +32,19 @@ $('#searchBtn').click(function(){
 
 // gets the download link for a video
 function get_download_link(event){
+	event.preventDefault();
 	elem = $(event.target);
-	console.log(elem);
 	elem.text('Fetching...');
 	$.getJSON('/g/' + elem.attr('data-video'), success=function(data, textStatus, jqXHR){
 		$(elem).unbind('click');
 		if (data['status'] != 0){
 			elem.text('Failed');
 			elem.removeAttr('href');
-			return;
+			return false;
 		}
 		elem.text('Download');
 		elem.attr('href', data['url']);
 		elem.attr('target', '_blank');
+		return false;
 	});
 }
