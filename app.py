@@ -35,8 +35,10 @@ def search():
     Search youtube and return results
     """
     search_term = request.args.get('q')
+    link = 'https://www.youtube.com/results?search_query=%s' % search_term
+    link += '&sp=EgIQAQ%253D%253D'  # for only video
     r = requests.get(
-        'https://www.youtube.com/results?search_query=%s' % search_term,
+        link,
         allow_redirects=True
     )
     vids = get_videos(r.content)

@@ -55,5 +55,8 @@ def get_video_attrs(html):
         result['thumb'] = thumb
     else:
         return None
+    # check if all items present. If not present, usually some problem in parsing
+    if len(result) != 7:
+        return None
     # return
     return result
