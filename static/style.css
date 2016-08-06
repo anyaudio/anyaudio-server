@@ -1,5 +1,6 @@
 body {
 	margin: 0;
+	background-color: #fdfdfd;
 }
 
 .header {
@@ -16,6 +17,7 @@ body {
 #search_group {
 	display: flex;
 	flex-direction: row;
+	margin-bottom: 2.5em;
 }
 
 #search_group #search {
@@ -36,6 +38,7 @@ body {
 	padding: 1em;
 	background: #eeeeee;
 	margin-bottom: 1.5em;
+	border-right-style: outset;
 }
 
 .result_image {
@@ -44,6 +47,10 @@ body {
 .result_text {
 	margin-left: 2em;
 	margin-top: 1em;
+}
+
+.result_text span {
+	opacity: 0.8;
 }
 
 .search_result .thumb {
@@ -67,7 +74,6 @@ a.download {
 	border: 1px solid;
 
 	min-width: 100px;
-	border-radius: 0.2em;
 	background: #F5F5F5;
 	padding: 0.3em;
 }

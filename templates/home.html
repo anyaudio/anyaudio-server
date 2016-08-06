@@ -2,6 +2,8 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width">
+  <meta name="author" content="Avi Aryan">
+  <link rel="author" href="https://plus.google.com/u/0/+AviAryan/posts">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
   <title>Youtube MP3 Downloader</title>
 </head>
@@ -17,16 +19,14 @@
     <button id="searchBtn">Go</button>
   </div>
 
-<br><br>
-
-  <div class="search_result">
+  <div class="search_result" style="display: none;">
     <div class="result_image">
-      <img src="http://img.youtube.com/vi/jYa1eI1hpDE/0.jpg" class="thumb"><br>
+      <img src="http://img.youtube.com/vi/jYa1eI1hpDE/0.jpg" class="thumb">
     </div>
     <div class="result_text">
       <span class="title">Song Title</span><br>
       <span class="uploader">SomeVEVO</span><br>
-      <span class="time">2 years ago</span> &middot; <span class="views">112,342</span> views<br>
+      <span class="time">2 years ago</span> &middot; <span class="views">112,342 views</span><br>
       <span class="length">3:40</span><br><br>
       <a class="download" href="#" data-video="video_id">Get Link</a>
     </div>

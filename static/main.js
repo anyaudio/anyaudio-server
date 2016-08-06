@@ -19,7 +19,7 @@ $('#searchBtn').click(function(){
 			$(search_x).find('.length').text(data[i]['length']);
 			$(search_x).find('.uploader').text(data[i]['uploader']);
 			$(search_x).find('.time').text(data[i]['time']);
-			$(search_x).find('.views').text(data[i]['views']);
+			$(search_x).find('.views').text(data[i]['views'] + ' views');
 			$(search_x).find('.download').attr('data-video', data[i]['id']);
 			$(search_x).find('.download').click(get_download_link);
 			// set d/l filename
@@ -50,6 +50,7 @@ function get_download_link(event){
 }
 
 $(document).ready(function(){
+	$('.search_result').hide();
 	$('#search').keyup(function(e){
 		if(e.keyCode == 13){
 			$(this).trigger("enterKey");
