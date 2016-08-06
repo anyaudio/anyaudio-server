@@ -48,3 +48,15 @@ function get_download_link(event){
 		return false;
 	});
 }
+
+$(document).ready(function(){
+	$('#search').keyup(function(e){
+		if(e.keyCode == 13){
+			$(this).trigger("enterKey");
+		}
+	});
+
+	$('#search').bind('enterKey', function(e){
+		$('#searchBtn').click();
+	});
+});
