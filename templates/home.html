@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
   <title>Youtube MP3 Downloader</title>
 </head>
 <body>
 
-<input type="text" required="required" name="search" id="search" placeholder="Enter your search query" />
-<button id="searchBtn">Go</button>
+<div class="header">
+  <h1>Youtube MP3 downloader</h1>
+</div>
+
+<div id="container">
+  <div id="search_group">
+    <input type="text" required="required" name="search" id="search" placeholder="Enter your search query" />
+    <button id="searchBtn">Go</button>
+  </div>
 
 <br><br>
 
-<div id="container">
-  <div class="search_result" style="display: none;">
-  <img src="" class="thumb"><br>
+  <div class="search_result">
+  <img src="http://img.youtube.com/vi/jYa1eI1hpDE/0.jpg" class="thumb"><br>
   <span class="title">Song Title</span><br>
-  <span class="length">Song Length</span><br>
-  <span class="uploader">Song Uploader</span><br>
-  <span class="time">Song Added</span><br>
-  <span class="views">Song Views</span><br><br>
+  <span class="length">3:40</span><br>
+  <span class="uploader">SomeVEVO</span><br>
+  <span class="time">2 years ago</span><br>
+  <span class="views">112,342</span><br><br>
   <a class="download" href="#" data-video="video_id">Get Link</a>
-  <br><br>
   </div>
+
 </div>
 
 <!-- js -->

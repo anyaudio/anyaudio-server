@@ -1,3 +1,41 @@
+body {
+	margin: 0;
+}
+
+.header {
+	padding: 1em 0 1em 2em;
+	background-color: #dddddd;
+	margin-bottom: 1em;
+}
+
+#container {
+	max-width: 800px;
+	margin: 2em auto 0 auto;
+}
+
+#search_group {
+	display: flex;
+	flex-direction: row;
+}
+
+#search_group #search {
+	width: 90%;
+	max-width: 650px;
+	font-size: 1.4em;
+}
+
+#search_group #searchBtn {
+	font-size: 1.4em;
+	min-width: 70px;
+	margin-left: auto;  /** pull right **/
+}
+
+.search_result {
+	padding: 1em;
+	background: #eeeeee;
+	margin-bottom: 1.5em;
+}
+
 .search_result .thumb {
 	max-width: 200px;
 	max-height: 200px;
@@ -7,4 +45,8 @@
 	border-radius: 0.2em;
 	background: #DDDDDD;
 	padding: 0.3em;
+}
+
+.title {
+	font-weight: bold;
 }
