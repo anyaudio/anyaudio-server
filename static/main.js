@@ -24,6 +24,7 @@ $('#searchBtn').click(function(){
 			$(search_x).find('.download').attr('data-video', data[i]['id']);
 			$(search_x).find('.download').click(get_download_link);
 			// set d/l filename
+			$(search_x).find('.download').text('Get Link');
 			$(search_x).find('.download').attr('download', data[i]['title']);
 			// console.log(search_x);
 			$(search_x).addClass('flex_force'); // just flex doesn't work
