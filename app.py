@@ -30,15 +30,15 @@ def download_file(url):
     Download the file
     """
     url = b64decode(url)
-    try:
-        command = 'wget -O static/music.m4a %s' % url
-        check_output(command.split())
-        data = open('static/music.m4a', 'b').read()
-        response = make_response(data)
-        response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
-    except Exception:
-        logging.info(traceback.format_exc())
-        return 'Bad things have happened', 400
+    # try:
+    command = 'wget -O static/music.m4a %s' % url
+    check_output(command.split())
+    data = open('static/music.m4a', 'r').read()
+    response = make_response(data)
+    response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
+    # except Exception:
+    #     logging.error(traceback.format_exc())
+    #     return 'Bad things have happened', 400
     return response
 
 
