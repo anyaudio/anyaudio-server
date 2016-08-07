@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, jsonify, request, render_template, url_for
+from flask import Flask, jsonify, request, render_template, url_for, make_response
 from subprocess import check_output
 from base64 import b64encode, b64decode
 from os import environ
@@ -27,11 +27,16 @@ def download_file(url):
     """
     Download the file
     """
-    # command = COMMAND % vid_id
-    # command += ' --ffmpeg-location `echo $OPENSHIFT_REPO_DIR../../dependencies/ffmpeg`'
-    # command += ' --audio-format mp3 --extract-audio'
-    print url
-    return b64decode(url)
+    url = b64decode(url)
+    try:
+        command = 'wget -o static/music.m4a %s' % url
+        check_output(command.split())
+        data = open('static/music.m4a', 'b').read()
+        response = make_response(data)
+        response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
+    except Exception:
+        return 'Bad things have happened', 400
+    return response
 
 
 @app.route('/g/<string:vid_id>')
