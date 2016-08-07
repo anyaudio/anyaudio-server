@@ -2,3 +2,4 @@ Flask
 youtube-dl
 requests
 gunicorn
+eventlet
