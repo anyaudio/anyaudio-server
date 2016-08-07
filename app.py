@@ -1,5 +1,6 @@
 import requests
 import traceback
+import logging
 from flask import Flask, jsonify, request, render_template, url_for, make_response
 from subprocess import check_output
 from base64 import b64encode, b64decode
@@ -36,7 +37,7 @@ def download_file(url):
         response = make_response(data)
         response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
     except Exception:
-        print traceback.format_exc()
+        logging.info(traceback.format_exc())
         return 'Bad things have happened', 400
     return response
 
