@@ -1,4 +1,5 @@
 import requests
+import traceback
 from flask import Flask, jsonify, request, render_template, url_for, make_response
 from subprocess import check_output
 from base64 import b64encode, b64decode
@@ -29,12 +30,13 @@ def download_file(url):
     """
     url = b64decode(url)
     try:
-        command = 'wget -o static/music.m4a %s' % url
+        command = 'wget -O static/music.m4a %s' % url
         check_output(command.split())
         data = open('static/music.m4a', 'b').read()
         response = make_response(data)
         response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
     except Exception:
+        print traceback.format_exc()
         return 'Bad things have happened', 400
     return response
 
