@@ -1,11 +1,10 @@
 import requests
 import traceback
 import logging
-from os import remove
 from flask import Flask, jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from base64 import b64encode, b64decode
-from os import environ
+from os import environ, remove
 
 from helpers.search import get_videos, get_video_attrs
 
@@ -41,6 +40,11 @@ def download_file(url):
     response = make_response(data)
     # set headers
     response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
+    response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
+    response.headers['Content-Length'] = str(len(data))
+    # remove files
+    remove('static/music.mp3')
+    remove('static/music.m4a')
     # except Exception:
     #     logging.error(traceback.format_exc())
     #     return 'Bad things have happened', 400
