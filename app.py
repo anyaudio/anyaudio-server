@@ -34,7 +34,7 @@ def download_file(url):
     # try:
     command = 'wget -O static/music.m4a %s' % url
     check_output(command.split())
-    command = '$OPENSHIFT_REPO_DIR../../dependencies/ffmpeg'
+    command = '$OPENSHIFT_REPO_DIR../../dependencies/ffmpeg/ffmpeg'
     command += ' -i static/music.m4a -acodec libmp3lame -ab 128k static/music.mp3'
     check_output(command.split())
     data = open('static/music.mp3', 'r').read()
