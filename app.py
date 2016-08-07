@@ -101,6 +101,9 @@ if __name__ == '__main__':
         )
     else:
         from wsgiref.simple_server import make_server
-        httpd = make_server('localhost', 8051, app)
+        httpd = make_server(
+            environ.get('OPENSHIFT_PYTHON_IP'),
+            int(environ.get('OPENSHIFT_PYTHON_PORT')), app
+        )
         # Wait for a single request, serve it and quit.
         httpd.handle_request()
