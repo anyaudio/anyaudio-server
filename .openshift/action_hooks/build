@@ -23,6 +23,8 @@
 cd ${OPENSHIFT_REPO_DIR}
 pip install --upgrade -r requirements.txt --no-cache-dir
 export FFMPEG_LOCATION=${OPENSHIFT_REPO_DIR}../../dependencies/ffmpeg
-# kill old processes (ps aux)
+
+# kill old processes (ps aux). For some reason, they are still hanging and don't
+# allow new deployment to take place
 # pkill fails if nothing killed
 pkill -f gunicorn || true
