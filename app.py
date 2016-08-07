@@ -16,7 +16,7 @@ LOCAL = True
 if environ.get('OPENSHIFT_PYTHON_IP'):
     LOCAL = False
 
-COMMAND = 'youtube-dl https://www.youtube.com/watch?v=%s -f bestaudio'
+COMMAND = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio'
 
 
 @app.route('/')
