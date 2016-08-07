@@ -106,4 +106,4 @@ if __name__ == '__main__':
             int(environ.get('OPENSHIFT_PYTHON_PORT')), app
         )
         # Wait for a single request, serve it and quit.
-        httpd.handle_request()
+        httpd.serve_forever()
