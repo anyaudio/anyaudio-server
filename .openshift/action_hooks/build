@@ -24,6 +24,9 @@ cd ${OPENSHIFT_REPO_DIR}
 pip install --upgrade -r requirements.txt --no-cache-dir
 export FFMPEG_LOCATION=${OPENSHIFT_REPO_DIR}../../dependencies/ffmpeg
 
+# install ffmpeg
+bash scripts/set_ffmpeg.sh
+
 # kill old processes (ps aux). For some reason, they are still hanging and don't
 # allow new deployment to take place
 # pkill fails if nothing killed
