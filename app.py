@@ -10,3 +10,7 @@ if __name__ == '__main__':
         environ.get('OPENSHIFT_PYTHON_PORT', '5000')
     )
     call(cmd.split())
+    # app.run(
+    #     host=environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1'),
+    #     port=int(environ.get('OPENSHIFT_PYTHON_PORT', 5000))
+    # )
