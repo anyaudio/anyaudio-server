@@ -4,10 +4,10 @@ import logging
 from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from base64 import b64encode, b64decode
-from os import remove
 from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs
+from helpers.helpers import delete_file
 
 
 @app.route('/')
@@ -21,22 +21,25 @@ def download_file(url):
     Download the file from the server.
     First downloads the file on the server using wget and then converts it using ffmpeg
     """
-    url = b64decode(url)
     try:
-        command = 'wget -O static/music.m4a %s' % url
+        vid_id, url = b64decode(url).split(' ', 1)  # zz
+        m4a_path = 'static/%s.m4a' % vid_id
+        mp3_path = 'static/%s.mp3' % vid_id
+        # vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
+        command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
         command = '$OPENSHIFT_REPO_DIR../../dependencies/ffmpeg/ffmpeg'
-        command += ' -i static/music.m4a -acodec libmp3lame -ab 128k static/music.mp3 -y'
+        command += ' -i %s -acodec libmp3lame -ab 128k %s -y' % (m4a_path, mp3_path)
         call(command, shell=True)  # shell=True only works, return ret_code
-        data = open('static/music.mp3', 'r').read()
+        data = open(mp3_path, 'r').read()
         response = make_response(data)
         # set headers
         response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
         response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
         response.headers['Content-Length'] = str(len(data))
         # remove files
-        remove('static/music.mp3')
-        remove('static/music.m4a')
+        delete_file(m4a_path)
+        delete_file(mp3_path)
         # stream
         return response
     except Exception:
@@ -56,7 +59,7 @@ def get_link(vid_id):
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:
-            retval = b64encode(retval)
+            retval = b64encode(vid_id + ' ' + retval)
             retval = url_for('download_file', url=retval)
         return jsonify({'status': 0, 'url': retval})
     except Exception:
