@@ -20,8 +20,8 @@ def get_link(vid_id):
     """
     Uses youtube-dl to fetch the direct link
     """
-    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio -g' % vid_id
-    command += ' --source-address 0.0.0.0'
+    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio' % vid_id
+    command += ' --ffmpeg-location `echo $FFMPEG_LOCATION` --audio-format mp3 --extract-audio'
     print command
     try:
         retval = check_output(command.split())
