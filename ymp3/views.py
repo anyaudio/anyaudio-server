@@ -7,7 +7,7 @@ from base64 import b64encode, b64decode
 from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs
-from helpers.helpers import delete_file
+from helpers.helpers import delete_file, get_ffmpeg_path
 
 
 @app.route('/')
@@ -28,7 +28,7 @@ def download_file(url):
         # vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
         command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
-        command = '$OPENSHIFT_REPO_DIR../../dependencies/ffmpeg/ffmpeg'
+        command = get_ffmpeg_path()
         command += ' -i %s -acodec libmp3lame -ab 128k %s -y' % (m4a_path, mp3_path)
         call(command, shell=True)  # shell=True only works, return ret_code
         data = open(mp3_path, 'r').read()
