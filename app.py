@@ -1,6 +1,7 @@
 import requests
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, url_for
 from subprocess import check_output
+from base64 import b64encode, b64decode
 from os import environ
 
 from helpers.search import get_videos, get_video_attrs
@@ -9,10 +10,28 @@ from helpers.search import get_videos, get_video_attrs
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
+LOCAL = True
+if environ.get('OPENSHIFT_PYTHON_IP'):
+    LOCAL = False
+
+COMMAND = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio'
+
 
 @app.route('/')
 def home():
     return render_template('/home.html')
+
+
+@app.route('/d/<string:url>')
+def download_file(url):
+    """
+    Download the file
+    """
+    # command = COMMAND % vid_id
+    # command += ' --ffmpeg-location `echo $OPENSHIFT_REPO_DIR../../dependencies/ffmpeg`'
+    # command += ' --audio-format mp3 --extract-audio'
+    print url
+    return b64decode(url)
 
 
 @app.route('/g/<string:vid_id>')
@@ -20,12 +39,15 @@ def get_link(vid_id):
     """
     Uses youtube-dl to fetch the direct link
     """
-    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio' % vid_id
-    command += ' --ffmpeg-location `echo $FFMPEG_LOCATION` --audio-format mp3 --extract-audio'
+    command = COMMAND % vid_id
+    command += ' -g'
     print command
     try:
         retval = check_output(command.split())
         retval = retval.strip()
+        if not LOCAL:
+            retval = b64encode(retval)
+            retval = url_for('download_file', url=retval)
         return jsonify({'status': 0, 'url': retval})
     except Exception:
         return jsonify({'status': 1, 'url': None})
