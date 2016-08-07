@@ -46,10 +46,11 @@ def download_file(url):
         # remove files
         remove('static/music.mp3')
         remove('static/music.m4a')
+        # stream
+        return response
     except Exception:
         logging.error(traceback.format_exc())
         return 'Bad things have happened', 400
-    return response
 
 
 @app.route('/g/<string:vid_id>')
