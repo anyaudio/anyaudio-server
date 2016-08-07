@@ -4,7 +4,7 @@ from ymp3 import app, LOCAL
 
 
 if __name__ == '__main__':
-    call('gunicorn ymp3:app -w 4 --worker-class gevent')
+    call('gunicorn ymp3:app -w 4 --worker-class eventlet'.split())
     # if LOCAL:
     #     app.run(
     #         host=environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1'),
