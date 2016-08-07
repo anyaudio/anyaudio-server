@@ -94,7 +94,13 @@ def search():
 
 
 if __name__ == '__main__':
-    app.run(
-        host=environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1'),
-        port=int(environ.get('OPENSHIFT_PYTHON_PORT', 5000))
-    )
+    if LOCAL:
+        app.run(
+            host=environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1'),
+            port=int(environ.get('OPENSHIFT_PYTHON_PORT', 5000))
+        )
+    else:
+        from wsgiref.simple_server import make_server
+        httpd = make_server('localhost', 8051, app)
+        # Wait for a single request, serve it and quit.
+        httpd.handle_request()
