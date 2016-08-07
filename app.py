@@ -1,6 +1,7 @@
 import requests
 import traceback
 import logging
+from os import remove
 from flask import Flask, jsonify, request, render_template, url_for, make_response
 from subprocess import check_output
 from base64 import b64encode, b64decode
@@ -33,7 +34,10 @@ def download_file(url):
     # try:
     command = 'wget -O static/music.m4a %s' % url
     check_output(command.split())
-    data = open('static/music.m4a', 'r').read()
+    command = '$OPENSHIFT_REPO_DIR../../dependencies/ffmpeg'
+    command += ' -i static/music.m4a -acodec libmp3lame -ab 128k static/music.mp3'
+    check_output(command.split())
+    data = open('static/music.mp3', 'r').read()
     response = make_response(data)
     response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
     # except Exception:
