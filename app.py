@@ -16,7 +16,7 @@ LOCAL = True
 if environ.get('OPENSHIFT_PYTHON_IP'):
     LOCAL = False
 
-COMMAND = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio'
+COMMAND = 'youtube-dl https://www.youtube.com/watch?v=%s -f bestaudio'
 
 
 @app.route('/')
@@ -27,27 +27,28 @@ def home():
 @app.route('/d/<string:url>')
 def download_file(url):
     """
-    Download the file
+    Download the file from the server.
+    First downloads the file on the server using wget and then converts it using ffmpeg
     """
     url = b64decode(url)
-    # try:
-    command = 'wget -O static/music.m4a %s' % url
-    check_output(command.split())
-    command = '$OPENSHIFT_REPO_DIR../../dependencies/ffmpeg/ffmpeg'
-    command += ' -i static/music.m4a -acodec libmp3lame -ab 128k static/music.mp3 -y'
-    ret_code = call(command, shell=True)  # shell=True only works
-    data = open('static/music.mp3', 'r').read()
-    response = make_response(data)
-    # set headers
-    response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
-    response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
-    response.headers['Content-Length'] = str(len(data))
-    # remove files
-    remove('static/music.mp3')
-    remove('static/music.m4a')
-    # except Exception:
-    #     logging.error(traceback.format_exc())
-    #     return 'Bad things have happened', 400
+    try:
+        command = 'wget -O static/music.m4a %s' % url
+        check_output(command.split())
+        command = '$OPENSHIFT_REPO_DIR../../dependencies/ffmpeg/ffmpeg'
+        command += ' -i static/music.m4a -acodec libmp3lame -ab 128k static/music.mp3 -y'
+        call(command, shell=True)  # shell=True only works, return ret_code
+        data = open('static/music.mp3', 'r').read()
+        response = make_response(data)
+        # set headers
+        response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
+        response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
+        response.headers['Content-Length'] = str(len(data))
+        # remove files
+        remove('static/music.mp3')
+        remove('static/music.m4a')
+    except Exception:
+        logging.error(traceback.format_exc())
+        return 'Bad things have happened', 400
     return response
 
 
