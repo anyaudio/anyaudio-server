@@ -21,8 +21,9 @@ def get_link(vid_id):
     Uses youtube-dl to fetch the direct link
     """
     command = 'youtube-dl https://www.youtube.com/watch?v=%s -f 140/m4a/bestaudio -g' % vid_id
+    command += ' --source-address 14.194.226.229'
+    print command
     try:
-        print command
         retval = check_output(command.split())
         retval = retval.strip()
         return jsonify({'status': 0, 'url': retval})
