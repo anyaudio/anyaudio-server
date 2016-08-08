@@ -62,7 +62,7 @@ function get_download_link(event){
 
 // after download button is clicked
 function download_start(event){
-	$(event.target).text('Starting..');
+	$(event.target).text('Please wait');
 }
 
 $(document).ready(function(){
