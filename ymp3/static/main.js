@@ -66,7 +66,9 @@ function download_start(event){
 	elem = $(event.target);
 	setTimeout(function(){ // let the link activate
 		elem.attr('href', '#');
-	}, 1000);
+		elem.removeAttr('download');
+		elem.removeAttr('target'); // don't open new tab
+	}, 500);
 }
 
 $(document).ready(function(){
