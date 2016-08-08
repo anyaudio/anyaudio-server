@@ -21,6 +21,7 @@ $('#searchBtn').click(function(){
 			search_x.attr('id', 'result' + i);
 			// set values
 			$(search_x).find('.thumb').attr('src', data[i]['thumb']);
+			$(search_x).find('.thumb_link').attr('href', 'https://youtube.com/watch?v=' + data[i]['id']);
 			$(search_x).find('.title').text(data[i]['title']);
 			$(search_x).find('.length').text(data[i]['length']);
 			$(search_x).find('.uploader').text(data[i]['uploader']);
