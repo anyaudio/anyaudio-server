@@ -45,8 +45,8 @@ function get_download_link(event){
 	event.preventDefault();
 	elem = $(event.target);
 	elem.text('Fetching...');
+	elem.unbind('click');
 	$.getJSON('/g/' + elem.attr('data-video'), success=function(data, textStatus, jqXHR){
-		$(elem).unbind('click');
 		if (data['status'] != 0){
 			elem.text('Failed');
 			elem.removeAttr('href');
@@ -68,6 +68,7 @@ function download_start(event){
 		elem.attr('href', '#');
 		elem.removeAttr('download');
 		elem.removeAttr('target'); // don't open new tab
+		elem.unbind('click');
 	}, 500);
 }
 
