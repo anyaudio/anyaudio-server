@@ -1,0 +1,13 @@
+language: python
+python:
+  - "2.7"
+env:
+- APP_CONFIG="config.TestingConfig"
+services:
+  - docker
+install:
+  - docker-compose build
+  - docker-compose up -d
+
+script:
+  - docker ps | grep -q ymp3

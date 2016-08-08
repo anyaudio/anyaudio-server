@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    command: python app.py
+    environment:
+      PYTHONUNBUFFERED: 'true'
+    volumes:
+      - '.:/ymp3'
+    ports:
+      - '8000:5000'
