@@ -26,8 +26,8 @@ A successful response is of the following format.
 
 ```js
 {
-  "status": 0,
-  "url": "https://some.com/long/url"
+	"status": 0,
+	"url": "https://some.com/long/url"
 }
 ```
 
@@ -42,14 +42,14 @@ Response is of the following format.
 
 ```js
 [
-  {
-    "id": "zaSZE194D4I",
-    "length": "3:33",
-    "thumb": "http://img.youtube.com/vi/zaSZE194D4I/0.jpg",
-    "time": "3 years ago",
-    "title": "Pitbull - Back in Time",
-    "uploader": "PitbullVEVO",
-    "views": "20,328,744"
-  },
+	{
+		"id": "zaSZE194D4I",
+		"length": "3:33",
+		"thumb": "http://img.youtube.com/vi/zaSZE194D4I/0.jpg",
+		"time": "3 years ago",
+		"title": "Pitbull - Back in Time",
+		"uploader": "PitbullVEVO",
+		"views": "20,328,744"
+	},
 ]
 ```
