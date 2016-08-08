@@ -2,12 +2,22 @@ language: python
 python:
   - "2.7"
 env:
-- APP_CONFIG="config.TestingConfig"
+  APP_CONFIG: "config.TestingConfig"
+  DOCKER_COMPOSE_VERSION: 1.8.0
+
 services:
   - docker
+
 install:
   - docker-compose build
   - docker-compose up -d
 
 script:
   - docker ps | grep -q ymp3
+
+# https://docs.travis-ci.com/user/docker/#Using-Docker-Compose
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
