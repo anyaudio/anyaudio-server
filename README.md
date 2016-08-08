@@ -1,6 +1,7 @@
 # Youtube MP3 server
 
 Download any song that this world ever heard, and that too in your favorite format MP3.
+
 A rich public API is also included.
 
 [Android App](https://github.com/bxute/musicgenie)
@@ -14,42 +15,11 @@ pip install -r requirements.txt
 python app.py
 ```
 
-----
-
 ## API
 
-#### Get audio url from video
-
-Send a GET request to `/g/<video_id>` where `video_id` is youtube video id. (Example `/g/8oGZTbeEhv4`)
-
-A successful response is of the following format.
-
-```js
-{
-	"status": 0,
-	"url": "https://some.com/long/url"
-}
-```
-
-The error response follows the same format but sets `status` to non-zero value.
+See [docs/API.md](docs/API.md)
 
 
-#### Get youtube search results
+## Deployment instructions
 
-Send a GET request to `/search` with query param `q=<search term>`. (Example `/search?q=Back%20In%20Time`)
-
-Response is of the following format.
-
-```js
-[
-	{
-		"id": "zaSZE194D4I",
-		"length": "3:33",
-		"thumb": "http://img.youtube.com/vi/zaSZE194D4I/0.jpg",
-		"time": "3 years ago",
-		"title": "Pitbull - Back in Time",
-		"uploader": "PitbullVEVO",
-		"views": "20,328,744"
-	},
-]
-```
+See [docs/OPENSHIFT.md](docs/OPENSHIFT.md)
