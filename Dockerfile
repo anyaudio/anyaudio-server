@@ -10,9 +10,9 @@ COPY . .
 # COPY requirements.txt requirements.txt
 # RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN apk update
-RUN apk add python-dev
-RUN apk add libevent-dev
-RUN pip install -r requirements.txt
+RUN apk add --no-cache --virtual build-dependencies gcc python-dev libevent-dev linux-headers musl-dev \
+	&& pip install -r requirements.txt \
+	&& apk del build-dependencies
 # RUN pip install --editable .
 
 CMD python app.py
