@@ -53,10 +53,16 @@ function get_download_link(event){
 			return false;
 		}
 		elem.text('Download');
+		elem.click(download_start);
 		elem.attr('href', data['url']);
 		elem.attr('target', '_blank');
 		return false;
 	});
+}
+
+// after download button is clicked
+function download_start(event){
+	$(event.target).text('Starting..');
 }
 
 $(document).ready(function(){
