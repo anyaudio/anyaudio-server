@@ -63,6 +63,10 @@ function get_download_link(event){
 // after download button is clicked
 function download_start(event){
 	$(event.target).text('Please wait');
+	elem = $(event.target);
+	setTimeout(function(){ // let the link activate
+		elem.attr('href', '#');
+	}, 1000);
 }
 
 $(document).ready(function(){
