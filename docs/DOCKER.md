@@ -18,8 +18,7 @@ $ docker-compose build
 * Run the app
 
 ```sh
-$ docker run -p 5000:5000 ymp3_web
-# docker-compose up has some issues
+$ docker-compose up
 ```
 
 * Navigate to `http://localhost:5000` to view the app.
