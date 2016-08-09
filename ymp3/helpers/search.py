@@ -58,5 +58,12 @@ def get_video_attrs(html):
     # check if all items present. If not present, usually some problem in parsing
     if len(result) != 7:
         return None
+    # check length
+    try:
+        dur = int(result['length'].replace(':', '').strip())  # 20 mins
+        if dur > 2000:
+            return None
+    except:
+        pass
     # return
     return result
