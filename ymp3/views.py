@@ -4,6 +4,7 @@ import logging
 from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
+from base64 import b64encode, b64decode
 
 from helpers.search import get_videos, get_video_attrs
 from helpers.helpers import delete_file, get_ffmpeg_path
@@ -15,7 +16,7 @@ def home():
     return render_template('/home.html')
 
 
-@app.route('/d/<string:url>')
+@app.route('/d/<path:url>')
 def download_file(url):
     """
     Download the file from the server.
@@ -65,6 +66,7 @@ def get_link(vid_id):
         retval = retval.strip()
         if not LOCAL:
             retval = encode(get_key(), vid_id + ' ' + retval)
+            print retval
             # retval = b64encode(vid_id + ' ' + retval)
             retval = url_for('download_file', url=retval)
         return jsonify({'status': 0, 'url': retval})

@@ -4,23 +4,28 @@ import os
 
 
 def encode(key, clear):
-    enc = []
-    for i in range(len(clear)):
-        key_c = key[i % len(key)]
-        enc_c = chr((ord(clear[i]) + ord(key_c)) % 256)
-        enc.append(enc_c)
-    return base64.urlsafe_b64encode("".join(enc))
+    st = ''
+    incr = get_key_hash(key)
+    for _ in clear:
+        st += chr(incr + ord(_))
+    return base64.b64encode(st)
 
 
 def decode(key, enc):
-    dec = []
-    enc = base64.urlsafe_b64decode(enc)
-    for i in range(len(enc)):
-        key_c = key[i % len(key)]
-        dec_c = chr((256 + ord(enc[i]) - ord(key_c)) % 256)
-        dec.append(dec_c)
-    return "".join(dec)
+    st = ''
+    enc = base64.b64decode(enc)
+    incr = get_key_hash(key)
+    for _ in enc:
+        st += chr(ord(_) - incr)
+    return st
 
 
 def get_key():
     return os.environ.get('SECRET_KEY', 'default key')
+
+
+def get_key_hash(key):
+    c = 0
+    for _ in key:
+        c += ord(_)
+    return c % 20
