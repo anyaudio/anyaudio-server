@@ -21,4 +21,8 @@ RUN apk --update add --no-cache --virtual build-dependencies tar xz \
 	&& ash scripts/set_ffmpeg.sh \
 	&& apk del build-dependencies
 
+# update needed for wget
+RUN apk --update add --no-cache ca-certificates wget
+RUN update-ca-certificates
+
 CMD python app.py
