@@ -7,7 +7,8 @@ from base64 import b64encode, b64decode
 from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs
-from helpers.helpers import delete_file, get_ffmpeg_path
+from helpers.helpers import delete_file, get_ffmpeg_path, get_video_info_ydl, \
+    get_filename_from_title
 
 
 @app.route('/')
@@ -33,8 +34,11 @@ def download_file(url):
         call(command, shell=True)  # shell=True only works, return ret_code
         data = open(mp3_path, 'r').read()
         response = make_response(data)
+        # get filename
+        video_info = get_video_info_ydl(vid_id)
+        filename = get_filename_from_title(video_info.get('title'))
         # set headers
-        response.headers['Content-Disposition'] = 'attachment; filename=music.mp3'
+        response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
         response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
         response.headers['Content-Length'] = str(len(data))
         # remove files
@@ -85,3 +89,15 @@ def search():
         if temp:
             ret_vids.append(temp)
     return jsonify(ret_vids)
+
+
+@app.route('/v/<string:vid_id>')
+def get_video(vid_id):
+    """
+    Gets video info
+    """
+    data = get_video_info_ydl(vid_id)
+    if len(data) > 0:
+        return jsonify(data)
+    else:
+        return 'There was a problem', 400
