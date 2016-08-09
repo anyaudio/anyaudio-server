@@ -16,13 +16,16 @@ API v1.
 		"bitrate": "Upper limit of bitrate in kbps. Defaults to 128."
 	}
 	```
-	* **Response** -
+
+	##### Response
 	```json
 	{
-		"status": 400,  # HTTP status code
+		"status": 400,
 		"developerMessage": "Verbose for debugging. Set only if there is an error.",
-		"userMessage": "Error message for user."
-		"errorCode": 12345  # Platform defined error code
-		"moreInfo": "/developer/error/12345"
+		"userMessage": "Error message for user.",
+		"errorCode": 12345,
+		"moreInfo": "/developer/error/12345",
+		"url": "https://url.to/song"
 	}
 	```
+
