@@ -1,0 +1,27 @@
+language: python
+python:
+  - "2.7"
+env:
+  APP_CONFIG: "config.TestingConfig"
+  DOCKER_COMPOSE_VERSION: 1.8.0
+
+services:
+  - docker
+
+install:
+  # - docker-compose build
+  - docker build -t ymp3 .
+  - docker run -d -p 127.0.0.1:80:5000 --name ymp3 ymp3
+
+script:
+  - docker ps | grep -q ymp3
+
+# https://docs.travis-ci.com/user/docker/#Using-Docker-Compose
+# before_install:
+#   - sudo apt-get update
+#   - sudo apt-get remove -y docker-engine
+#   - sudo apt-get install -y docker-engine
+#   - sudo rm /usr/local/bin/docker-compose
+#   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+#   - chmod +x docker-compose
+#   - sudo mv docker-compose /usr/local/bin

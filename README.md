@@ -20,6 +20,11 @@ python app.py
 See [docs/API.md](docs/API.md)
 
 
-## Deployment instructions
+## Deployment on Openshift instructions
 
 See [docs/OPENSHIFT.md](docs/OPENSHIFT.md)
+
+
+## Deployment using Docker instructions
+
+See [docs/DOCKER.md](docs/DOCKER.md)
