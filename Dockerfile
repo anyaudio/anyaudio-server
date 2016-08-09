@@ -17,9 +17,8 @@ RUN apk add --no-cache --virtual build-dependencies gcc python-dev libevent-dev 
 # update tar .. --strip-componenets not available in current version
 # install ffmpeg
 # wget, tar etc already present
-RUN apk --update add --no-cache --virtual build-dependencies tar xz \
-	&& ash scripts/set_ffmpeg.sh \
-	&& apk del build-dependencies
+RUN apk --update add --no-cache tar xz
+RUN ash scripts/set_ffmpeg.sh
 
 # update needed for wget
 RUN apk --update add --no-cache ca-certificates wget
