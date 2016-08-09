@@ -17,7 +17,7 @@ python app.py
 
 ## API
 
-See [docs/API.md](docs/API.md)
+See [docs/API.md](docs/api/v1/API-v1.md)
 
 
 ## Deployment instructions
