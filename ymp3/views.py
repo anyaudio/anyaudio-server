@@ -7,8 +7,7 @@ from base64 import b64encode, b64decode
 from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs
-from helpers.helpers import delete_file, get_ffmpeg_path, get_video_info_ydl, \
-    get_filename_from_title
+from helpers.helpers import delete_file, get_ffmpeg_path, get_video_info_ydl
 
 
 @app.route('/')
@@ -35,8 +34,9 @@ def download_file(url):
         data = open(mp3_path, 'r').read()
         response = make_response(data)
         # get filename
-        video_info = get_video_info_ydl(vid_id)
-        filename = get_filename_from_title(video_info.get('title'))
+        # video_info = get_video_info_ydl(vid_id)
+        # filename = get_filename_from_title(video_info.get('title'))
+        filename = 'music.mp3'
         # set headers
         response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
         response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
