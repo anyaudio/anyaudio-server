@@ -1,9 +1,11 @@
 import os
 from ymp3 import LOCAL
 from youtube_dl import YoutubeDL
+import HTMLParser
 
 
-FILENAME_EXCLUDE = '<>:"/\|?*'
+FILENAME_EXCLUDE = '<>:"/\|?*;'
+# semi-colon is terminator in header
 
 
 def delete_file(path):
@@ -43,6 +45,7 @@ def get_filename_from_title(title):
     """
     if not title:
         return 'music.mp3'
+    title = HTMLParser.HTMLParser().unescape(title)
     for _ in FILENAME_EXCLUDE:
         title = title.replace(_, ' ')  # provide readability with space
     return title[:40] + '.mp3'  # TODO - smart hunt
