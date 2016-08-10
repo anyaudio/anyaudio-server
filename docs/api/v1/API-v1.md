@@ -72,8 +72,6 @@ Example -
 	| Term | Explaination |
 	|-----------|--------------|
 	|`q`| Search query.|
-	|`offset`| Number of items to skip. e.g. if `offset = 10`, results start from 11<sup>th</sup> item.|
-	|`number`| Maximum number of results to fetch.|
 	* **Response**:
 
 	| Term | Explaination |
