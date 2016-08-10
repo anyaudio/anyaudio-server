@@ -1,4 +1,5 @@
 import re
+from encryption import get_key, encode_data
 
 INF = 1000000000
 
@@ -8,14 +9,14 @@ def get_videos(html):
     separate videos in html
     """
     first = html.find('yt-lockup-tile')
-    html = html[first+2:]
+    html = html[first + 2:]
     vid = []
     while True:
         pos = html.find('yt-lockup-tile')
         if pos == -1:
             pos = INF
-        vid.append(html[:pos+2])
-        html = html[pos+3:]
+        vid.append(html[:pos + 2])
+        html = html[pos + 3:]
         if pos == INF:
             break
     return vid
@@ -58,5 +59,13 @@ def get_video_attrs(html):
     # check if all items present. If not present, usually some problem in parsing
     if len(result) != 7:
         return None
+    # check length
+    try:
+        dur = int(result['length'].replace(':', '').strip())  # 20 mins
+        if dur > 2000:
+            return None
+    except:
+        pass
     # return
+    result['get_url'] = '/g/' + encode_data(get_key(), id=result['id'], title=result['title'])
     return result
