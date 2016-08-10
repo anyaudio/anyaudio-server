@@ -11,6 +11,7 @@ services:
 install:
   # - docker-compose build
   - docker build -t ymp3 .
+  - docker images | grep -i ymp3
   - docker run -d -p 127.0.0.1:80:5000 --name ymp3 ymp3
 
 script:
