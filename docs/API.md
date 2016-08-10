@@ -1,20 +1,5 @@
 # API
 
-### Get audio url from video
-
-Send a GET request to `/g/<video_id>` where `video_id` is youtube video id. (Example `/g/8oGZTbeEhv4`)
-
-A successful response is of the following format.
-
-```js
-{
-	"status": 0,
-	"url": "https://some.com/long/url"
-}
-```
-
-The error response follows the same format but sets `status` to non-zero value.
-
 
 ### Get youtube search results
 
@@ -31,7 +16,24 @@ Response is of the following format.
 		"time": "3 years ago",
 		"title": "Pitbull - Back in Time",
 		"uploader": "PitbullVEVO",
-		"views": "20,328,744"
+		"views": "20,328,744",
+		"get_url": "/g/someLoNgUrl"
 	},
 ]
 ```
+
+
+### Get download url of a search result
+
+Send a GET request to `get_url` that you got in search API response. It will return the download `url`.
+
+A successful response is of the following format.
+
+```js
+{
+	"status": 0,
+	"url": "https://some.com/long/url"
+}
+```
+
+The error response follows the same format but sets `status` to non-zero value.

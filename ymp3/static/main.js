@@ -22,12 +22,12 @@ $('#searchBtn').click(function(){
 			// set values
 			$(search_x).find('.thumb').attr('src', data[i]['thumb']);
 			$(search_x).find('.thumb_link').attr('href', 'https://youtube.com/watch?v=' + data[i]['id']);
-			$(search_x).find('.title').text(data[i]['title']);
+			$(search_x).find('.title').html(data[i]['title']);
 			$(search_x).find('.length').text(data[i]['length']);
-			$(search_x).find('.uploader').text(data[i]['uploader']);
+			$(search_x).find('.uploader').html(data[i]['uploader']);
 			$(search_x).find('.time').text(data[i]['time']);
 			$(search_x).find('.views').text(data[i]['views'] + ' views');
-			$(search_x).find('.download').attr('data-video', data[i]['id']);
+			$(search_x).find('.download').attr('data-get-url', data[i]['get_url']);
 			$(search_x).find('.download').click(get_download_link);
 			// set d/l filename
 			$(search_x).find('.download').attr('download', data[i]['title']);
@@ -46,7 +46,7 @@ function get_download_link(event){
 	elem = $(event.target);
 	elem.text('Fetching...');
 	elem.unbind('click');
-	$.getJSON('/g/' + elem.attr('data-video'), success=function(data, textStatus, jqXHR){
+	$.getJSON(elem.attr('data-get-url'), success=function(data, textStatus, jqXHR){
 		if (data['status'] != 0){
 			elem.text('Failed');
 			elem.removeAttr('href');
