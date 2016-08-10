@@ -11,7 +11,7 @@ COPY . .
 # install deps
 RUN apk update
 RUN apk add --no-cache --virtual build-dependencies gcc python-dev libevent-dev linux-headers musl-dev \
-	&& pip install --no-cache-dir -r requirements.txt \
+	&& pip install -r requirements.txt \
 	&& apk del build-dependencies
 
 # update tar .. --strip-componenets not available in current version
