@@ -1,6 +1,6 @@
 import base64
 import os
-# http://stackoverflow.com/a/16321853/2295672
+import json
 
 
 def encode(key, clear):
@@ -29,3 +29,13 @@ def get_key_hash(key):
     for _ in key:
         c += ord(_)
     return c % 20
+
+
+def encode_data(key, **kwargs):
+    data = json.dumps(kwargs, ensure_ascii=False, indent=None)
+    return encode(key, data)
+
+
+def decode_data(key, data):
+    dec = decode(key, data)
+    return json.loads(dec)

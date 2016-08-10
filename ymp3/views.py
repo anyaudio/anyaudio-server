@@ -4,11 +4,10 @@ import logging
 from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
-from base64 import b64encode, b64decode
 
 from helpers.search import get_videos, get_video_attrs
-from helpers.helpers import delete_file, get_ffmpeg_path
-from helpers.encryption import encode, decode, get_key
+from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title
+from helpers.encryption import get_key, encode_data, decode_data
 
 
 @app.route('/')
@@ -23,11 +22,15 @@ def download_file(url):
     First downloads the file on the server using wget and then converts it using ffmpeg
     """
     try:
-        # vid_id, url = b64decode(url).split(' ', 1)  # zz
-        vid_id, url = decode(get_key(), url).split(' ', 1)
+        # decode info from url
+        data = decode_data(get_key(), url)
+        vid_id = data['id']
+        url = data['url']
+        filename = get_filename_from_title(data['title'])
         m4a_path = 'static/%s.m4a' % vid_id
         mp3_path = 'static/%s.mp3' % vid_id
-        # vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
+        # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
+        # download and convert
         command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
         command = get_ffmpeg_path()
@@ -35,10 +38,6 @@ def download_file(url):
         call(command, shell=True)  # shell=True only works, return ret_code
         data = open(mp3_path, 'r').read()
         response = make_response(data)
-        # get filename
-        # video_info = get_video_info_ydl(vid_id)
-        # filename = get_filename_from_title(video_info.get('title'))
-        filename = 'music.mp3'
         # set headers
         response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
         response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
@@ -53,11 +52,14 @@ def download_file(url):
         return 'Bad things have happened', 400
 
 
-@app.route('/g/<string:vid_id>')
-def get_link(vid_id):
+@app.route('/g/<path:url>')
+def get_link(url):
     """
     Uses youtube-dl to fetch the direct link
     """
+    data = decode_data(get_key(), url)
+    vid_id = data['id']
+    title = data['title']
     command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
     command += ' -g'
     print command
@@ -65,9 +67,7 @@ def get_link(vid_id):
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:
-            retval = encode(get_key(), vid_id + ' ' + retval)
-            print retval
-            # retval = b64encode(vid_id + ' ' + retval)
+            retval = encode_data(get_key(), id=vid_id, title=title, url=retval)
             retval = url_for('download_file', url=retval)
         return jsonify({'status': 0, 'url': retval})
     except Exception:
