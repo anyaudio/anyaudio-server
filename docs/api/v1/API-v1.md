@@ -27,7 +27,7 @@ Example -
 ```json
 {
 	"status": 500,
-	"requestLocation": "/api/v1/g"
+	"requestLocation": "/api/v1/g",
 	"developerMessage": "URLOpen: Timeout",
 	"userMessage": "Server problem, please try again later.",
 	"errorCode": "500-004"
