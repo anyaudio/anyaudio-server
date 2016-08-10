@@ -5,7 +5,7 @@ API v1.
 ---
 
 
-* ### Common Response Fields
+### Common Response Fields
 
 All responses will include these common fields -
 
