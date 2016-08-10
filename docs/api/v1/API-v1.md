@@ -79,7 +79,7 @@ Example -
 	Example -
 	```json
 	{
-		"q": "Bass Rani"
+		"q": "Bass%20Rani"
 	}
 	```
 
