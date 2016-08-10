@@ -71,6 +71,7 @@ def get_link(url):
             retval = url_for('download_file', url=retval)
         return jsonify({'status': 0, 'url': retval})
     except Exception:
+        logging.error(traceback.format_exc())
         return jsonify({'status': 1, 'url': None})
 
 
