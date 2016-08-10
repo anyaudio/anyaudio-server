@@ -16,6 +16,20 @@ All responses will include these common fields -
 | `userMessage`| Error message for user.|
 |`errorCode`| Platform specific error code.|
 
+Example -
+```json
+{
+	"status": 200
+}
+```
+```json
+{
+	"status": 500,
+	"developerMessage": "FFMPEG: Error converting m4a to mp3",
+	"userMessage": "The download couldn't be processed, please try again. Contact support@musicgenie.com if problem persists.",
+	"errorCode": "500-006"
+}
+```
 
 * ### Getting Audio from Video ID
 
