@@ -72,11 +72,13 @@ Example -
 	| Term | Explaination |
 	|-----------|--------------|
 	|`q`| Search query.|
+	
+
 	* **Response**:
 
 	| Term | Explaination |
 	|-----------|--------------|
-	|`metadata`| Data about fetched data. <br/>&nbsp;&nbsp;&nbsp;&nbsp;`query`: Searched query.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`offset`: Offset of results shown<br/>&nbsp;&nbsp;&nbsp;&nbsp;`number`: Number of results requested<br/>`count`: Number of results shown.|
+	|`metadata`| Data about fetched data. <br/>&nbsp;&nbsp;&nbsp;&nbsp;`query`: Searched query.|
 	|`results`| Actual result set contains a list of items with following attributes : <br/>&nbsp;&nbsp;&nbsp;&nbsp;`id`: Youtube ID of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`length`: Length of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`thumb`: Link to video thumbnail.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`time`: Time since upload. e.g. `3 years ago`.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`uploader`: Youtube uploader ID.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`views`: View count for the video.|
 
 * ### Getting Trending Songs
