@@ -45,4 +45,4 @@ def get_filename_from_title(title):
         return 'music.mp3'
     for _ in FILENAME_EXCLUDE:
         title = title.replace(_, ' ')  # provide readability with space
-    return title[:30] + '.mp3'  # TODO - smart hunt
+    return title[:40] + '.mp3'  # TODO - smart hunt
