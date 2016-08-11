@@ -23,6 +23,11 @@ def download_file(url):
     """
     try:
         # decode info from url
+        try:
+            abr = int(request.args.get('bitrate', '128'))
+            abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
+        except Exception:
+            abr = 128
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']
@@ -34,7 +39,7 @@ def download_file(url):
         command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
         command = get_ffmpeg_path()
-        command += ' -i %s -acodec libmp3lame -ab 128k %s -y' % (m4a_path, mp3_path)
+        command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
         call(command, shell=True)  # shell=True only works, return ret_code
         data = open(mp3_path, 'r').read()
         response = make_response(data)
@@ -59,16 +64,11 @@ def get_link():
     """
     try:
         url = request.args.get('url')
-        try:
-            bitrate = int(request.args.get('bitrate', 128))
-            bitrate = (bitrate < 32) and bitrate or 128
-        except ValueError:
-            bitrate = 128
 
         data = decode_data(get_key(), url)
         vid_id = data['id']
         title = data['title']
-        command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio[abr<=%s]' % (vid_id, bitrate)
+        command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
         command += ' -g'
         print command
         retval = check_output(command.split())

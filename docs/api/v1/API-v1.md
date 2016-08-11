@@ -43,7 +43,6 @@ Example -
 	| Term | Explaination |
 	|-----------|--------------|
 	|`url`| Video ID as on Youtube.|
-	|`bitrate`| Upper Limit of song bitrate in kbps. Defaults to 140.|
 
 	Example -
 	```json
@@ -70,7 +69,7 @@ Example -
 
 	* **Type**: `GET`
 	* **Location**: `/api/v1/search`
-	* **Terms**:
+	* **Parameters**:
 
 	| Term | Explaination |
 	|-----------|--------------|
@@ -173,3 +172,14 @@ Example -
 		]
 	}
 	```
+
+* ### Downloading from URL provided
+
+	* **Type**: `GET`
+	* **Location**: `/api/v1/d/<URL>`
+	* **Parameters**:
+
+		| Term | Explaination |
+		|------|--------------|
+		|`bitrate`| Desired bitrate. Defaults to 128|
+	* **Response**: Song or some error.

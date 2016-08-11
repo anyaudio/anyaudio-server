@@ -12,8 +12,9 @@ A rich public API is also included.
 
 ```
 pip install -r requirements.txt
-python app.py
+bash run.sh
 ```
+**Note**: Set `FFMPEG_PATH` to path to your `ffmpeg` binary.
 
 ## API
 
@@ -28,3 +29,7 @@ See [docs/OPENSHIFT.md](docs/OPENSHIFT.md)
 ## Deployment using Docker instructions
 
 See [docs/DOCKER.md](docs/DOCKER.md)
+
+## External Dependencies
+* `ffmpeg`
+	Make sure that you have `ffmpeg` and its path is set properly in `run.sh`
