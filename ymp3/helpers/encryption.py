@@ -7,8 +7,8 @@ def encode(key, clear):
     st = ''
     incr = get_key_hash(key)
     for _ in clear:
-        st += chr(incr + ord(_))
-    return base64.b64encode(st)
+        st += unichr(incr + ord(_))
+    return base64.b64encode(st.encode('utf-8'))
 
 
 def decode(key, enc):
@@ -16,7 +16,7 @@ def decode(key, enc):
     enc = base64.b64decode(enc)
     incr = get_key_hash(key)
     for _ in enc:
-        st += chr(ord(_) - incr)
+        st += unichr(ord(_) - incr)
     return st
 
 

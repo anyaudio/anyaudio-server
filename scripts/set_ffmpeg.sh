@@ -5,4 +5,4 @@ mkdir ffmpeg
 tar -xf ffmpeg.tar.xz -C ffmpeg --strip-components 1
 rm ffmpeg.tar.xz
 cd ffmpeg
-ls | grep -i -E -v ffmpeg$ | rm -rf
+find . ! -iname ffmpeg -delete
