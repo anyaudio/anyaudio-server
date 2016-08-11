@@ -1,7 +1,7 @@
 import re
 from encryption import get_key, encode_data
 
-INF = 1000000000
+INF = float("inf")
 
 
 def get_videos(html):
