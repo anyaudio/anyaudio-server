@@ -67,5 +67,5 @@ def get_video_attrs(html):
     except:
         pass
     # return
-    result['get_url'] = '/g/' + encode_data(get_key(), id=result['id'], title=result['title'])
+    result['get_url'] = '/g?url=' + encode_data(get_key(), id=result['id'], title=result['title'])
     return result

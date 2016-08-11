@@ -42,7 +42,7 @@ Example -
 
 	| Term | Explaination |
 	|-----------|--------------|
-	|`video_id`| Video ID as on Youtube.|
+	|`url`| Video ID as on Youtube.|
 	|`bitrate`| Upper Limit of song bitrate in kbps. Defaults to 140.|
 
 	Example -

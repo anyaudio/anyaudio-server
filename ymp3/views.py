@@ -15,7 +15,7 @@ def home():
     return render_template('/home.html')
 
 
-@app.route('/d/<path:url>')
+@app.route('/api/v1/d/<path:url>')
 def download_file(url):
     """
     Download the file from the server.
@@ -52,48 +52,90 @@ def download_file(url):
         return 'Bad things have happened', 400
 
 
-@app.route('/g/<path:url>')
-def get_link(url):
+@app.route('/api/v1/g')
+def get_link():
     """
     Uses youtube-dl to fetch the direct link
     """
-    data = decode_data(get_key(), url)
-    vid_id = data['id']
-    title = data['title']
-    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
-    command += ' -g'
-    print command
     try:
+        url = request.args.get('url')
+        try:
+            bitrate = int(request.args.get('bitrate', 128))
+            bitrate = (bitrate < 32) and bitrate or 128
+        except ValueError:
+            bitrate = 128
+
+        data = decode_data(get_key(), url)
+        vid_id = data['id']
+        title = data['title']
+        command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio[abr<=%s]' % (vid_id, bitrate)
+        command += ' -g'
+        print command
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:
             retval = encode_data(get_key(), id=vid_id, title=title, url=retval)
             retval = url_for('download_file', url=retval)
-        return jsonify({'status': 0, 'url': retval})
-    except Exception:
-        logging.error(traceback.format_exc())
-        return jsonify({'status': 1, 'url': None})
+
+        ret_dict = {
+            'status': 200,
+            'requestLocation': '/api/v1/g',
+            'url': retval
+        }
+        return jsonify(ret_dict)
+    except Exception as e:
+        print(traceback.format_exc())
+        return jsonify(
+            {
+                'status': 500,
+                'requestLocation': '/api/v1/g',
+                'developerMessage': str(e),
+                'userMessage': 'Some error occurred',
+                'errorCode': '500-001'
+            }
+        )
 
 
-@app.route('/search')
+@app.route('/api/v1/search')
 def search():
     """
     Search youtube and return results
     """
-    search_term = request.args.get('q')
-    link = 'https://www.youtube.com/results?search_query=%s' % search_term
-    link += '&sp=EgIQAQ%253D%253D'  # for only video
-    r = requests.get(
-        link,
-        allow_redirects=True
-    )
-    vids = get_videos(r.content)
-    ret_vids = []
-    for _ in vids:
-        temp = get_video_attrs(_)
-        if temp:
-            ret_vids.append(temp)
-    return jsonify(ret_vids)
+    try:
+        search_term = request.args.get('q')
+        link = 'https://www.youtube.com/results?search_query=%s' % search_term
+        link += '&sp=EgIQAQ%253D%253D'  # for only video
+        r = requests.get(
+            link,
+            allow_redirects=True
+        )
+        vids = get_videos(r.content)
+        ret_vids = []
+        for _ in vids:
+            temp = get_video_attrs(_)
+            if temp:
+                temp['get_url'] = '/api/v1' + temp['get_url']
+                ret_vids.append(temp)
+
+        ret_dict = {
+            'metadata': {
+                'q': search_term,
+                'count': len(ret_vids)
+            },
+            'results': ret_vids,
+            'status': 200,
+            'requestLocation': '/api/v1/search'
+        }
+    except Exception as e:
+        ret_dict = {
+            'status': 500,
+            'requestLocation': '/api/v1/search',
+            'developerMessage': str(e),
+            'userMessage': 'Some error occurred',
+            'errorCode': '500-001'
+        }
+
+    return jsonify(ret_dict)
 
 
 # @app.route('/v/<string:vid_id>')
