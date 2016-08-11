@@ -32,4 +32,5 @@ See [docs/DOCKER.md](docs/DOCKER.md)
 
 ## External Dependencies
 * `ffmpeg`
+
 	Make sure that you have `ffmpeg` and its path is set properly in `run.sh`
