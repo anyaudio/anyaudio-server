@@ -134,6 +134,13 @@ Example -
 
 	* **Type**: `GET`
 	* **Location**: `/api/v1/trending`
+	* **Parameters**:
+
+	| Term | Explaination |
+	|------|--------------}
+	|`number`| Max number of results to get.|
+	|`type`| Type of playlist to get data from. Defaults to `popular`|
+
 	* **Response**
 
 	| Term | Explaination |
@@ -145,7 +152,8 @@ Example -
 	```json
 	{
 		"metadata": {
-			"count": "2"
+			"count": "2",
+			"type": "popular"
 		},
 		"results" : [
 			{

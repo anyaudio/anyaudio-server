@@ -8,6 +8,8 @@ from ymp3 import app, LOCAL
 from helpers.search import get_videos, get_video_attrs, get_trending_videos
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title
 from helpers.encryption import get_key, encode_data, decode_data
+from helpers.data import trending_playlist
+from helpers.database import get_trending
 
 
 @app.route('/')
@@ -151,16 +153,17 @@ def get_latest():
             max_count = 100
     except ValueError:
         max_count = 25
-    link = 'https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI'
-    r = requests.get(
-        link,
-        allow_redirects=True
-    )
-    ret_vids = get_trending_videos(r.content, count = max_count, prefix='/api/v1/g?url=')
+
+    type = request.args.get('type', 'popular')
+    if type not in [_[0] for _ in trending_playlist]:
+        type = 'popular'
+
+    ret_vids = get_trending(type, max_count, get_url_prefix='/api/v1/g?url=')
 
     ret_dict = {
         'metadata': {
-            'count': len(ret_vids)
+            'count': len(ret_vids),
+            'type': type
         },
         'results': ret_vids
     }
