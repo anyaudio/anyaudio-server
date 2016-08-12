@@ -5,7 +5,7 @@ from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
 
-from helpers.search import get_videos, get_video_attrs
+from helpers.search import get_videos, get_video_attrs, get_trending_videos
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title
 from helpers.encryption import get_key, encode_data, decode_data
 
@@ -26,7 +26,7 @@ def download_file(url):
         try:
             abr = int(request.args.get('bitrate', '128'))
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
-        except Exception:
+        except ValueError:
             abr = 128
         data = decode_data(get_key(), url)
         vid_id = data['id']
@@ -134,6 +134,36 @@ def search():
             'userMessage': 'Some error occurred',
             'errorCode': '500-001'
         }
+
+    return jsonify(ret_dict)
+
+
+@app.route('/api/v1/trending')
+def get_latest():
+    """
+    Get trending songs
+    """
+    try:
+        max_count = int(request.args.get('number', '25'))
+        if max_count <= 0:
+            max_count = 1
+        if max_count > 100:
+            max_count = 100
+    except ValueError:
+        max_count = 25
+    link = 'https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI'
+    r = requests.get(
+        link,
+        allow_redirects=True
+    )
+    ret_vids = get_trending_videos(r.content, count = max_count, prefix='/api/v1/g?url=')
+
+    ret_dict = {
+        'metadata': {
+            'count': len(ret_vids)
+        },
+        'results': ret_vids
+    }
 
     return jsonify(ret_dict)
 
