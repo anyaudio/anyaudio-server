@@ -1,5 +1,9 @@
 import re
+import requests
+
 from encryption import get_key, encode_data
+from HTMLParser import HTMLParser
+from networking import open_page
 
 INF = float("inf")
 
@@ -67,5 +71,51 @@ def get_video_attrs(html):
     except:
         pass
     # return
-    result['get_url'] = '/g/' + encode_data(get_key(), id=result['id'], title=result['title'])
+    result['get_url'] = '/g?url=' + encode_data(get_key(), id=result['id'], title=result['title'])
     return result
+
+
+def get_trending_videos(html):
+    """
+    Get trending youtube videos from html
+    """
+    regex = '<tr.*?data-video-id="(.*?)".*?src="(.*?)".*?<a cl.*?>(.*?)</a>.*?by.*?>(.*?)</a>.*?<span .*?>(.*?)</'
+
+    raw_results = re.findall(
+        regex,
+        html,
+        re.DOTALL
+    )
+
+    vids = []
+    for raw_result in raw_results:
+        vids.append(
+            {
+                'id': raw_result[0],
+                'thumb': raw_result[1],
+                'title': html_unescape(raw_result[2].strip().decode('utf-8')),
+                'uploader': raw_result[3].decode('utf8'),
+                'length': raw_result[4],
+                'views': get_views(video_id = raw_result[0]),
+                'get_url': encode_data(get_key(), id = raw_result[0], title=raw_result[2].strip())
+            }
+        )
+    return vids
+
+
+def get_views(video_id):
+    url = 'https://www.youtube.com/watch?v={0}'.format(video_id)
+    content = open_page(url)
+
+    return re.findall(
+        '<div class="watch-view-count">(.*?) ',
+        content,
+    )[0]
+
+
+def html_unescape(text):
+    try:
+        title = HTMLParser().unescape(text)
+    except Exception:
+        title = text
+    return title

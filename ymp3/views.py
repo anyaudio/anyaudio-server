@@ -5,9 +5,11 @@ from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
 
-from helpers.search import get_videos, get_video_attrs
+from helpers.search import get_videos, get_video_attrs, get_trending_videos
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title
 from helpers.encryption import get_key, encode_data, decode_data
+from helpers.data import trending_playlist
+from helpers.database import get_trending
 
 
 @app.route('/')
@@ -15,7 +17,7 @@ def home():
     return render_template('/home.html')
 
 
-@app.route('/d/<path:url>')
+@app.route('/api/v1/d/<path:url>')
 def download_file(url):
     """
     Download the file from the server.
@@ -23,6 +25,11 @@ def download_file(url):
     """
     try:
         # decode info from url
+        try:
+            abr = int(request.args.get('bitrate', '128'))
+            abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
+        except ValueError:
+            abr = 128
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']
@@ -34,7 +41,7 @@ def download_file(url):
         command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
         command = get_ffmpeg_path()
-        command += ' -i %s -acodec libmp3lame -ab 128k %s -y' % (m4a_path, mp3_path)
+        command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
         call(command, shell=True)  # shell=True only works, return ret_code
         data = open(mp3_path, 'r').read()
         response = make_response(data)
@@ -52,48 +59,116 @@ def download_file(url):
         return 'Bad things have happened', 400
 
 
-@app.route('/g/<path:url>')
-def get_link(url):
+@app.route('/api/v1/g')
+def get_link():
     """
     Uses youtube-dl to fetch the direct link
     """
-    data = decode_data(get_key(), url)
-    vid_id = data['id']
-    title = data['title']
-    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
-    command += ' -g'
-    print command
     try:
+        url = request.args.get('url')
+
+        data = decode_data(get_key(), url)
+        vid_id = data['id']
+        title = data['title']
+        command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
+        command += ' -g'
+        print command
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:
             retval = encode_data(get_key(), id=vid_id, title=title, url=retval)
             retval = url_for('download_file', url=retval)
-        return jsonify({'status': 0, 'url': retval})
-    except Exception:
-        logging.error(traceback.format_exc())
-        return jsonify({'status': 1, 'url': None})
+
+        ret_dict = {
+            'status': 200,
+            'requestLocation': '/api/v1/g',
+            'url': retval
+        }
+        return jsonify(ret_dict)
+    except Exception as e:
+        print(traceback.format_exc())
+        return jsonify(
+            {
+                'status': 500,
+                'requestLocation': '/api/v1/g',
+                'developerMessage': str(e),
+                'userMessage': 'Some error occurred',
+                'errorCode': '500-001'
+            }
+        )
 
 
-@app.route('/search')
+@app.route('/api/v1/search')
 def search():
     """
     Search youtube and return results
     """
-    search_term = request.args.get('q')
-    link = 'https://www.youtube.com/results?search_query=%s' % search_term
-    link += '&sp=EgIQAQ%253D%253D'  # for only video
-    r = requests.get(
-        link,
-        allow_redirects=True
-    )
-    vids = get_videos(r.content)
-    ret_vids = []
-    for _ in vids:
-        temp = get_video_attrs(_)
-        if temp:
-            ret_vids.append(temp)
-    return jsonify(ret_vids)
+    try:
+        search_term = request.args.get('q')
+        link = 'https://www.youtube.com/results?search_query=%s' % search_term
+        link += '&sp=EgIQAQ%253D%253D'  # for only video
+        r = requests.get(
+            link,
+            allow_redirects=True
+        )
+        vids = get_videos(r.content)
+        ret_vids = []
+        for _ in vids:
+            temp = get_video_attrs(_)
+            if temp:
+                temp['get_url'] = '/api/v1' + temp['get_url']
+                ret_vids.append(temp)
+
+        ret_dict = {
+            'metadata': {
+                'q': search_term,
+                'count': len(ret_vids)
+            },
+            'results': ret_vids,
+            'status': 200,
+            'requestLocation': '/api/v1/search'
+        }
+    except Exception as e:
+        ret_dict = {
+            'status': 500,
+            'requestLocation': '/api/v1/search',
+            'developerMessage': str(e),
+            'userMessage': 'Some error occurred',
+            'errorCode': '500-001'
+        }
+
+    return jsonify(ret_dict)
+
+
+@app.route('/api/v1/trending')
+def get_latest():
+    """
+    Get trending songs
+    """
+    try:
+        max_count = int(request.args.get('number', '25'))
+        if max_count <= 0:
+            max_count = 1
+        if max_count > 100:
+            max_count = 100
+    except ValueError:
+        max_count = 25
+
+    type = request.args.get('type', 'popular')
+    if type not in [_[0] for _ in trending_playlist]:
+        type = 'popular'
+
+    ret_vids = get_trending(type, max_count, get_url_prefix='/api/v1/g?url=')
+
+    ret_dict = {
+        'metadata': {
+            'count': len(ret_vids),
+            'type': type
+        },
+        'results': ret_vids
+    }
+
+    return jsonify(ret_dict)
 
 
 # @app.route('/v/<string:vid_id>')

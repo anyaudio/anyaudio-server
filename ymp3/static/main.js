@@ -14,8 +14,9 @@ $('#searchBtn').click(function(){
 	// delete
 	$('.search_result').remove();
 	// get new results
-	$.getJSON('/search?q=' + search_text, success=function(data, textStatus, jqXHR){
+	$.getJSON('/api/v1/search?q=' + search_text, success=function(data, textStatus, jqXHR){
 		// create new
+		data = data['results'];
 		for (i=0; i<data.length; i++){
 			search_x = search_temp.clone();
 			search_x.attr('id', 'result' + i);
@@ -47,7 +48,7 @@ function get_download_link(event){
 	elem.text('Fetching...');
 	elem.unbind('click');
 	$.getJSON(elem.attr('data-get-url'), success=function(data, textStatus, jqXHR){
-		if (data['status'] != 0){
+		if (data['status'] != 200){
 			elem.text('Failed');
 			elem.removeAttr('href');
 			return false;
