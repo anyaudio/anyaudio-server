@@ -137,7 +137,7 @@ Example -
 	* **Parameters**:
 
 	| Term | Explaination |
-	|------|--------------}
+	|------|--------------|
 	|`number`| Max number of results to get.|
 	|`type`| Type of playlist to get data from. Defaults to `popular`|
 
