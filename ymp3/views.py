@@ -1,15 +1,15 @@
-import requests
 import traceback
 import logging
 from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
 
-from helpers.search import get_videos, get_video_attrs, get_trending_videos
+from helpers.search import get_videos, get_video_attrs
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title
 from helpers.encryption import get_key, encode_data, decode_data
 from helpers.data import trending_playlist
 from helpers.database import get_trending
+from helpers.networking import open_page
 
 
 @app.route('/')
@@ -107,11 +107,8 @@ def search():
         search_term = request.args.get('q')
         link = 'https://www.youtube.com/results?search_query=%s' % search_term
         link += '&sp=EgIQAQ%253D%253D'  # for only video
-        r = requests.get(
-            link,
-            allow_redirects=True
-        )
-        vids = get_videos(r.content)
+        raw_html = open_page(link)
+        vids = get_videos(raw_html)
         ret_vids = []
         for _ in vids:
             temp = get_video_attrs(_)
