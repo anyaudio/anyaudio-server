@@ -5,7 +5,7 @@ from encryption import get_key, encode_data
 from HTMLParser import HTMLParser
 from networking import open_page
 
-INF = 1000000000
+INF = float("inf")
 
 
 def get_videos(html):
@@ -85,11 +85,10 @@ def get_trending_videos(html):
         regex,
         html,
         re.DOTALL
-    )[:5]
+    )
 
     vids = []
     for raw_result in raw_results:
-
         vids.append(
             {
                 'id': raw_result[0],
