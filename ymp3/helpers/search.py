@@ -1,5 +1,4 @@
 import re
-import requests
 
 from encryption import get_key, encode_data
 from HTMLParser import HTMLParser
