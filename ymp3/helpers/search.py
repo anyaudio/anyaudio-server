@@ -18,10 +18,10 @@ def get_videos(html):
         pos = html.find('yt-lockup-tile')
         if pos == -1:
             pos = INF
+            vid.append(html)
+            break
         vid.append(html[:pos + 2])
         html = html[pos + 3:]
-        if pos == INF:
-            break
     return vid
 
 

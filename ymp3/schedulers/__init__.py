@@ -2,6 +2,7 @@ from threading import Thread
 from time import sleep
 from traceback import print_exc
 
+
 class Scheduler():
 
     def __init__(self, name, period):
@@ -18,7 +19,7 @@ class Scheduler():
             try:
                 self.run()
                 sleep(self.period)
-            except Exception as e:
+            except Exception:
                 print_exc()
 
     def run(self):

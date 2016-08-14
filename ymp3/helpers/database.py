@@ -50,7 +50,7 @@ def save_trending_songs(playlist_name, songs):
         cursor.executemany(sql, data)
         conn.commit()
 
-    except Exception as e:
+    except Exception:
         pass
     conn.close()
 

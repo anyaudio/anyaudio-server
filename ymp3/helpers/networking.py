@@ -36,8 +36,11 @@ def post_request_content(url, allow_redirects, data):
     return req.content
 
 
-def open_page(url, user_agent=get_user_agent(), sleep_lower_limit=0, sleep_upper_limit=0, allow_redirects=True, type='GET', params=None, data=None):
-
+def open_page(url, user_agent=get_user_agent(), sleep_lower_limit=0, sleep_upper_limit=0,
+              allow_redirects=True, type='GET', params=None, data=None):
+    """
+    Load a page and return its content
+    """
     try:
         sleep(
             uniform(
@@ -64,5 +67,5 @@ def open_page(url, user_agent=get_user_agent(), sleep_lower_limit=0, sleep_upper
                 data
             )
         return ret
-    except Exception as e:
-        pass
+    except Exception:
+        print_exc()
