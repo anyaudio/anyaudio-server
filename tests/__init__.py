@@ -22,6 +22,17 @@ class YMP3TestCase(unittest.TestCase):
         else:
             return resp.data
 
+    def _get_dl_link(self, url, just_url=False):
+        """
+        from get download url, get the download url
+        """
+        resp = self.app.get(url)
+        self.assertEqual(resp.status_code, 200)
+        if just_url:
+            return json.loads(resp.data)['url']
+        else:
+            return resp.data
+
     def tearDown(self):
         pass
         # if os.path.isfile('test.db'):
