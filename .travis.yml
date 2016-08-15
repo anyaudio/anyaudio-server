@@ -17,7 +17,7 @@ install:
 
 script:
   - docker ps | grep -q ymp3
-  - python -m unittest discover tests/
+  - make test
 
 # https://docs.travis-ci.com/user/docker/#Using-Docker-Compose
 # before_install:
