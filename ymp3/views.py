@@ -56,7 +56,7 @@ def download_file(url):
         return response
     except Exception:
         logger.info(traceback.format_exc())
-        return 'Bad things have happened', 400
+        return 'Bad things have happened', 500
 
 
 @app.route('/api/v1/g')
