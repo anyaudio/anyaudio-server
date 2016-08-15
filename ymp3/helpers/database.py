@@ -1,13 +1,11 @@
 import sqlite3
+from ymp3 import DATABASE_PATH
 
 from ..helpers.data import table_creation_sql_statements
 
 
 def get_connection():
-    conn = sqlite3.connect(
-        'SQLite.db'
-    )
-
+    conn = sqlite3.connect(DATABASE_PATH)
     return conn, conn.cursor()
 
 
