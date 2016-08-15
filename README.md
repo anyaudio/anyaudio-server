@@ -34,3 +34,11 @@ See [docs/DOCKER.md](docs/DOCKER.md)
 * `ffmpeg`
 
 	Make sure that you have `ffmpeg` and its path is set properly in `run.sh`
+
+## Running tests
+
+```bash
+make test
+# or
+# python -m unittest discover tests
+```

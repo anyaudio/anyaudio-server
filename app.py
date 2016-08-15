@@ -1,4 +1,3 @@
-import logging
 from os import environ
 from subprocess import call
 
@@ -7,12 +6,6 @@ from ymp3.schedulers import trending
 
 
 if __name__ == '__main__':
-
-    # set logging https://docs.python.org/2/howto/logging-cookbook.html
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(relativeCreated)6d %(threadName)s %(message)s'
-    )
 
     # Create SQLite tables
     init_database()
