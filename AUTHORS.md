@@ -3,4 +3,4 @@
 | Name | Github | EMail |
 |:----:|:------:|:-----:|
 | AVI ARYAN | [@aviaryan](https://github.com/aviaryan) | aviaryan123@gmail.com |
-| PRATYUSH SINGH | [@singh-pratyush96](https://github.com/singh-pratyush96) | singh.pratyush96@gmail.com|
+| PRATYUSH SINGH | [@singhpratyush](https://github.com/singhpratyush) | singh.pratyush96@gmail.com|
