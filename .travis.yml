@@ -17,6 +17,8 @@ install:
 
 script:
   - docker ps | grep -q ymp3
+  - bash scripts/set_ffmpeg.sh
+  - mv ffmpeg/ffmpeg ffmpeg
   - make test
 
 # https://docs.travis-ci.com/user/docker/#Using-Docker-Compose
