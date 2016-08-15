@@ -1,7 +1,7 @@
 import logging
 from . import Scheduler
 from ..helpers.data import trending_playlist
-from ..helpers.search import get_trending_videos
+from ..helpers.trending import get_trending_videos
 from ..helpers.networking import open_page
 from ..helpers.database import save_trending_songs
 

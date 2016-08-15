@@ -72,7 +72,7 @@ def get_link():
         title = data['title']
         command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
         command += ' -g'
-        print command
+        logging.info(command)
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:

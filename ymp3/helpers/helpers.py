@@ -1,7 +1,7 @@
 import os
 from ymp3 import LOCAL
 from youtube_dl import YoutubeDL
-import HTMLParser
+from HTMLParser import HTMLParser
 
 
 FILENAME_EXCLUDE = '<>:"/\|?*;'
@@ -45,7 +45,18 @@ def get_filename_from_title(title):
     """
     if not title:
         return 'music.mp3'
-    title = HTMLParser.HTMLParser().unescape(title)
+    title = HTMLParser().unescape(title)
     for _ in FILENAME_EXCLUDE:
         title = title.replace(_, ' ')  # provide readability with space
     return title[:40] + '.mp3'  # TODO - smart hunt
+
+
+def html_unescape(text):
+    """
+    Remove &409D; type unicode symbols and convert them to real unicode
+    """
+    try:
+        title = HTMLParser().unescape(text)
+    except Exception:
+        title = text
+    return title
