@@ -1,4 +1,5 @@
 import re
+from os import environ
 
 from encryption import get_key, encode_data
 from HTMLParser import HTMLParser
@@ -84,7 +85,7 @@ def get_trending_videos(html):
         regex,
         html,
         re.DOTALL
-    )
+    )[:int(environ.get('PLAYLIST_VIDEOS_LIMIT', 100))]
 
     vids = []
     for raw_result in raw_results:
