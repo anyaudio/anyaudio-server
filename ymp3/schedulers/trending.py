@@ -1,4 +1,4 @@
-import logging
+from ymp3 import logger
 from . import Scheduler
 from ..helpers.data import trending_playlist
 from ..helpers.trending import get_trending_videos
@@ -17,7 +17,7 @@ class TrendingScheduler(Scheduler):
     def run(self):
 
         for pl in self.playlist:
-            logging.info('Crawling playlist "%s"' % pl[0])
+            logger.info('Crawling playlist "%s"' % pl[0])
 
             playlist_name = pl[0]
             playlist_url = pl[1]

@@ -1,5 +1,5 @@
 import traceback
-import logging
+from ymp3 import logger
 from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
@@ -55,7 +55,7 @@ def download_file(url):
         # stream
         return response
     except Exception:
-        logging.error(traceback.format_exc())
+        logger.info(traceback.format_exc())
         return 'Bad things have happened', 400
 
 
@@ -72,7 +72,7 @@ def get_link():
         title = data['title']
         command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
         command += ' -g'
-        logging.info(command)
+        logger.info(command)
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:
