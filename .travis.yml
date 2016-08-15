@@ -4,6 +4,7 @@ python:
 env:
   APP_CONFIG: "config.TestingConfig"
   DOCKER_COMPOSE_VERSION: 1.8.0
+  PATH: $PATH:$(pwd)/ffmpeg
 
 services:
   - docker
@@ -17,11 +18,11 @@ install:
 
 script:
   - docker ps | grep -q ymp3
-  # install ffmpge
+  # install ffmpeg
   - bash scripts/set_ffmpeg.sh
-  - mv ffmpeg/ffmpeg ffmpeg2
-  - rm -rf ffmpeg
-  - mv ffmpeg2 ffmpeg
+  # - mv ffmpeg/ffmpeg ffmpeg2
+  # - rm -rf ffmpeg
+  # - mv ffmpeg2 ffmpeg
   # test
   - make test
 
