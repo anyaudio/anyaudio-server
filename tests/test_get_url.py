@@ -14,6 +14,11 @@ class TestGetUrl(YMP3TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertIn('url', resp.data)
 
+    def test_fake_get_url(self):
+        """test the 5xx response in case of fake get url"""
+        resp = self.app.get('/api/v1/g?url=somefalseurl')
+        self.assertEqual(resp.status_code, 500)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -86,7 +86,7 @@ def get_link():
         }
         return jsonify(ret_dict)
     except Exception as e:
-        print(traceback.format_exc())
+        logger.info(traceback.format_exc())
         return jsonify(
             {
                 'status': 500,
@@ -95,7 +95,7 @@ def get_link():
                 'userMessage': 'Some error occurred',
                 'errorCode': '500-001'
             }
-        )
+        ), 500
 
 
 @app.route('/api/v1/search')
