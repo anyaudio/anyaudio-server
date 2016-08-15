@@ -20,9 +20,6 @@ script:
   - docker ps | grep -q ymp3
   # install ffmpeg
   - bash scripts/set_ffmpeg.sh
-  # - mv ffmpeg/ffmpeg ffmpeg2
-  # - rm -rf ffmpeg
-  # - mv ffmpeg2 ffmpeg
   # test
   - make test
 
