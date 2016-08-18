@@ -14,7 +14,7 @@ from helpers.networking import open_page
 
 @app.route('/')
 def home():
-    return render_template('/home_new.html')
+    return render_template('/explore.html')
 
 
 @app.route('/api/v1/d/<path:url>')
