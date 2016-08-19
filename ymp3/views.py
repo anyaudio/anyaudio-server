@@ -18,20 +18,21 @@ def home():
     return render_template('/home.html')
 
 
-@app.route('/api/v1/d/<path:url>')
-def download_file(url):
+@app.route('/api/v1/d')
+def download_file():
     """
     Download the file from the server.
     First downloads the file on the server using wget and then converts it using ffmpeg
     """
     log_api_call(request)
     try:
-        # decode info from url
+        url = request.args.get('url')
         try:
             abr = int(request.args.get('bitrate', '128'))
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
         except ValueError:
             abr = 128
+        # decode info from url
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']

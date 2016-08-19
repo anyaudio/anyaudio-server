@@ -60,7 +60,7 @@ Example -
 	Example -
 	```json
 	{
-		"url": "/api/v1/d/fSR3dG4kPCIkanZasdasdasdasdasfasfasdfasfasdas"
+		"url": "/api/v1/d?url=fSR3dG4kPCIkanZasdasdasdasdasfasfasdfasfasdas"
 	}
 	```
 
@@ -181,10 +181,11 @@ Example -
 * ### Downloading from URL provided
 
 	* **Type**: `GET`
-	* **Location**: `/api/v1/d/<URL>`
+	* **Location**: `/api/v1/d`
 	* **Parameters**:
 
 		| Term | Explaination |
 		|------|--------------|
 		|`bitrate`| Desired bitrate. Defaults to 128|
+		|`url` | Encrypted URL as recieved from `/api/v1/g`|
 	* **Response**: Audio file or some error message.
