@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width">
   <meta name="author" content="Mofid Ansari">
   <link href="https://fonts.googleapis.com/css?family=Raleway:200,400,600" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/materialize/css/materialize.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/font-awesome-4.6.3/css/font-awesome.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome-4.6.3/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="../static/lib/materialize/css/materialize.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
   <title>Youtube MP3 Downloader</title>
 </head>
 <body>
@@ -42,17 +42,18 @@
         <div class="or text-center"><span>OR</span></div>
         <div class="white-space space-sm"></div>
         <div class="exp text-center">
-          <a class="no-shadow waves-effect waves-light btn white color-primary btn-large">Explore <i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
+          <a href="#home-trending" class="no-shadow waves-effect waves-light btn white color-primary btn-large">Explore <i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
         </div>
       </div>
     </div>
   </div>
-  <div class="home-trending container">
+  <div id="home-trending" class="container">
     <div class="white-space space-sm"></div>
-    <h1 class="text-center title-deco">
+    <h1 class="text-center title-deco font-200">
       <span>Trending Music</span>
     </h1>
     <div class="white-space space-sm"></div>
+    <!--Trending 1-->
     <div class="trending">
       <div class="trending-title">
         <h4 class="title-deco title-deco--sm">Pop</h4>
@@ -160,8 +161,141 @@
         </div>
       </div>
       <div class="white-space space-mini"></div>
-      <div class="trending-more">more</div>
+      <a href="#!" class="no-shadow waves-effect waves-light btn red trending-more">More</a>
     </div>
+
+    <!--Trending 2-->
+    <div class="trending">
+      <div class="trending-title">
+        <h4 class="title-deco title-deco--sm">Rock</h4>
+      </div>
+      <div class="white-space space-mini"></div>
+      <div class="trending-list row">
+        <!--Result Card-->
+        <div class="col s6 m4 l3">
+          <div class="card card--ym3">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="{{ url_for('static', filename='img/th_1.jpg') }}">
+              <div class="overlay overlay--dark"></div>
+              <div class="meta-duration ">03:59</div>
+              <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
+            </div>
+            <div class="card-content">
+              <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
+              <div class="meta">
+                <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
+                  Adele</div>
+                <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                  57,000,000</div>
+              </div>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
+              <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+          </div>
+        </div>
+
+        <!--Result Card-->
+        <div class="col s6 m4 l3">
+          <div class="card card--ym3">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="{{ url_for('static', filename='img/th_2.jpg') }}">
+              <div class="overlay overlay--dark"></div>
+              <div class="meta-duration ">03:59</div>
+              <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
+            </div>
+            <div class="card-content">
+              <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
+              <div class="meta">
+                <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
+                  Adele</div>
+                <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                  57,000,000</div>
+              </div>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
+              <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+          </div>
+        </div>
+
+        <!--Result Card-->
+        <div class="col s6 m4 l3">
+          <div class="card card--ym3">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="{{ url_for('static', filename='img/th_3.jpg') }}">
+              <div class="overlay overlay--dark"></div>
+              <div class="meta-duration ">03:59</div>
+              <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
+            </div>
+            <div class="card-content">
+              <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
+              <div class="meta">
+                <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
+                  Adele</div>
+                <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                  57,000,000</div>
+              </div>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
+              <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+          </div>
+        </div>
+
+        <!--Result Card-->
+        <div class="col s6 m4 l3">
+          <div class="card card--ym3">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="{{ url_for('static', filename='img/th_1.jpg') }}">
+              <div class="overlay overlay--dark"></div>
+              <div class="meta-duration ">03:59</div>
+              <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
+            </div>
+            <div class="card-content">
+              <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
+              <div class="meta">
+                <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
+                  Adele</div>
+                <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                  57,000,000</div>
+              </div>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
+              <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="white-space space-mini"></div>
+      <a href="#!" class="no-shadow waves-effect waves-light btn red trending-more">More</a>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <div class="bg-color-primary overflow-hidden">
+    <footer class="footer container row">
+      <div class="footer-site-map col s4">
+        <ul class="footer-site-map__links">
+          <li><a href="#!">Home</a></li>
+          <li><a href="#!">Explore</a></li>
+          <li><a href="#!">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-logo col s4">MusicGenie</div>
+      <div class="footer-social col s4">
+        <ul class="social__links">
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-github-alt valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-twitter valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-facebook valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-google-plus valign" aria-hidden="true"></i></a></li>
+        </ul>
+      </div>
+    </footer>
   </div>
 </div>
 
