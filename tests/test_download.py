@@ -21,7 +21,7 @@ class TestDownload(YMP3TestCase):
 
     def test_failed_download(self):
         """test fail"""
-        resp = self.app.get('/api/v1/d/askfasfk')
+        resp = self.app.get('/api/v1/d?url=askfasfk')
         self.assertEqual(resp.status_code, 500)
         self.assertTrue(len(resp.data) < 1000)
 
