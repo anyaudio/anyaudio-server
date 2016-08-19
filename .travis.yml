@@ -1,21 +1,35 @@
 language: python
 python:
   - "2.7"
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libpq-dev python2.7-dev postgresql postgresql-contrib
 env:
   APP_CONFIG: "config.TestingConfig"
   DOCKER_COMPOSE_VERSION: 1.8.0
+  PATH: $PATH:$(pwd)/ffmpeg
 
 services:
   - docker
+  - postgresql
 
 install:
   # - docker-compose build
+  - pip install -r requirements.txt
   - docker build -t ymp3 .
   - docker images | grep -i ymp3
   - docker run -d -p 127.0.0.1:80:5000 --name ymp3 ymp3
 
+before_script:
+  - psql -c "CREATE DATABASE ymp3;" -U postgres
+  - psql -c "CREATE USER ymp3 WITH PASSWORD 'ymp3';" -U postgres
+  - psql -c "GRANT ALL ON DATABASE ymp3 TO ymp3;" -U postgres
+
 script:
-  - docker ps | grep -q ymp3
+  # install ffmpeg
+  - bash scripts/set_ffmpeg.sh
+  # test
+  - make test
 
 # https://docs.travis-ci.com/user/docker/#Using-Docker-Compose
 # before_install:

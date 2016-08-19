@@ -1,11 +1,12 @@
 import traceback
-import logging
+from ymp3 import logger
 from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs
-from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title
+from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title, \
+    record_request
 from helpers.encryption import get_key, encode_data, decode_data
 from helpers.data import trending_playlist
 from helpers.database import get_trending
@@ -13,6 +14,7 @@ from helpers.networking import open_page
 
 
 @app.route('/')
+@record_request
 def home():
     return render_template('/home_new.html')
 
@@ -22,6 +24,7 @@ def explore():
 
 
 @app.route('/api/v1/d/<path:url>')
+@record_request
 def download_file(url):
     """
     Download the file from the server.
@@ -59,11 +62,12 @@ def download_file(url):
         # stream
         return response
     except Exception:
-        logging.error(traceback.format_exc())
-        return 'Bad things have happened', 400
+        logger.info(traceback.format_exc())
+        return 'Bad things have happened', 500
 
 
 @app.route('/api/v1/g')
+@record_request
 def get_link():
     """
     Uses youtube-dl to fetch the direct link
@@ -76,7 +80,7 @@ def get_link():
         title = data['title']
         command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
         command += ' -g'
-        logging.info(command)
+        logger.info(command)
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:
@@ -90,7 +94,7 @@ def get_link():
         }
         return jsonify(ret_dict)
     except Exception as e:
-        print(traceback.format_exc())
+        logger.info(traceback.format_exc())
         return jsonify(
             {
                 'status': 500,
@@ -99,10 +103,11 @@ def get_link():
                 'userMessage': 'Some error occurred',
                 'errorCode': '500-001'
             }
-        )
+        ), 500
 
 
 @app.route('/api/v1/search')
+@record_request
 def search():
     """
     Search youtube and return results
@@ -142,6 +147,7 @@ def search():
 
 
 @app.route('/api/v1/trending')
+@record_request
 def get_latest():
     """
     Get trending songs
