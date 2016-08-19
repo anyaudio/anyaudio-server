@@ -175,7 +175,8 @@ def get_latest():
     ret_dict = {
         'metadata': {
             'count': len(ret_vids),
-            'type': type
+            'type': type,
+            'offset': offset
         },
         'results': ret_vids
     }
