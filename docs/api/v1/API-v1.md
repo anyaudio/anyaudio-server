@@ -140,6 +140,7 @@ Example -
 	|------|--------------|
 	|`number`| Max number of results to get.|
 	|`type`| Type of playlist to get data from. Defaults to `popular`|
+	|`offset`| Number of items to skip before returning the results. Defaults to 0. |
 
 	* **Response**
 
@@ -153,7 +154,8 @@ Example -
 	{
 		"metadata": {
 			"count": "2",
-			"type": "popular"
+			"type": "popular",
+			"offset": "1"
 		},
 		"results" : [
 			{
