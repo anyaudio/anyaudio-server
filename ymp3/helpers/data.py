@@ -1,3 +1,5 @@
+import os
+
 trending_playlist = [
     ('popular', 'https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI'),
     ('latest', 'https://www.youtube.com/playlist?list=PLFgquLnL59akA2PflFpeQG9L01VFg90wS'),
@@ -47,6 +49,18 @@ user_agents = [
     'WorldWideweb (NEXT)'
 ]
 
-table_creation_sql_statements = [
+table_creation_sqlite_statements = [
     '''create table if not exists trending_songs(id_ text, title_ text, thumb_ text, uploader_ text, length_ text, views_ text, get_url_ text, playlist_ text)''',
 ]
+
+table_creation_psql_statements = [
+    '''create table if not exists api_log(args VARCHAR(8192), access_route varchar(8192), base_url varchar(5120), path varchar(5120), method VARCHAR(4), user_agent varchar(256), request_time TIMESTAMP WITH TIME zone default now())''',
+]
+
+psql_data = {
+    'db_name': 'ymp3',
+    'username': os.environ.get('OPENSHIFT_POSTGRESQL_DB_USERNAME'),
+    'password': os.environ.get('OPENSHIFT_POSTGRESQL_DB_PASSWORD'),
+    'host': os.environ.get('OPENSHIFT_POSTGRESQL_DB_HOST'),
+    'port': os.environ.get('OPENSHIFT_POSTGRESQL_DB_PORT')
+}
