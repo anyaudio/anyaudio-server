@@ -65,12 +65,12 @@ def save_trending_songs(playlist_name, songs):
     conn.close()
 
 
-def get_trending(type='popular', count=25, get_url_prefix=''):
+def get_trending(type='popular', count=25, offset=0, get_url_prefix=''):
     conn, cursor = get_sqlite_connection()
 
-    sql = 'select * from trending_songs where playlist_ = ? limit ?'
+    sql = 'select * from trending_songs where playlist_ = ? limit ? offset ?'
 
-    rows = cursor.execute(sql, (type, count))
+    rows = cursor.execute(sql, (type, count, offset))
 
     vids = []
     for row in rows:
