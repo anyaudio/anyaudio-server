@@ -46,6 +46,7 @@ body{
 
 .nav--custom .search{
 	text-align: center;
+	margin: 0 2rem;
 }
 .nav--custom .search .search-btn{
 	font-size: 1.5rem;
@@ -57,6 +58,7 @@ body{
 	flex: 1;
 	text-align: center;
 	font-size: 2rem;
+	/*display: inline-block;*/
 }
 
 .nav--custom a:hover{
@@ -191,6 +193,67 @@ body{
 	cursor: pointer;
 	white-space: nowrap;
 	font-weight: normal;
+}
+
+.card-image .meta-duration{
+	font-size: 1.25rem;
+	position: absolute;
+	bottom: 1.25rem;
+	right: 1.25rem;
+	background-color: rgba(244, 67, 54,0.85);
+	color: white;
+	padding: 0.1rem 0.5rem;
+	transition: all 0.5s;
+	z-index: 1;
+}
+
+.card-image:hover .meta-duration,.card-image.dwn-ready-card  .meta-duration{
+	background-color:white;
+	color: rgba(244, 67, 54,0.85);
+}
+
+.btn-dwn{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	height: 75px;
+	width: 75px;
+	background-color: rgba(244, 67, 54,0.75);
+	border-radius: 50%;
+	justify-content: center;
+	transition: all 0.25s;
+}
+/*.btn-dwn:hover{
+	background-color: rgba(244, 67, 54,0.9);
+}*/
+
+.card-image:hover .btn-dwn,.dwn-ready-card .btn-dwn{
+	transition: height 0.35s cubic-bezier(0.4, 0, 1, 1),width 0.35s cubic-bezier(0.4, 0, 1, 1),border-radius 0.2s cubic-bezier(0.47, 0, 0.75, 0.72) 0.3s;
+	height: 100%;
+	width: 100%;
+	border-radius: 0;
+}
+
+.overlay{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	transition: all 0.5s;
+}
+
+@media only screen and (max-width: 600px) {
+	.nav--custom .nav-wrapper{
+		padding: 0 2.8rem;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.nav-addons .explore{
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 992px) {
