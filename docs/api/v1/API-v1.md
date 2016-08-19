@@ -60,7 +60,7 @@ Example -
 	Example -
 	```json
 	{
-		"url": "/api/v1/d/fSR3dG4kPCIkanZasdasdasdasdasfasfasdfasfasdas"
+		"url": "/api/v1/d?url=fSR3dG4kPCIkanZasdasdasdasdasfasfasdfasfasdas"
 	}
 	```
 
@@ -140,6 +140,7 @@ Example -
 	|------|--------------|
 	|`number`| Max number of results to get.|
 	|`type`| Type of playlist to get data from. Defaults to `popular`|
+	|`offset`| Number of items to skip before returning the results. Defaults to 0. |
 
 	* **Response**
 
@@ -153,7 +154,8 @@ Example -
 	{
 		"metadata": {
 			"count": "2",
-			"type": "popular"
+			"type": "popular",
+			"offset": "1"
 		},
 		"results" : [
 			{
@@ -181,10 +183,11 @@ Example -
 * ### Downloading from URL provided
 
 	* **Type**: `GET`
-	* **Location**: `/api/v1/d/<URL>`
+	* **Location**: `/api/v1/d`
 	* **Parameters**:
 
 		| Term | Explaination |
 		|------|--------------|
 		|`bitrate`| Desired bitrate. Defaults to 128|
+		|`url` | Encrypted URL as recieved from `/api/v1/g`|
 	* **Response**: Audio file or some error message.

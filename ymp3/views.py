@@ -19,20 +19,21 @@ def home():
     return render_template('/home.html')
 
 
-@app.route('/api/v1/d/<path:url>')
+@app.route('/api/v1/d')
 @record_request
-def download_file(url):
+def download_file():
     """
     Download the file from the server.
     First downloads the file on the server using wget and then converts it using ffmpeg
     """
     try:
-        # decode info from url
+        url = request.args.get('url')
         try:
             abr = int(request.args.get('bitrate', '128'))
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
         except ValueError:
             abr = 128
+        # decode info from url
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']
@@ -157,16 +158,26 @@ def get_latest():
     except ValueError:
         max_count = 25
 
+    try:
+        offset = int(request.args.get('offset', '0'))
+        if offset < 0:
+            offset = 0
+        if offset > 100:
+            offset = 100
+    except ValueError:
+        offset = 0
+
     type = request.args.get('type', 'popular')
     if type not in [_[0] for _ in trending_playlist]:
         type = 'popular'
 
-    ret_vids = get_trending(type, max_count, get_url_prefix='/api/v1/g?url=')
+    ret_vids = get_trending(type, max_count, offset=offset, get_url_prefix='/api/v1/g?url=')
 
     ret_dict = {
         'metadata': {
             'count': len(ret_vids),
-            'type': type
+            'type': type,
+            'offset': offset
         },
         'results': ret_vids
     }
