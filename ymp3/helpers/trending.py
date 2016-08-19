@@ -1,5 +1,6 @@
 import re
 from os import environ
+from ymp3 import logger
 from networking import open_page
 from encryption import get_key, encode_data
 from helpers import html_unescape
@@ -36,8 +37,12 @@ def get_trending_videos(html):
 def get_views(video_id):
     url = 'https://www.youtube.com/watch?v={0}'.format(video_id)
     content = open_page(url)
-
-    return re.findall(
+    results = re.findall(
         '<div class="watch-view-count">(.*?) ',
         content,
-    )[0]
+    )
+    if len(results) == 0:
+        logger.info('Get Videos Failed %s' % video_id)
+        return 'N/A'
+    else:
+        return results[0]
