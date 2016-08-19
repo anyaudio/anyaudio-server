@@ -62,5 +62,5 @@ psql_data = {
     'username': os.environ.get('OPENSHIFT_POSTGRESQL_DB_USERNAME'),
     'password': os.environ.get('OPENSHIFT_POSTGRESQL_DB_PASSWORD'),
     'host': os.environ.get('OPENSHIFT_POSTGRESQL_DB_HOST'),
-    'port': os.environ.get('OPENSHIFT_POSTGRESQL_DB_PORT')
+    'port': int(os.environ.get('OPENSHIFT_POSTGRESQL_DB_PORT'))
 }

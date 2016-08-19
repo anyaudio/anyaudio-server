@@ -1,6 +1,23 @@
 version: '2'
 
 services:
+  data:
+    image: postgres:9.5
+    environment:
+      POSTGRES_PASSWORD: 'test'
+    volumes:
+      - /var/lib/postgresql
+    command: echo true
+
+  postgres:
+    image: postgres:9.5
+    environment:
+      POSTGRES_PASSWORD: 'test'
+    volumes_from:
+      - data
+    ports:
+      - '5432:5432'
+
   web:
     build: .
     command: python "/ymp3/app.py" # runs current instance
@@ -8,5 +25,11 @@ services:
       OPENSHIFT_PYTHON_IP: '0.0.0.0'
       OPENSHIFT_PYTHON_PORT: '5000'
       FFMPEG_PATH: 'ffmpeg/ffmpeg'
+      OPENSHIFT_POSTGRESQL_DB_HOST: postgres
+      OPENSHIFT_POSTGRESQL_DB_PORT: '5432'
+      OPENSHIFT_POSTGRESQL_DB_USERNAME: postgres
+      OPENSHIFT_POSTGRESQL_DB_PASSWORD: test
+    links:
+      - postgres:postgres
     ports:
       - '5000:5000'
