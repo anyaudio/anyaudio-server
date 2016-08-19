@@ -1,3 +1,4 @@
+from os import environ
 from ymp3 import logger
 from . import Scheduler
 from ..helpers.data import trending_playlist
@@ -11,7 +12,7 @@ class TrendingScheduler(Scheduler):
     def __init__(self, name='Trending Scheduler', period=21600, playlist=trending_playlist,
                  connection_delay=0):
         Scheduler.__init__(self, name, period)
-        self.playlist = playlist
+        self.playlist = playlist[:int(environ.get('PLAYLIST_LIST_LIMIT', 1000))]
         self.connection_delay = connection_delay
 
     def run(self):
@@ -28,6 +29,6 @@ class TrendingScheduler(Scheduler):
             )
 
             song_data = get_trending_videos(html)
-            
+
             clear_trending(playlist_name)
             save_trending_songs(playlist_name, song_data)
