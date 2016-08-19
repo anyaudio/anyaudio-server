@@ -14,6 +14,10 @@ from helpers.networking import open_page
 
 @app.route('/')
 def home():
+    return render_template('/home_new.html')
+
+@app.route('/explore')
+def explore():
     return render_template('/explore.html')
 
 
