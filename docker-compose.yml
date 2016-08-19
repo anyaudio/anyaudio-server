@@ -20,7 +20,6 @@ services:
 
   web:
     build: .
-    command: python "/ymp3/app.py" # runs current instance
     environment:
       OPENSHIFT_PYTHON_IP: '0.0.0.0'
       OPENSHIFT_PYTHON_PORT: '5000'
@@ -29,6 +28,8 @@ services:
       OPENSHIFT_POSTGRESQL_DB_PORT: '5432'
       OPENSHIFT_POSTGRESQL_DB_USERNAME: postgres
       OPENSHIFT_POSTGRESQL_DB_PASSWORD: test
+      PLAYLIST_VIDEOS_LIMIT: 2
+      PLAYLIST_LIST_LIMIT: 2
     links:
       - postgres:postgres
     ports:
