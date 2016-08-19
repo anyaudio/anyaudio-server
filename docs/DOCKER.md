@@ -21,4 +21,4 @@ $ docker-compose build
 $ docker-compose up
 ```
 
-* Navigate to `http://localhost:5000` to view the app.
+* Navigate to `http://localhost` to view the app.
