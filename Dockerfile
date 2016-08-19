@@ -6,22 +6,24 @@ RUN mkdir -p $INSTALL_PATH
 
 WORKDIR $INSTALL_PATH
 
-COPY . .
+COPY requirements.txt requirements.txt
 
 # install deps
 RUN apk update
-RUN apk add --no-cache --virtual build-dependencies gcc python-dev libevent-dev linux-headers musl-dev postgresql postgresql-dev \
+RUN apk add --no-cache --virtual build-dependencies gcc python-dev libevent-dev linux-headers musl-dev postgresql-dev \
 	&& pip install -r requirements.txt \
 	&& apk del build-dependencies
 
+# update needed for wget
 # update tar .. --strip-componenets not available in current version
+RUN apk --update add --no-cache ca-certificates wget tar xz
+RUN update-ca-certificates
+
 # install ffmpeg
-# wget, tar etc already present
-RUN apk --update add --no-cache tar xz
+COPY scripts/set_ffmpeg.sh scripts/set_ffmpeg.sh
 RUN ash scripts/set_ffmpeg.sh
 
-# update needed for wget
-RUN apk --update add --no-cache ca-certificates wget
-RUN update-ca-certificates
+# copy remaining files
+COPY . .
 
 CMD python app.py
