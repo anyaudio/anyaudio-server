@@ -9,6 +9,7 @@ export OPENSHIFT_POSTGRESQL_DB_PASSWORD=ymp3;
 
 # Dev configs
 export PLAYLIST_VIDEOS_LIMIT=2;
+export PLAYLIST_LIST_LIMIT=2;
 
 # Run
 python app.py;
