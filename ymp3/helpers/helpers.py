@@ -1,7 +1,10 @@
 import os
+from functools import wraps
 from ymp3 import LOCAL
+from flask import request
 from youtube_dl import YoutubeDL
 from HTMLParser import HTMLParser
+from database import log_api_call
 
 
 FILENAME_EXCLUDE = '<>:"/\|?*;'
@@ -60,3 +63,14 @@ def html_unescape(text):
     except Exception:
         title = text
     return title
+
+
+def record_request(func):
+    """
+    Wrapper to log a request
+    """
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        log_api_call(request)
+        return func(*args, **kwargs)
+    return wrapper
