@@ -203,6 +203,10 @@ body{
 	font-size: 1.25rem;
 }
 
+.meta div i{
+	margin-right: 0.5rem;
+}
+
 .card--ym3--title{
 	margin-top: 0;
 	color:rgb(51,51,51);
@@ -234,9 +238,9 @@ body{
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;
-	height: 75px;
-	width: 75px;
-	background-color: rgba(244, 67, 54,0.75);
+	height: 50px;
+	width: 50px;
+	background-color: rgba(244, 67, 54,0.8);
 	border-radius: 50%;
 	justify-content: center;
 	transition: all 0.5s;
@@ -347,6 +351,16 @@ body{
 
 .result{
 	margin-bottom: 5rem;
+}
+
+#search-preloader{
+	display: none;
+	margin-bottom: 4rem;
+}
+
+#search-preloader .preloader-wrapper{
+	display: block;
+	margin: 0 auto;
 }
 
 @media only screen and (max-width: 600px) {

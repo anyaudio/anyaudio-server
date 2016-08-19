@@ -18,8 +18,8 @@
         <div class="nav-wrapper text-center">
           <a href="#" class="brand-logo">MusicGenie</a>
           <div class="search search--alt">
-            <form class="search-wrapper">
-              <input type="text" class="search-btn" placeholder="Search Your Favourite Song">
+          <form id="ymp3-search" class="search-wrapper">
+              <input type="text" class="search-btn" placeholder="Search Your Favourite Song" name="keyword">
               <button class="btn-icon-only line-height-1" type="submit"><i class="fa fa-search line-height-1 height-auto"></i></button>
             </form>
           </div>
@@ -38,23 +38,68 @@
   </header>
   <div class="main-contents container">
     <div class="white-space space-md"></div>
-    <div class="result-tag text-center">
-      <h4>Result For "Faded"</h4>
+    <div id="result-keyword" class="result-tag text-center">
+      <h4></h4>
     </div>
     <div class="white-space space-sm"></div>
 
-    <div class="result row">
+    <div id="search-preloader">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-red">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-yellow">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-green">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+        <div class="white-space space-sm"></div>
+      </div>
+    </div>
+
+    <div id="search-result" class="result row">
       <!--Result Card-->
-      <div class="col s6 m4 l3">
-        <div class="card card--ym3">
+     <!-- <div class="col s6 m4 l3">
+        <div class="card card&#45;&#45;ym3">
           <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" src="{{ url_for('static', filename='img/th_1.jpg') }}">
-            <div class="overlay overlay--dark"></div>
+            <div class="overlay overlay&#45;&#45;dark"></div>
             <div class="meta-duration ">03:59</div>
             <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
           </div>
           <div class="card-content">
-            <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
+            <span class="activator card&#45;&#45;ym3&#45;&#45;title flow-text">Set Fire to Rain - Adele</span>
             <div class="meta">
               <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
                 Adele</div>
@@ -67,107 +112,8 @@
             <p>Here is some more information about this product that is only revealed once clicked on.</p>
           </div>
         </div>
-      </div>
+      </div>-->
 
-      <!--Result Card-->
-      <div class="col s6 m4 l3">
-        <div class="card card--ym3">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="{{ url_for('static', filename='img/th_2.jpg') }}">
-            <div class="overlay overlay--dark"></div>
-            <div class="meta-duration ">03:59</div>
-            <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
-          </div>
-          <div class="card-content">
-            <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
-            <div class="meta">
-              <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
-                Adele</div>
-              <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                57,000,000</div>
-            </div>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
-
-      <!--Result Card-->
-      <div class="col s6 m4 l3">
-        <div class="card card--ym3">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="{{ url_for('static', filename='img/th_3.jpg') }}">
-            <div class="overlay overlay--dark"></div>
-            <div class="meta-duration ">03:59</div>
-            <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
-          </div>
-          <div class="card-content">
-            <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
-            <div class="meta">
-              <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
-                Adele</div>
-              <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                57,000,000</div>
-            </div>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
-
-      <!--Result Card-->
-      <div class="col s6 m4 l3">
-        <div class="card card--ym3">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="{{ url_for('static', filename='img/th_1.jpg') }}">
-            <div class="overlay overlay--dark"></div>
-            <div class="meta-duration ">03:59</div>
-            <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
-          </div>
-          <div class="card-content">
-            <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
-            <div class="meta">
-              <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
-                Adele</div>
-              <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                57,000,000</div>
-            </div>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
-
-      <!--Result Card-->
-      <div class="col s6 m4 l3">
-        <div class="card card--ym3">
-          <div class="card-image waves-effect waves-block waves-light dwn-ready-card">
-            <img class="activator" src="{{ url_for('static', filename='img/th_2.jpg') }}">
-            <div class="overlay overlay--dark"></div>
-            <div class="meta-duration ">03:59</div>
-            <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
-          </div>
-          <div class="card-content">
-            <span class="activator card--ym3--title flow-text">Set Fire to Rain - Adele</span>
-            <div class="meta">
-              <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
-                Adele</div>
-              <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                57,000,000</div>
-            </div>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>
 
     </div>
   </div>
@@ -197,6 +143,6 @@
 <!-- js -->
 <script src="{{ url_for('static', filename='lib/jquery-2.2.4.min.js') }}"></script>
 <script src="{{ url_for('static', filename='lib/materialize/js/materialize.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="../static/js/main_new.js"></script>
 </body>
 </html>
