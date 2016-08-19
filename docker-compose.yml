@@ -28,8 +28,7 @@ services:
       OPENSHIFT_POSTGRESQL_DB_PORT: '5432'
       OPENSHIFT_POSTGRESQL_DB_USERNAME: postgres
       OPENSHIFT_POSTGRESQL_DB_PASSWORD: test
-      PLAYLIST_VIDEOS_LIMIT: 2
-      PLAYLIST_LIST_LIMIT: 2
+      POSTGRESQL_DB_NAME: ymp3
     links:
       - postgres:postgres
     ports:
