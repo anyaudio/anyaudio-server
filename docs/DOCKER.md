@@ -21,4 +21,17 @@ $ docker-compose build
 $ docker-compose up
 ```
 
-* Navigate to `http://localhost` to view the app.
+* Open a new shell and run the following command.
+
+```sh
+docker-compose run postgres psql -h postgres -p 5432 -U postgres --password
+# enter password as test
+```
+
+* When in psql shell, create the database and then exit using `\q`.
+
+```sql
+create database ymp3;
+```
+
+* Close the server and then start it again. Then navigate to `http://localhost` to view the app.
