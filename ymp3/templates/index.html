@@ -55,7 +55,7 @@
         <div class="or text-center"><span>OR</span></div>
         <div class="white-space space-sm"></div>
         <div class="exp text-center">
-          <a href="#home-trending" class="no-shadow waves-effect waves-light btn white color-primary btn-large">Explore <i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
+          <a href="#home-trending" class="smooth-scroll no-shadow waves-effect waves-light btn white color-primary btn-large">Explore <i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
         </div>
       </div>
     </div>
@@ -317,5 +317,21 @@
 <script src="{{ url_for('static', filename='lib/jquery-2.2.4.min.js') }}"></script>
 <script src="{{ url_for('static', filename='lib/materialize/js/materialize.min.js') }}"></script>
 <script src="../static/js/main_new.js"></script>
+<script>
+  $(function() {
+    $('a[href*="#"]:not([href="#"]).smooth-scroll').click(function() {
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: target.offset().top
+          }, 1000);
+          return false;
+        }
+      }
+    });
+  });
+</script>
 </body>
 </html>

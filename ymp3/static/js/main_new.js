@@ -65,3 +65,30 @@ function loadResult(searchInput){
 		$('#search-preloader').hide();
 	})
 }
+
+//Adding Navbar dynamic class
+
+(function($) {
+	"use strict";
+
+	var $navbar = $(".nav--custom"),
+		y_pos = $navbar.offset().top,
+		height = $navbar.height();
+
+	$(document).scroll(function() {
+		var scrollTop = $(this).scrollTop();
+
+		if (scrollTop > y_pos + height) {
+			$navbar.addClass("nav-white").animate({
+				top: 0
+			});
+			$navbar.removeClass("nav--transparent");
+		} else if (scrollTop <= y_pos) {
+			$navbar.removeClass("nav-white").clearQueue().animate({
+				top: "-80px"
+			}, 0);
+			$navbar.addClass("nav--transparent");
+		}
+	});
+
+})(jQuery, undefined);
