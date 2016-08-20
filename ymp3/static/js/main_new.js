@@ -25,7 +25,31 @@ $(document).ready(function(){
 		})
 	});
 
+
+	$('#search-result').on('click','.ymp3-download',function(e){
+		e.preventDefault();
+		$this = $(this);
+		$this.addClass('dwn-ready-card');
+
+		if($this.hasClass('dwn-done'))
+			$this.removeClass('dwn-done');
+
+		$.getJSON($this.attr('data-get-url'), success=function(data, textStatus, jqXHR){
+			if (data['status'] != 200){
+				$this.text('Failed');
+				$this.removeAttr('href');
+				return false;
+			}
+			console.log($this.attr('data-get-url'));
+			$this.attr('href',data['url']);
+			$this.attr('target', '_blank');
+			window.open(data['url']);
+			$this.addClass('dwn-done');
+			$this.unbind('click');
+		});
+	});
+
 	function getCardHtml(data){
-		return ' <div class="col s6 m4 l3"><div class="card card--ym3"><div class="card-image waves-effect waves-block waves-light"><img class="activator" src="'+data["thumb"]+'"><div class="overlay overlay--dark"></div><div class="meta-duration ">'+data["length"]+'</div><a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down" aria-hidden="true"></i></a></div><div class="card-content"><span class="activator card--ym3--title flow-text">'+data["title"]+'</span><div class="meta"><div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>'+data["uploader"]+'</div><div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>'+data["views"]+'</div></div></div><div class="card-reveal"><span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>'+data["title"]+'</span><p>Here is some more information about this product that is only revealed once clicked on.</p></div></div></div>';
+		return '<div class="col s6 m4 l3"><div class="card card--ym3"><a data-get-url="'+data['get_url']+'" class="card-image waves-effect waves-block waves-light ymp3-download"><img class="activator" src="'+data["thumb"]+'"><div class="overlay overlay--dark"></div><div class="meta-duration ">'+data["length"]+'</div><span href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-spinner fa-pulse fa-3x fa-fw"></i><i class="valign fa fa-arrow-down" aria-hidden="true"></i><i class="valign fa fa-check fa-2x" aria-hidden="true"></i></span></a><div class="card-content"><span class="activator card--ym3--title flow-text">'+data["title"]+'</span><div class="meta"><div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>'+data["uploader"]+'</div><div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>'+data["views"]+'</div></div></div><div class="card-reveal"><span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>'+data["title"]+'</span><p>Here is some more information about this product that is only revealed once clicked on.</p></div></div></div>';
 	}
 });

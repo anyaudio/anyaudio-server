@@ -201,10 +201,15 @@ body{
 
 .card--ym3 .meta{
 	font-size: 1.25rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .meta div i{
 	margin-right: 0.5rem;
+}
+.meta div{
+	white-space: nowrap;
 }
 
 .card--ym3--title{
@@ -244,6 +249,28 @@ body{
 	border-radius: 50%;
 	justify-content: center;
 	transition: all 0.5s;
+	z-index: 1;
+}
+
+.dwn-ready-card .btn-dwn .fa-spinner{
+	display: block;
+}
+
+.btn-dwn .fa-spinner,.dwn-done.dwn-ready-card .btn-dwn .fa-spinner{
+	display: none;
+}
+
+.btn-dwn .fa-check{
+	display: none;
+}
+
+.dwn-done .btn-dwn .fa-check{
+	display: block;
+}
+
+
+.dwn-ready-card .btn-dwn .fa-arrow-down{
+	display: none;
 }
 
 .card-image:hover .btn-dwn,.dwn-ready-card .btn-dwn{
