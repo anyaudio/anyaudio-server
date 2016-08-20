@@ -191,6 +191,9 @@ body{
 .nav-white{
 	background-color: white;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.nav-sticky{
 	top: -80px;
 }
 
@@ -332,6 +335,10 @@ body{
 
 .trending-list{
 	margin-bottom: 0;
+}
+
+.trending-title .title-deco{
+	text-transform: capitalize;
 }
 
 .footer{
