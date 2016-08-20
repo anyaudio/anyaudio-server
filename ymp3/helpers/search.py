@@ -57,8 +57,16 @@ def get_video_attrs(html):
         result['thumb'] = thumb
     else:
         return None
+    # Description
+    desc_regex = 'yt-lockup-description.*?>(.*?)<'
+    temp = re.findall(desc_regex, html)
+    if len(temp) > 0:
+        result['description'] = temp[0]
+    else:
+        result['description'] = ''
+
     # check if all items present. If not present, usually some problem in parsing
-    if len(result) != 7:
+    if len(result) != 8:
         return None
     # check length
     try:

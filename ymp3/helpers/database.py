@@ -42,7 +42,7 @@ def save_trending_songs(playlist_name, songs):
     conn, cursor = get_sqlite_connection()
 
     try:
-        sql = 'insert into trending_songs values(?,?,?,?,?,?,?,?)'
+        sql = 'insert into trending_songs values(?,?,?,?,?,?,?,?,?)'
 
         data = [
             (
@@ -53,7 +53,8 @@ def save_trending_songs(playlist_name, songs):
                 song['length'],
                 song['views'],
                 song['get_url'],
-                playlist_name
+                playlist_name,
+                song['description'].decode('utf-8')
             ) for song in songs
         ]
 
@@ -61,6 +62,8 @@ def save_trending_songs(playlist_name, songs):
         conn.commit()
 
     except Exception:
+        import traceback
+        traceback.print_exc()
         pass
     conn.close()
 
@@ -82,7 +85,8 @@ def get_trending(type='popular', count=25, offset=0, get_url_prefix=''):
                 'uploader': row[3],
                 'length': row[4],
                 'views': row[5],
-                'get_url': get_url_prefix + row[6]
+                'get_url': get_url_prefix + row[6],
+                'description': row[8]
             }
         )
 
