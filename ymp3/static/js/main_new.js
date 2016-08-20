@@ -13,7 +13,7 @@ $(document).ready(function(){
 		loadResult(searchInput);
 	});
 
-	$('#search-result').on('click','.ymp3-download',function(e){
+	$('body').on('click','.ymp3-download',function(e){
 		e.preventDefault();
 		$this = $(this);
 		$this.addClass('dwn-ready-card');
@@ -55,24 +55,36 @@ function getCardHtml(data){
 }
 
 function getTrendingHtml(data,type){
-	return '<div class="trending"><div class="trending-title"><h4 class="title-deco title-deco--sm">'+type+'</h4></div><div class="white-space space-mini"></div><div class="trending-list row">'+data+'</div><div class="white-space space-mini"></div><a href="#!" class="no-shadow waves-effect waves-light btn red trending-more">More</a></div>';
+	return '<div class="trending"><div class="trending-title"><h4 class="title-deco title-deco--sm">'+type+'</h4></div><div class="white-space space-mini"></div><div class="trending-list row">'+data+'</div><div class="white-space space-mini"></div><a href="/explore?p='+type+'" class="no-shadow waves-effect waves-light btn red trending-more">More</a></div>';
 }
 
-function loadResult(searchInput){
+function loadResult(searchInput,resType){
+
+	/*Result Type
+	0:For Search
+	1:for PlayList*/
+	var resAPI = ['/api/v1/search?q=','/api/v1/trending?type='];
+
+	resType = typeof resType !=='undefined'?resType:0;
+
 	$('#search-result').html('');
 
-	$.getJSON('/api/v1/search?q=' + searchInput, success=function(data, textStatus, jqXHR){
+	$.getJSON(resAPI[resType] + searchInput, success=function(data, textStatus, jqXHR){
 		var dataResult = data['results'];
-		var searchKeyword = data['metadata']['q'];
-		if(!dataResult.length){
+		//var searchKeyword = data['metadata']['q'];
+
+		if(!dataResult.length) {
 			$('#result-keyword h4').html('No <span class="color-primary">"result" </span>found');
 			$('#result-keyword').show();
 			$('#search-preloader').hide();
 			return false;
 		}
-		$('#result-keyword h4').html('Showing results for <span class="color-primary">"'+searchKeyword+'"</span>');
-		console.log(searchKeyword);
-		//console.log(dataResult);
+
+		if(resType === 1) {
+			$('#result-keyword h4').html('Showing top results for <span class="color-primary">"'+data['metadata']['type']+'"</span>');
+		}
+		else
+			$('#result-keyword h4').html('Showing results for <span class="color-primary">"'+data['metadata']['q']+'"</span>');
 
 		dataResult.forEach(function(res){
 			var resHtml;

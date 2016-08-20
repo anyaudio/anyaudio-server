@@ -159,10 +159,17 @@
   $(document).ready(function(){
     window.history.pushState("object or string", "Title", "/explore");
     var queryString = {{ query }}
+    var playlist = {{ playlist }}
+    console.log(playlist);
     if(queryString.length){
       $('#search-preloader').show();
       $('#ymp3-search input').val(queryString);
       loadResult(queryString);
+    }
+    else if(playlist.length){
+      $('#search-preloader').show();
+//      $('#ymp3-search input').val(queryString);
+      loadResult(playlist,1);
     }
   })
 </script>

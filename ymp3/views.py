@@ -26,7 +26,13 @@ def explore():
         search_query = '"{0}"'.format(search_query.replace('\"','\\\"').strip())
     else:
         search_query = '""'
-    return render_template('/explore.html', query=Markup(search_query))
+
+    playlist = request.args.get('p')
+    if playlist:
+        playlist = '"{0}"'.format(playlist.replace('\"','\\\"').strip())
+    else:
+        playlist = '""'
+    return render_template('/explore.html', query=Markup(search_query), playlist=Markup(playlist))
 
 
 @app.route('/api/v1/d/<path:url>')
