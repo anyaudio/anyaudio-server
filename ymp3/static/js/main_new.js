@@ -3,6 +3,7 @@ $(document).ready(function(){
 	//Trending Playlist
 	var trendingList = ['popular','latest','weekly','electroic','latin'];
 
+	//Search event listener
 	$('#ymp3-search').submit(function(e){
 		$('#search-preloader').show();
 		$('#result-keyword').hide();
@@ -13,6 +14,7 @@ $(document).ready(function(){
 		loadResult(searchInput);
 	});
 
+	//Fetches url and starts dowload in new tab
 	$('body').on('click','.ymp3-download',function(e){
 		e.preventDefault();
 		$this = $(this);
@@ -35,16 +37,17 @@ $(document).ready(function(){
 		});
 	});
 
+	//Nav Overlay trigger
 	$('#menu-bar').click(function(e){
 		e.preventDefault();
 		document.getElementById("nav-overlay").style.width = "100%";
 	});
-
 	$('#nav-overlay .closebtn').click(function(e){
 		e.preventDefault();
 		document.getElementById("nav-overlay").style.width = 0;
 	});
 
+	//Loads trending list on homepage
 	trendingList.forEach(function(pName){
 		loadTrending(pName,4);
 	})

@@ -11,7 +11,10 @@
   <title>Youtube MP3 Downloader</title>
 </head>
 <body>
+<!--Main Wrapper-->
 <div class="main-wrapper">
+
+  <!--Header-->
   <header>
     <div class="navbar-fixed">
       <nav class="nav--custom nav--transparent">
@@ -23,6 +26,7 @@
         </div>
       </nav>
     </div>
+    <!--/Header-->
 
     <!--Nav Overlay-->
     <div id="nav-overlay" class="overlay">
@@ -31,8 +35,8 @@
       <a href="#!" class="closebtn">&times;</a>
 
       <!-- Overlay content -->
-      <div class="overlay-content">
-        <a href="/">Home</a>
+      <div class="overlay-content font-200">
+        <a class="active" href="/">Home</a>
         <a href="/#home-trending">Explore</a>
         <a href="#">About Us</a>
         <a href="#">Contact</a>
@@ -42,9 +46,11 @@
 
   </header>
 
+  <!--Home Header Section-->
   <div class="home-header">
     <div class="container">
       <div class="search-exp">
+        <!--Search form-->
         <div class="search search--lg">
           <form action="explore" class="search-wrapper">
             <input type="text" class="search-btn" placeholder="Search Your Favourite Song" name="q">
@@ -54,18 +60,23 @@
         <div class="white-space space-sm"></div>
         <div class="or text-center"><span>OR</span></div>
         <div class="white-space space-sm"></div>
+        <!--Explore Button-->
         <div class="exp text-center">
           <a href="#home-trending" class="smooth-scroll no-shadow waves-effect waves-light btn white color-primary btn-large">Explore <i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
         </div>
       </div>
     </div>
   </div>
+  <!--/Home Header-->
+
+  <!--Trending List-->
   <div id="home-trending" class="container">
-    <div class="white-space space-sm"></div>
+    <div class="white-space space-md"></div>
     <h1 class="text-center title-deco font-200">
       <span>Trending Music</span>
     </h1>
     <div class="white-space space-sm"></div>
+    <!--Results are laoded dynamically here-->
   </div>
 
   <!--Footer-->
@@ -98,6 +109,8 @@
 <script src="../static/js/main_new.js"></script>
 <script>
   $(function() {
+
+//    Smooth scroll
     $('a[href*="#"]:not([href="#"]).smooth-scroll').click(function() {
       if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
         var target = $(this.hash);
@@ -111,6 +124,7 @@
       }
     });
 
+//    Sticky Nav bar
     var $navbar = $(".nav--custom"),
             y_pos = $navbar.offset().top,
             height = $navbar.height();

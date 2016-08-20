@@ -12,7 +12,9 @@
 </head>
 <body>
 <div class="main-wrapper">
+  <!--Header-->
   <header>
+    <!--Navbar-->
     <div class="navbar-fixed">
       <nav class="nav--custom nav-white">
         <div class="nav-wrapper text-center">
@@ -31,13 +33,18 @@
       </nav>
     </div>
   </header>
+  <!--/Header-->
+
+  <!--Main Container-->
   <div class="main-contents container">
     <div class="white-space space-md"></div>
+    <!--Result Message-->
     <div id="result-keyword" class="result-tag text-center">
       <h4></h4>
     </div>
     <div class="white-space space-sm"></div>
 
+    <!--Preloader-->
     <div id="search-preloader">
       <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-blue">
@@ -83,34 +90,11 @@
       </div>
     </div>
 
+    <!--Results-->
     <div id="search-result" class="result row">
-      <!--Result Card-->
-     <!-- <div class="col s6 m4 l3">
-        <div class="card card&#45;&#45;ym3">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="{{ url_for('static', filename='img/th_1.jpg') }}">
-            <div class="overlay overlay&#45;&#45;dark"></div>
-            <div class="meta-duration ">03:59</div>
-            <a href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
-          </div>
-          <div class="card-content">
-            <span class="activator card&#45;&#45;ym3&#45;&#45;title flow-text">Set Fire to Rain - Adele</span>
-            <div class="meta">
-              <div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>
-                Adele</div>
-              <div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                57,000,000</div>
-            </div>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>Set Fire to Rain - Adele</span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
-      </div>-->
-
-
+        <!--Result is loaded dynamically Here-->
     </div>
+    <!--/Results-->
 
     <!--Nav Overlay-->
     <div id="nav-overlay" class="overlay">
@@ -119,7 +103,7 @@
       <a href="#!" class="closebtn">&times;</a>
 
       <!-- Overlay content -->
-      <div class="overlay-content">
+      <div class="overlay-content font-200">
         <a href="/">Home</a>
         <a href="/#home-trending">Explore</a>
         <a href="#">About Us</a>
@@ -128,9 +112,13 @@
 
     </div>
   </div>
+  <!--/Main Container-->
+
   <!--Footer Wrapper-->
   <div class="bg-color-primary overflow-hidden">
     <footer class="footer container row">
+
+      <!--Sitmap-->
       <div class="footer-site-map col s4">
         <ul class="footer-site-map__links">
           <li><a href="#!">Home</a></li>
@@ -138,7 +126,11 @@
           <li><a href="#!">About</a></li>
         </ul>
       </div>
+
+      <!--Logo-->
       <div class="footer-logo col s4">MusicGenie</div>
+
+      <!--Social-->
       <div class="footer-social col s4">
         <ul class="social__links">
           <li><a href="#!" class="valign-wrapper"><i class="fa fa-github-alt valign" aria-hidden="true"></i></a></li>
@@ -157,18 +149,17 @@
 <script src="../static/js/main_new.js"></script>
 <script>
   $(document).ready(function(){
-    window.history.pushState("object or string", "Title", "/explore");
+    window.history.pushState("object or string", "Title", "/explore");//Removes get parameter from address bar
     var queryString = {{ query }}
     var playlist = {{ playlist }}
     console.log(playlist);
-    if(queryString.length){
+    if(queryString.length){//Searches for keyword received through get param
       $('#search-preloader').show();
       $('#ymp3-search input').val(queryString);
       loadResult(queryString);
     }
-    else if(playlist.length){
+    else if(playlist.length){//loads playlist item through get param
       $('#search-preloader').show();
-//      $('#ymp3-search input').val(queryString);
       loadResult(playlist,1);
     }
   })

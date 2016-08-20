@@ -437,7 +437,11 @@ body{
 	margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
 }
 
-/* The navigation links inside the overlay */
+#nav-overlay .overlay-content a.active{
+	color: rgba(244, 67, 54,0.75);
+}
+
+	/* The navigation links inside the overlay */
 #nav-overlay.overlay a {
 	padding: 8px;
 	text-decoration: none;
@@ -449,7 +453,7 @@ body{
 
 /* When you mouse over the navigation links, change their color */
 #nav-overlay.overlay a:hover,#nav-overlay.overlay a:focus {
-	color: rgba(244, 67, 54,0.75);
+	color: rgba(244, 67, 54,1);
 }
 
 /* Position the close button (top right corner) */
