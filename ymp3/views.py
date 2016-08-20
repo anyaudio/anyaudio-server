@@ -9,7 +9,7 @@ from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_titl
     record_request
 from helpers.encryption import get_key, encode_data, decode_data
 from helpers.data import trending_playlist
-from helpers.database import get_trending
+from helpers.database import get_trending, get_api_log
 from helpers.networking import open_page
 
 
@@ -183,6 +183,47 @@ def get_latest():
     }
 
     return jsonify(ret_dict)
+
+
+@app.route('/logs')
+def get_log_page():
+    user_key = request.args.get('key')
+
+    if not user_key or user_key != get_key():
+        return render_template('/unauthorized.html')
+
+    try:
+        offset = int(request.args.get('offset', '0'))
+        if offset < 0:
+            offset = 0
+    except Exception:
+        offset = 0
+
+    try:
+        number = int(request.args.get('number', '10'))
+        if number < 1:
+            number = 1
+    except Exception:
+        number = 0
+
+    resultset = get_api_log(number, offset)
+
+    if offset - number < 0:
+        prev_link = None
+    else:
+        prev_link = '/logs?key={0}&number={1}&offset={2}'.format(
+            user_key,
+            number,
+            offset - number
+        )
+
+    next_link = '/logs?key={0}&number={1}&offset={2}'.format(
+        user_key,
+        number,
+        offset+number + 1
+    )
+
+    return render_template('/log_page.html', logs=resultset, number=number, offset=offset, prev_link=prev_link, next_link=next_link)
 
 
 # @app.route('/v/<string:vid_id>')
