@@ -65,12 +65,12 @@ def save_trending_songs(playlist_name, songs):
     conn.close()
 
 
-def get_trending(type='popular', count=25, get_url_prefix=''):
+def get_trending(type='popular', count=25, offset=0, get_url_prefix=''):
     conn, cursor = get_sqlite_connection()
 
-    sql = 'select * from trending_songs where playlist_ = ? limit ?'
+    sql = 'select * from trending_songs where playlist_ = ? limit ? offset ?'
 
-    rows = cursor.execute(sql, (type, count))
+    rows = cursor.execute(sql, (type, count, offset))
 
     vids = []
     for row in rows:
@@ -124,3 +124,32 @@ def log_api_call(obj):
     con.commit()
 
     psql_connection_pool.putconn(con)
+
+
+def get_api_log(number=10, offset=0):
+
+    sql = '''select * from api_log order by request_time desc limit %s offset %s'''
+
+    con = psql_connection_pool.getconn()
+    cur = con.cursor()
+
+    cur.execute(sql, (number, offset))
+    rows = cur.fetchall()
+
+    psql_connection_pool.putconn(con)
+
+    result = []
+    for row in rows:
+        result.append(
+            {
+                'args': row[0],
+                'access_route': row[1],
+                'base_url': row[2],
+                'path': row[3],
+                'method': row[4],
+                'user_agent': row[5],
+                'request_time': row[6],
+            }
+        )
+
+    return result

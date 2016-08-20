@@ -13,6 +13,8 @@ class TestGetUrl(YMP3TestCase):
         resp = self.app.get(get_url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn('url', resp.data)
+        self.assertIn('Love', resp.data)
+        self.assertIn('Story', resp.data)
         self.assertIn('/d/', resp.data)
 
     def test_fake_get_url(self):

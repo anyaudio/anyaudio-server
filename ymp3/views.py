@@ -1,4 +1,5 @@
 import traceback
+from urllib import quote
 from ymp3 import logger
 from flask import jsonify, request, render_template, url_for, make_response, Markup
 from subprocess import check_output, call
@@ -9,7 +10,7 @@ from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_titl
     record_request
 from helpers.encryption import get_key, encode_data, decode_data
 from helpers.data import trending_playlist
-from helpers.database import get_trending
+from helpers.database import get_trending, get_api_log
 from helpers.networking import open_page
 
 
@@ -35,24 +36,24 @@ def explore():
     return render_template('/explore.html', query=Markup(search_query), playlist=Markup(playlist))
 
 
-@app.route('/api/v1/d/<path:url>')
+@app.route('/api/v1/d/<string:filename>')
 @record_request
-def download_file(url):
+def download_file(filename):
     """
     Download the file from the server.
     First downloads the file on the server using wget and then converts it using ffmpeg
     """
     try:
-        # decode info from url
+        url = request.args.get('url')
         try:
             abr = int(request.args.get('bitrate', '128'))
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
         except ValueError:
             abr = 128
+        # decode info from url
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']
-        filename = get_filename_from_title(data['title'])
         m4a_path = 'static/%s.m4a' % vid_id
         mp3_path = 'static/%s.mp3' % vid_id
         # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
@@ -65,7 +66,9 @@ def download_file(url):
         data = open(mp3_path, 'r').read()
         response = make_response(data)
         # set headers
-        response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
+        # http://stackoverflow.com/questions/93551/how-to-encode-the-filename-
+        response.headers['Content-Disposition'] = 'attachment'
+        # ; filename*=UTF-8''%s' % quote(filename)
         response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
         response.headers['Content-Length'] = str(len(data))
         # remove files
@@ -73,7 +76,8 @@ def download_file(url):
         delete_file(mp3_path)
         # stream
         return response
-    except Exception:
+    except Exception as e:
+        logger.info('Error %s' % str(e))
         logger.info(traceback.format_exc())
         return 'Bad things have happened', 500
 
@@ -97,7 +101,11 @@ def get_link():
         retval = retval.strip()
         if not LOCAL:
             retval = encode_data(get_key(), id=vid_id, title=title, url=retval)
-            retval = url_for('download_file', url=retval)
+            retval = url_for(
+                'download_file',
+                filename=quote(get_filename_from_title(title).encode('utf-8'), safe=''),
+                url=retval
+            )
 
         ret_dict = {
             'status': 200,
@@ -173,16 +181,26 @@ def get_latest():
     except ValueError:
         max_count = 25
 
+    try:
+        offset = int(request.args.get('offset', '0'))
+        if offset < 0:
+            offset = 0
+        if offset > 100:
+            offset = 100
+    except ValueError:
+        offset = 0
+
     type = request.args.get('type', 'popular')
     if type not in [_[0] for _ in trending_playlist]:
         type = 'popular'
 
-    ret_vids = get_trending(type, max_count, get_url_prefix='/api/v1/g?url=')
+    ret_vids = get_trending(type, max_count, offset=offset, get_url_prefix='/api/v1/g?url=')
 
     ret_dict = {
         'metadata': {
             'count': len(ret_vids),
-            'type': type
+            'type': type,
+            'offset': offset
         },
         'results': ret_vids
     }
@@ -190,13 +208,72 @@ def get_latest():
     return jsonify(ret_dict)
 
 
-# @app.route('/v/<string:vid_id>')
-# def get_video(vid_id):
-#     """
-#     Gets video info ..
-#     """
-#     data = get_video_info_ydl(vid_id)
-#     if len(data) > 0:
-#         return jsonify(data)
-#     else:
-#         return 'There was a problem', 400
+@app.route('/logs')
+def get_log_page():
+    """
+    View application logs
+    """
+    user_key = request.args.get('key')
+
+    if not user_key or user_key != get_key():
+        return render_template('/unauthorized.html')
+
+    try:
+        offset = int(request.args.get('offset', '0'))
+        if offset < 0:
+            offset = 0
+    except Exception:
+        offset = 0
+
+    try:
+        number = int(request.args.get('number', '10'))
+        if number < 1:
+            number = 1
+    except Exception:
+        number = 0
+
+    resultset = get_api_log(number, offset)
+
+    if offset - number < 0:
+        prev_link = None
+    else:
+        prev_link = '/logs?key={0}&number={1}&offset={2}'.format(
+            user_key,
+            number,
+            offset - number
+        )
+
+    next_link = '/logs?key={0}&number={1}&offset={2}'.format(
+        user_key,
+        number,
+        offset + number
+    )
+
+    return render_template(
+        '/log_page.html', logs=resultset, number=number, offset=offset,
+        prev_link=prev_link, next_link=next_link
+    )
+
+
+@app.route('/api/v1/playlists')
+def get_playlists():
+    count = len(trending_playlist)
+    result = []
+    for item in trending_playlist:
+        result.append(
+            {
+                "playlist": item[0],
+                "url": item[1]
+            }
+        )
+
+    response = {
+        'status': 200,
+        'requestLocation': '/api/v1/playlists',
+        "metadata": {
+            "count": count
+        },
+        "results": result
+    }
+
+    return jsonify(response)

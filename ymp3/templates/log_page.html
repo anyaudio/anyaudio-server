@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API calls made to server</title>
+</head>
+<body>
+
+    <div style="margin: 10px">
+        <table border="1">
+            <thead>
+                <th>Path</th>
+                <th>Arguments</th>
+                <th>Access Route</th>
+                <th>User Agent</th>
+                <th>Time</th>
+            </thead>
+            {% for row in logs %}
+            <tr>
+                <td>{{ row['path'] }}</td>
+                <td>{{ row['args'][:50] }}</td>
+                <td>{{ row['access_route'] }}</td>
+                <td>{{ row['user_agent'] }}</td>
+                <td>{{ row['request_time'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if prev_link %}
+            <a href="{{ prev_link }}">Previous&nbsp;</a>
+        {% else %}
+            Previous&nbsp;
+        {% endif %}
+        <a href="{{ next_link }}">Next</a>
+    </div>
+</body>
+</html>
