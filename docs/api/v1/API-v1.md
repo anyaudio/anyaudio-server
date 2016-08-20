@@ -183,7 +183,7 @@ Example -
 * ### Downloading from URL provided
 
 	* **Type**: `GET`
-	* **Location**: `/api/v1/d`
+	* **Location**: `/api/v1/d/<filename>`
 	* **Parameters**:
 
 		| Term | Explaination |

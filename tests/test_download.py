@@ -14,14 +14,14 @@ class TestDownload(YMP3TestCase):
         dl_url = self._get_dl_link(get_url, just_url=True)
         resp = self.app.get(dl_url)
         self.assertTrue(len(resp.data) > 100000, resp.data)
-        # test filename
-        self.assertIn(title[:10], resp.headers['Content-Disposition'], resp.headers)
+        # test filename not in CD. Can cause issues with some browsers
+        self.assertNotIn(title[:10], resp.headers['Content-Disposition'], resp.headers)
         # test file length
         self.assertEqual(int(resp.headers['Content-Length']), len(resp.data))
 
     def test_failed_download(self):
         """test fail"""
-        resp = self.app.get('/api/v1/d?url=askfasfk')
+        resp = self.app.get('/api/v1/d/name?url=askfasfk')
         self.assertEqual(resp.status_code, 500)
         self.assertTrue(len(resp.data) < 1000)
 
