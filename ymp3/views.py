@@ -187,6 +187,9 @@ def get_latest():
 
 @app.route('/logs')
 def get_log_page():
+    """
+    View application logs
+    """
     user_key = request.args.get('key')
 
     if not user_key or user_key != get_key():
@@ -220,10 +223,13 @@ def get_log_page():
     next_link = '/logs?key={0}&number={1}&offset={2}'.format(
         user_key,
         number,
-        offset+number + 1
+        offset + number
     )
 
-    return render_template('/log_page.html', logs=resultset, number=number, offset=offset, prev_link=prev_link, next_link=next_link)
+    return render_template(
+        '/log_page.html', logs=resultset, number=number, offset=offset,
+        prev_link=prev_link, next_link=next_link
+    )
 
 
 # @app.route('/v/<string:vid_id>')
