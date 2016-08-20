@@ -191,3 +191,33 @@ Example -
 		|`bitrate`| Desired bitrate. Defaults to 128|
 		|`url` | Encrypted URL as recieved from `/api/v1/g`|
 	* **Response**: Audio file or some error message.
+
+* ### Getting supported Playlists
+
+	* **Type**: `GET`
+	* **Location**: `/api/v1/playlists`
+	* **Response**:
+
+	| Term | Explaination |
+	|------|--------------|
+	|`metadata`| Contains following term:<br/>&nbsp;&nbsp;&nbsp;&nbsp;`count`: Number of playlists.|
+	|`results`| List containing following dictionary:<br/>&nbsp;&nbsp;&nbsp;&nbsp;`playlist`: Name of playlist<br/>&nbsp;&nbsp;&nbsp;&nbsp;`url`: Playlist URL on Youtube|
+
+	Example -
+	```json
+	{
+		"metadata": {
+			"count": "2"
+		},
+		"results": [
+			{
+				"playlist": "popular",
+				"url": "https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI"
+			},
+			{
+				"playlist": "latest",
+				"url": "https://www.youtube.com/playlist?list=PLFgquLnL59akA2PflFpeQG9L01VFg90wS'"
+			}
+		]
+	}
+	```
