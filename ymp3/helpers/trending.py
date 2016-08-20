@@ -24,7 +24,7 @@ def get_trending_videos(html):
             vids.append(
                 {
                     'id': raw_result[0],
-                    'thumb': raw_result[1],
+                    'thumb': 'http://img.youtube.com/vi/{0}/0.jpg'.format(raw_result[0]),
                     'title': html_unescape(raw_result[2].strip().decode('utf-8')),
                     'uploader': raw_result[3].decode('utf8'),
                     'length': raw_result[4],
