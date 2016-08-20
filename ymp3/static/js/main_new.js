@@ -24,13 +24,22 @@ $(document).ready(function(){
 				return false;
 			}
 			console.log($this.attr('data-get-url'));
-			$this.attr('href',data['url']);
-			$this.attr('target', '_blank');
 			window.open(data['url']);
+			//window.location.href = data['url'];
 			$this.addClass('dwn-done');
 			$this.unbind('click');
 		});
 	});
+
+	$('#menu-bar').click(function(e){
+		e.preventDefault();
+		document.getElementById("nav-overlay").style.width = "100%";
+	});
+
+	$('#nav-overlay .closebtn').click(function(e){
+		e.preventDefault();
+		document.getElementById("nav-overlay").style.width = 0;
+	})
 
 });
 

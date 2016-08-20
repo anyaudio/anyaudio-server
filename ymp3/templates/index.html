@@ -16,25 +16,38 @@
     <div class="navbar-fixed">
       <nav class="nav--custom nav--transparent">
         <div class="nav-wrapper text-center">
-          <a href="#" class="brand-logo">MusicGenie</a>
+          <a href="/" class="brand-logo">MusicGenie</a>
           <div class="nav-addons">
-            <a href="#!" class="float-left"><i class="fa fa-bars" aria-hidden="true"></i></a>
+            <a href="#!" id="menu-bar" class="float-left"><i class="fa fa-bars" aria-hidden="true"></i></a>
           </div>
-          <ul id="nav-overlay" class="right nav-overlay--hidden">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
-          </ul>
         </div>
       </nav>
     </div>
+
+    <!--Nav Overlay-->
+    <div id="nav-overlay" class="overlay">
+
+      <!-- Button to close the overlay navigation -->
+      <a href="#!" class="closebtn">&times;</a>
+
+      <!-- Overlay content -->
+      <div class="overlay-content">
+        <a href="/">Home</a>
+        <a href="/#home-trending">Explore</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+      </div>
+
+    </div>
+
   </header>
+
   <div class="home-header">
     <div class="container">
       <div class="search-exp">
         <div class="search search--lg">
-          <form class="search-wrapper">
-            <input type="text" class="search-btn" placeholder="Search Your Favourite Song">
+          <form action="explore" class="search-wrapper">
+            <input type="text" class="search-btn" placeholder="Search Your Favourite Song" name="q">
             <button class="btn-icon-only" type="submit"><i class="fa fa-2x fa-search"></i></button>
           </form>
         </div>
@@ -303,6 +316,6 @@
 <!-- js -->
 <script src="{{ url_for('static', filename='lib/jquery-2.2.4.min.js') }}"></script>
 <script src="{{ url_for('static', filename='lib/materialize/js/materialize.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="../static/js/main_new.js"></script>
 </body>
 </html>

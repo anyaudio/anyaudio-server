@@ -16,7 +16,7 @@ from helpers.networking import open_page
 @app.route('/')
 @record_request
 def home():
-    return render_template('/home_new.html')
+    return render_template('/index.html')
 
 @app.route('/explore')
 @record_request

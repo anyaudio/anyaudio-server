@@ -16,7 +16,7 @@
     <div class="navbar-fixed">
       <nav class="nav--custom nav-white">
         <div class="nav-wrapper text-center">
-          <a href="#" class="brand-logo">MusicGenie</a>
+          <a href="/" class="brand-logo">MusicGenie</a>
           <div class="search search--alt">
           <form id="ymp3-search" class="search-wrapper">
               <input type="text" class="search-btn" placeholder="Search Your Favourite Song" name="keyword">
@@ -25,13 +25,8 @@
           </div>
           <div class="nav-addons">
             <a href="#!" class="explore">Explore</a>
-            <a href="#!" class="menu-bar float-left"><i class="fa fa-bars height-auto" aria-hidden="true"></i></a>
+            <a href="#!" id="menu-bar" class="menu-bar float-left"><i class="fa fa-bars height-auto" aria-hidden="true"></i></a>
           </div>
-          <ul id="nav-overlay" class="right nav-overlay--hidden">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
-          </ul>
         </div>
       </nav>
     </div>
@@ -114,6 +109,22 @@
         </div>
       </div>-->
 
+
+    </div>
+
+    <!--Nav Overlay-->
+    <div id="nav-overlay" class="overlay">
+
+      <!-- Button to close the overlay navigation -->
+      <a href="#!" class="closebtn">&times;</a>
+
+      <!-- Overlay content -->
+      <div class="overlay-content">
+        <a href="/">Home</a>
+        <a href="/#home-trending">Explore</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+      </div>
 
     </div>
   </div>
