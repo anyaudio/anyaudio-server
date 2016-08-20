@@ -1,6 +1,6 @@
 import traceback
 from ymp3 import logger
-from flask import jsonify, request, render_template, url_for, make_response
+from flask import jsonify, request, render_template, url_for, make_response, Markup
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
 
@@ -19,8 +19,14 @@ def home():
     return render_template('/home_new.html')
 
 @app.route('/explore')
+@record_request
 def explore():
-    return render_template('/explore.html')
+    search_query = request.args.get('q')
+    if search_query:
+        search_query = '"{0}"'.format(search_query.replace('\"','\\\"').strip())
+    else:
+        search_query = '""'
+    return render_template('/explore.html', query=Markup(search_query))
 
 
 @app.route('/api/v1/d/<path:url>')

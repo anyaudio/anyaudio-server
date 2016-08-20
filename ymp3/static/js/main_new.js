@@ -6,25 +6,8 @@ $(document).ready(function(){
 		e.preventDefault();
 		var searchInput = $this.find('.search-btn').val();
 		console.log(searchInput);
-		$('#search-result').html('');
-
-		$.getJSON('/api/v1/search?q=' + searchInput, success=function(data, textStatus, jqXHR){
-			var dataResult = data['results'];
-			var searchKeyword = data['metadata']['q'];
-			$('#result-keyword h4').text('Showing results for "'+searchKeyword+'"');
-			console.log(searchKeyword);
-			//console.log(dataResult);
-
-			dataResult.forEach(function(res){
-				var resHtml;
-				$('#search-result').append(getCardHtml(res));
-				//console.log(getCardHtml(res));
-			});
-			$('#result-keyword').show();
-			$('#search-preloader').hide();
-		})
+		loadResult(searchInput);
 	});
-
 
 	$('#search-result').on('click','.ymp3-download',function(e){
 		e.preventDefault();
@@ -49,7 +32,27 @@ $(document).ready(function(){
 		});
 	});
 
-	function getCardHtml(data){
-		return '<div class="col s6 m4 l3"><div class="card card--ym3"><a data-get-url="'+data['get_url']+'" class="card-image waves-effect waves-block waves-light ymp3-download"><img class="activator" src="'+data["thumb"]+'"><div class="overlay overlay--dark"></div><div class="meta-duration ">'+data["length"]+'</div><span href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-spinner fa-pulse fa-3x fa-fw"></i><i class="valign fa fa-arrow-down" aria-hidden="true"></i><i class="valign fa fa-check fa-2x" aria-hidden="true"></i></span></a><div class="card-content"><span class="activator card--ym3--title flow-text">'+data["title"]+'</span><div class="meta"><div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>'+data["uploader"]+'</div><div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>'+data["views"]+'</div></div></div><div class="card-reveal"><span class="card-title activator grey-text text-darken-4"><i class="fa fa-times right"></i>'+data["title"]+'</span><p>Here is some more information about this product that is only revealed once clicked on.</p></div></div></div>';
-	}
 });
+
+function getCardHtml(data){
+	return '<div class="col s6 m4 l3"><div class="card card--ym3"><a data-get-url="'+data['get_url']+'" class="card-image waves-effect waves-block waves-light ymp3-download"><img class="activator" src="'+data["thumb"]+'"><div class="overlay overlay--dark"></div><div class="meta-duration ">'+data["length"]+'</div><span href="#!" class="btn-dwn valign-wrapper"><i class="valign fa fa-spinner fa-pulse fa-3x fa-fw"></i><i class="valign fa fa-arrow-down" aria-hidden="true"></i><i class="valign fa fa-check fa-2x" aria-hidden="true"></i></span></a><div class="card-content"><span class="activator card--ym3--title flow-text">'+data["title"]+'</span><div class="meta"><div class="channel color-primary"><i class="fa fa-bullseye" aria-hidden="true"></i>'+data["uploader"]+'</div><div class="views color-primary"><i class="fa fa-eye" aria-hidden="true"></i>'+data["views"]+'</div></div></div><div class="card-reveal"><span class="card-title color-primary activator"><i class="fa fa-times right"></i>'+data["title"]+'</span><p class="flow-text">Here is some more information about this product that is only revealed once clicked on.</p></div></div></div>';
+}
+
+function loadResult(searchInput){
+	$('#search-result').html('');
+
+	$.getJSON('/api/v1/search?q=' + searchInput, success=function(data, textStatus, jqXHR){
+		var dataResult = data['results'];
+		var searchKeyword = data['metadata']['q'];
+		$('#result-keyword h4').html('Showing results for <span class="color-primary">"'+searchKeyword+'"</span>');
+		console.log(searchKeyword);
+		//console.log(dataResult);
+
+		dataResult.forEach(function(res){
+			var resHtml;
+			$('#search-result').append(getCardHtml(res));
+		});
+		$('#result-keyword').show();
+		$('#search-preloader').hide();
+	})
+}

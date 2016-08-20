@@ -8,7 +8,7 @@ body{
 }
 
 .color-primary{
-	color: rgb(244, 67, 54)
+	color: rgb(244, 67, 54) !important;
 }
 .nav--custom{
 	height: 80px;
@@ -79,6 +79,17 @@ body{
 	align-items: center;
 	height: 100%;
 }
+
+.main-wrapper{
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.main-contents{
+	flex: 1;
+}
+
 .search-exp{
 	width: 100%;
 }
@@ -279,6 +290,10 @@ body{
 
 .card-image:hover .overlay,.card-image.dwn-ready-card .overlay{
 	background-color: rgba(244, 67, 54,0.75);
+}
+
+.card-reveal .card-title{
+	font-size: 1.8rem;
 }
 
 .overlay{

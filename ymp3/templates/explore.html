@@ -144,5 +144,16 @@
 <script src="{{ url_for('static', filename='lib/jquery-2.2.4.min.js') }}"></script>
 <script src="{{ url_for('static', filename='lib/materialize/js/materialize.min.js') }}"></script>
 <script src="../static/js/main_new.js"></script>
+<script>
+  $(document).ready(function(){
+    window.history.pushState("object or string", "Title", "/explore");
+    var queryString = {{ query }}
+    if(queryString.length){
+      $('#search-preloader').show();
+      $('#ymp3-search input').val(queryString);
+      loadResult(queryString);
+    }
+  })
+</script>
 </body>
 </html>
