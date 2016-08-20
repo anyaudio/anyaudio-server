@@ -232,13 +232,25 @@ def get_log_page():
     )
 
 
-# @app.route('/v/<string:vid_id>')
-# def get_video(vid_id):
-#     """
-#     Gets video info ..
-#     """
-#     data = get_video_info_ydl(vid_id)
-#     if len(data) > 0:
-#         return jsonify(data)
-#     else:
-#         return 'There was a problem', 400
+@app.route('/api/v1/playlists')
+def get_playlists():
+    count = len(trending_playlist)
+    result = []
+    for item in trending_playlist:
+        result.append(
+            {
+                "playlist": item[0],
+                "url": item[1]
+            }
+        )
+
+    response = {
+        'status': 200,
+        'requestLocation': '/api/v1/playlists',
+        "metadata": {
+            "count": count
+        },
+        "results": result
+    }
+
+    return jsonify(response)
