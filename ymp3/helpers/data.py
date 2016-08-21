@@ -50,7 +50,7 @@ user_agents = [
 ]
 
 table_creation_sqlite_statements = [
-    '''create table if not exists trending_songs(id_ text, title_ text, thumb_ text, uploader_ text, length_ text, views_ text, get_url_ text, playlist_ text)''',
+    '''create table if not exists trending_songs(id_ text, title_ text, thumb_ text, uploader_ text, length_ text, views_ text, get_url_ text, playlist_ text, description text)''',
 ]
 
 table_creation_psql_statements = [

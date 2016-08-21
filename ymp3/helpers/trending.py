@@ -21,6 +21,8 @@ def get_trending_videos(html):
     vids = []
     for raw_result in raw_results:
         try:
+            url = 'https://www.youtube.com/watch?v=' + raw_result[0]
+            html = open_page(url)
             vids.append(
                 {
                     'id': raw_result[0],
@@ -28,8 +30,9 @@ def get_trending_videos(html):
                     'title': html_unescape(raw_result[2].strip().decode('utf-8')),
                     'uploader': raw_result[3].decode('utf8'),
                     'length': raw_result[4],
-                    'views': get_views(video_id=raw_result[0]),
-                    'get_url': encode_data(get_key(), id=raw_result[0], title=raw_result[2].strip())
+                    'views': get_views(html),
+                    'get_url': encode_data(get_key(), id=raw_result[0], title=raw_result[2].strip()),
+                    'description': html_unescape(get_description(html))
                 }
             )
         except Exception as e:
@@ -41,10 +44,19 @@ def get_trending_videos(html):
     return vids
 
 
-def get_views(video_id):
-    url = 'https://www.youtube.com/watch?v={0}'.format(video_id)
-    content = open_page(url)
+def get_views(html):
     return re.findall(
         '<div class="watch-view-count">(.*?) ',
-        content,
+        html
     )[0]
+
+
+def get_description(html):
+    desc =  re.findall(
+        '<p id="eow-description".*?>(.*?)</p></div',
+        html
+    )
+
+    if len(desc) > 0:
+        return desc[0]
+    return ''

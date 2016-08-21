@@ -86,7 +86,7 @@ Example -
 	| Term | Explaination |
 	|-----------|--------------|
 	|`metadata`| Data about fetched data. <br/>&nbsp;&nbsp;&nbsp;&nbsp;`q`: Searched query.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`count`: Numner of results returned.|
-	|`results`| Actual result set contains a list of items with following attributes : <br/>&nbsp;&nbsp;&nbsp;&nbsp;`get_url`: URL to get song from.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`title`: Title of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`id`: Youtube ID of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`length`: Length of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`thumb`: Link to video thumbnail.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`time`: Time since upload. e.g. `3 years ago`.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`uploader`: Youtube uploader ID.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`views`: View count for the video in comma separated number format.|
+	|`results`| Actual result set contains a list of items with following attributes : <br/>&nbsp;&nbsp;&nbsp;&nbsp;`get_url`: URL to get song from.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`title`: Title of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`id`: Youtube ID of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`length`: Length of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`thumb`: Link to video thumbnail.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`time`: Time since upload. e.g. `3 years ago`.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`uploader`: Youtube uploader ID.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`views`: View count for the video in comma separated number format.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`description`: Video description as on Youtube.|
 
 	Example -
 	```json
@@ -104,7 +104,8 @@ Example -
 				"time": "10 months ago",
 				"title": "Nucleya - BASS Rani - Aaja feat Avneet Khurmi &amp; Guri Gangsta",
 				"uploader": "NUCLEYA",
-				"views": "1,078,918"
+				"views": "1,078,918",
+				"description": "Some Description <strong>MAY</strong> contain HTML stuff"
 			},
 			{
 				"get_url": "/api/v1/g?url=fSRrZiQ8IiRmc1RJOFJbTXl6eSQuIiR2a3ZuZyQ8IiROY3dwaSJJY3ljZWpjIkh2IkN4cGdndiJNand0b2sifiJQV0VOR1tDIn4iRENVVSJUQ1BLIn4iSHdubiJDbmR3byR/",
@@ -114,7 +115,8 @@ Example -
 				"time": "10 months ago",
 				"title": "Laung Gawacha Ft Avneet Khurmi | NUCLEYA | BASS RANI | Full Album",
 				"uploader": "Lyrics Arena",
-				"views": "575,811"
+				"views": "575,811",
+				"description": "Some Description <strong>MAY</strong> contain HTML stuff"
 			},
 			{
 				"get_url": "/api/v1/g?url=fSRrZiQ8IiR5bll1S0phZFdNVyQuIiR2a3ZuZyQ8IiRQV0VOR1tDIi8iQ0NMQyJ+IkRDVVUiVENQSyJ+IlFISEtFS0NOIkpTIkNXRktRIn4kfw==",
@@ -124,7 +126,8 @@ Example -
 				"time": "10 months ago",
 				"title": "NUCLEYA - AAJA | BASS RANI | OFFICIAL HQ AUDIO |",
 				"uploader": "Prasad Kedar",
-				"views": "1,862,495"
+				"views": "1,862,495",
+				"description": "Some Description <strong>MAY</strong> contain HTML stuff"
 			}
 		]
 	}
@@ -147,7 +150,7 @@ Example -
 	| Term | Explaination |
 	|-----------|--------------|
 	|`metadata`| Data about fetched data.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`count`: Number of results returned.|
-	|`results`| Actual result set contains a list of items with following attributes : <br/>&nbsp;&nbsp;&nbsp;&nbsp;`get_url`: URL to get song from.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`id`: Youtube ID of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`title`: Title of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`length`: Length of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`thumb`: Link to video thumbnail.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`uploader`: Youtube uploader ID.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`views`: View count for the video.|
+	|`results`| Actual result set contains a list of items with following attributes : <br/>&nbsp;&nbsp;&nbsp;&nbsp;`get_url`: URL to get song from.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`id`: Youtube ID of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`title`: Title of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`length`: Length of video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`thumb`: Link to video thumbnail.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`uploader`: Youtube uploader ID.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`views`: View count for the video.<br/>&nbsp;&nbsp;&nbsp;&nbsp;`description`: Video description as on Youtube.|
 
 	Example -
 	```json
@@ -165,7 +168,8 @@ Example -
 				"thumb": "http://img.youtube.com/vi/slNebO7Yips/0.jpg",
 				"title": "Nucleya - BASS Rani - Aaja feat Avneet Khurmi &amp; Guri Gangsta",
 				"uploader": "NUCLEYA",
-				"views": "1,078,918"
+				"views": "1,078,918",
+				"description": "Some Description <strong>MAY</strong> contain HTML stuff"
 			},
 			{
 				"get_url": "/api/v1/g?url=fSRrZiQ8IiRmc1RJOFJbTXl6eSQuIiR2a3ZuZyQ8IiROY3dwaSJJY3ljZWpjIkh2IkN4cGdndiJNand0b2sifiJQV0VOR1tDIn4iRENVVSJUQ1BLIn4iSHdubiJDbmR3byR/",
@@ -174,7 +178,8 @@ Example -
 				"thumb": "http://img.youtube.com/vi/dqRG6PYKwxw/0.jpg",
 				"title": "Laung Gawacha Ft Avneet Khurmi | NUCLEYA | BASS RANI | Full Album",
 				"uploader": "Lyrics Arena",
-				"views": "575,811"
+				"views": "575,811",
+				"description": "Some Description <strong>MAY</strong> contain HTML stuff"
 			},
 		]
 	}
@@ -183,7 +188,7 @@ Example -
 * ### Downloading from URL provided
 
 	* **Type**: `GET`
-	* **Location**: `/api/v1/d/<filename>`
+	* **Location**: `/api/v1/d`
 	* **Parameters**:
 
 		| Term | Explaination |

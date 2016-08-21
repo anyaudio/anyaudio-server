@@ -1,5 +1,4 @@
 import traceback
-from urllib import quote
 from ymp3 import logger
 from flask import jsonify, request, render_template, url_for, make_response, Markup
 from subprocess import check_output, call
@@ -36,9 +35,9 @@ def explore():
     return render_template('/explore.html', query=Markup(search_query), playlist=Markup(playlist))
 
 
-@app.route('/api/v1/d/<string:filename>')
+@app.route('/api/v1/d')
 @record_request
-def download_file(filename):
+def download_file():
     """
     Download the file from the server.
     First downloads the file on the server using wget and then converts it using ffmpeg
@@ -54,6 +53,7 @@ def download_file(filename):
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']
+        filename = get_filename_from_title(data['title'])
         m4a_path = 'static/%s.m4a' % vid_id
         mp3_path = 'static/%s.mp3' % vid_id
         # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
@@ -66,9 +66,7 @@ def download_file(filename):
         data = open(mp3_path, 'r').read()
         response = make_response(data)
         # set headers
-        # http://stackoverflow.com/questions/93551/how-to-encode-the-filename-
-        response.headers['Content-Disposition'] = 'attachment'
-        # ; filename*=UTF-8''%s' % quote(filename)
+        response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
         response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
         response.headers['Content-Length'] = str(len(data))
         # remove files
@@ -76,8 +74,7 @@ def download_file(filename):
         delete_file(mp3_path)
         # stream
         return response
-    except Exception as e:
-        logger.info('Error %s' % str(e))
+    except Exception:
         logger.info(traceback.format_exc())
         return 'Bad things have happened', 500
 
@@ -101,11 +98,7 @@ def get_link():
         retval = retval.strip()
         if not LOCAL:
             retval = encode_data(get_key(), id=vid_id, title=title, url=retval)
-            retval = url_for(
-                'download_file',
-                filename=quote(get_filename_from_title(title).encode('utf-8'), safe=''),
-                url=retval
-            )
+            retval = url_for('download_file', url=retval)
 
         ret_dict = {
             'status': 200,
