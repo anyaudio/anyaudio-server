@@ -1,8 +1,5 @@
 $(document).ready(function(){
 
-	//Trending Playlist
-	var trendingList = ['popular','latest','weekly','electroic','latin'];
-
 	//Search event listener
 	$('#ymp3-search').submit(function(e){
 		$('#search-preloader').show();
@@ -47,10 +44,6 @@ $(document).ready(function(){
 		document.getElementById("nav-overlay").style.width = 0;
 	});
 
-	//Loads trending list on homepage
-	trendingList.forEach(function(pName){
-		loadTrending(pName,4);
-	})
 });
 
 function getCardHtml(data){
@@ -108,5 +101,14 @@ function loadTrending(type,number){
 			trendingCard += getCardHtml(res);
 		});
 		$('#home-trending').append(getTrendingHtml(trendingCard,type));
+	})
+}
+
+function trendingInit(count){
+	$.getJSON('/api/v1/playlists', success=function(data, textStatus, jqXHR){
+		var results = data['results'];
+		for (var i = 0;i<count;i++){
+			loadTrending(results[i]['playlist'],4);
+		}
 	})
 }
