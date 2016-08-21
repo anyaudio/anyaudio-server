@@ -66,7 +66,8 @@ def download_file():
         data = open(mp3_path, 'r').read()
         response = make_response(data)
         # set headers
-        response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
+        # http://stackoverflow.com/questions/93551/how-to-encode-the-filename-
+        response.headers['Content-Disposition'] = 'attachment; filename="%s"' % filename
         response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
         response.headers['Content-Length'] = str(len(data))
         # remove files
@@ -74,7 +75,8 @@ def download_file():
         delete_file(mp3_path)
         # stream
         return response
-    except Exception:
+    except Exception as e:
+        logger.info('Error %s' % str(e))
         logger.info(traceback.format_exc())
         return 'Bad things have happened', 500
 
