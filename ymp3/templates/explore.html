@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width">
   <meta name="author" content="Mofid Ansari">
   <link href="https://fonts.googleapis.com/css?family=Raleway:200,400,600" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/materialize/css/materialize.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/font-awesome-4.6.3/css/font-awesome.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,400,600" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
   <title>Youtube MP3 Downloader</title>
 </head>
 <body>
@@ -144,8 +145,8 @@
 </div>
 
 <!-- js -->
-<script src="{{ url_for('static', filename='lib/jquery-2.2.4.min.js') }}"></script>
-<script src="{{ url_for('static', filename='lib/materialize/js/materialize.min.js') }}"></script>
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
 <script src="../static/js/main_new.js"></script>
 <script>
   $(document).ready(function(){
