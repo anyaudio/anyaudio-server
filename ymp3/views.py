@@ -1,5 +1,5 @@
 import traceback
-from ymp3 import logger, DOWNLOAD_MP3
+from ymp3 import logger
 from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
@@ -28,6 +28,7 @@ def download_file():
     """
     try:
         url = request.args.get('url')
+        download_format = request.args.get('format', 'm4a')
         try:
             abr = int(request.args.get('bitrate', '128'))
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
@@ -44,7 +45,7 @@ def download_file():
         # download and convert
         command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
-        if DOWNLOAD_MP3:
+        if download_format == 'mp3':
             command = get_ffmpeg_path()
             command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
             call(command, shell=True)  # shell=True only works, return ret_code
