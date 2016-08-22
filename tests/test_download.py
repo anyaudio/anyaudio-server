@@ -11,7 +11,7 @@ class TestDownload(YMP3TestCase):
         result = self._search('Payphone Maroon 5', just_results=True)
         get_url = result[0]['get_url']
         title = result[0]['title']
-        dl_url = self._get_dl_link(get_url, just_url=True)
+        dl_url = self._get_dl_link(get_url, just_url=True) + '&format=mp3'
         resp = self.app.get(dl_url)
         self.assertTrue(len(resp.data) > 100000, resp.data)
         # test filename
@@ -25,6 +25,19 @@ class TestDownload(YMP3TestCase):
         self.assertEqual(resp.status_code, 500)
         self.assertTrue(len(resp.data) < 1000)
 
+    def test_successful_download_m4a(self):
+        """test successful download of a music in m4a"""
+        # search and get link
+        result = self._search('Payphone Maroon 5', just_results=True)
+        get_url = result[0]['get_url']
+        dl_url = self._get_dl_link(get_url, just_url=True) + '&format=m4a'
+        resp = self.app.get(dl_url)
+        # test
+        self.assertTrue(len(resp.data) > 100000, resp.data)
+        self.assertEqual(int(resp.headers['Content-Length']), len(resp.data))
+        self.assertIn(
+            '.m4a', resp.headers['Content-Disposition'], resp.headers['Content-Disposition']
+        )
 
 if __name__ == '__main__':
     unittest.main()
