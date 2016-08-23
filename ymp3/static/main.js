@@ -8,6 +8,7 @@ $('#searchBtn').click(function(){
 	search_temp = $('.search_result').first().clone();
 	// reset
 	search_temp.show();
+	search_temp.find('audio').attr('src', '');
 	search_temp.find('.download').text('Get Link');
 	search_temp.find('.download').attr('href', '#');
 	search_temp.find('audio').hide();
