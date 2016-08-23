@@ -10,6 +10,7 @@ $('#searchBtn').click(function(){
 	search_temp.show();
 	search_temp.find('.download').text('Get Link');
 	search_temp.find('.download').attr('href', '#');
+	search_temp.find('audio').hide();
 	search_temp.unbind('click');
 	// delete
 	$('.search_result').remove();
@@ -57,6 +58,8 @@ function get_download_link(event){
 		elem.click(download_start);
 		elem.attr('href', data['url']);
 		elem.attr('target', '_blank');
+		elem.siblings('audio').attr('src', data['url'].replace('/api/v1/d', 'api/v1/stream'));
+		elem.siblings('audio').show();
 		return false;
 	});
 }
