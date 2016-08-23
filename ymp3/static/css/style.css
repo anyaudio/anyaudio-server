@@ -474,6 +474,11 @@ body{
 	}
 }
 
+.card--ym3 .card-image.ymp3-download img{
+	min-height: 120px;
+	background-color: rgba(244, 67, 54, 0.11);;
+}
+
 @media only screen and (max-width: 600px) {
 	.nav--custom .nav-wrapper{
 		padding: 0 2.8rem;
