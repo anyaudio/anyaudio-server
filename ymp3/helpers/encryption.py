@@ -8,12 +8,13 @@ def encode(key, clear):
     incr = get_key_hash(key)
     for _ in clear:
         st += unichr(incr + ord(_))
-    return base64.b64encode(st.encode('utf-8'))
+    return base64.urlsafe_b64encode(st.encode('utf-8'))
 
 
 def decode(key, enc):
     st = ''
-    enc = base64.b64decode(enc)
+    enc = enc.replace('-', '+').replace('_', '/')
+    enc = base64.b64decode(enc)  # dont know why urlsafe decode doesn't work
     incr = get_key_hash(key)
     for _ in enc:
         st += unichr(ord(_) - incr)

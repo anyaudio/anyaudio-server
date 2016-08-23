@@ -195,6 +195,7 @@ Example -
 		|------|--------------|
 		|`bitrate`| Desired bitrate. Defaults to 128|
 		|`url` | Encrypted URL as recieved from `/api/v1/g`|
+		|`format` | Format in which the audio will be download. `mp3` or `m4a`|
 	* **Response**: Audio file or some error message.
 
 * ### Getting supported Playlists
@@ -226,3 +227,14 @@ Example -
 		]
 	}
 	```
+
+* ### Streaming content
+	* **Type**: `GET`
+	* **Location**: `/api/v1/stream`
+	* **Parameters**:
+
+		| Term | Explaination |
+		|------|--------------|
+		|`url`| Encoded URL as recieved from `/api/v1/g`|
+
+	* **Response**: `m4a` audio stream or some error.

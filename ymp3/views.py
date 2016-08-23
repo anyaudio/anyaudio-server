@@ -1,4 +1,8 @@
 import traceback
+
+import requests
+from flask import Response
+
 from ymp3 import logger
 from flask import jsonify, request, render_template, url_for, make_response, Markup
 from subprocess import check_output, call
@@ -44,6 +48,7 @@ def download_file():
     """
     try:
         url = request.args.get('url')
+        download_format = request.args.get('format', 'm4a')
         try:
             abr = int(request.args.get('bitrate', '128'))
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
@@ -53,22 +58,29 @@ def download_file():
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']
-        filename = get_filename_from_title(data['title'])
+        filename = get_filename_from_title(data['title'], ext='')
         m4a_path = 'static/%s.m4a' % vid_id
         mp3_path = 'static/%s.mp3' % vid_id
         # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
         # download and convert
         command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
-        command = get_ffmpeg_path()
-        command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
-        call(command, shell=True)  # shell=True only works, return ret_code
-        data = open(mp3_path, 'r').read()
+        if download_format == 'mp3':
+            command = get_ffmpeg_path()
+            command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
+            call(command, shell=True)  # shell=True only works, return ret_code
+            data = open(mp3_path, 'r').read()
+            content_type = 'audio/mpeg'  # or audio/mpeg3'
+            filename += '.mp3'
+        else:
+            data = open(m4a_path, 'r').read()
+            content_type = 'audio/mp4'
+            filename += '.m4a'
         response = make_response(data)
         # set headers
         # http://stackoverflow.com/questions/93551/how-to-encode-the-filename-
         response.headers['Content-Disposition'] = 'attachment; filename="%s"' % filename
-        response.headers['Content-Type'] = 'audio/mpeg'  # or audio/mpeg3
+        response.headers['Content-Type'] = content_type
         response.headers['Content-Length'] = str(len(data))
         # remove files
         delete_file(m4a_path)
@@ -272,3 +284,21 @@ def get_playlists():
     }
 
     return jsonify(response)
+
+
+@app.route('/api/v1/stream')
+@record_request
+def stream():
+    url = request.args.get('url')
+
+    try:
+        url = decode_data(get_key(), url)['url']
+    except Exception:
+        return 'Bad URL', 400
+
+    def generate_data():
+        r = requests.get(url, stream=True)
+        for data_chunk in r.iter_content(chunk_size=2048):
+            yield data_chunk
+
+    return Response(generate_data(), mimetype='audio/mp4')

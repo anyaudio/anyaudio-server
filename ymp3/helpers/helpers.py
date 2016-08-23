@@ -42,7 +42,7 @@ def get_video_info_ydl(vid_id):
         return {}
 
 
-def get_filename_from_title(title):
+def get_filename_from_title(title, ext='.mp3'):
     """
     Creates a filename from title
     """
@@ -51,7 +51,7 @@ def get_filename_from_title(title):
     title = HTMLParser().unescape(title)
     for _ in FILENAME_EXCLUDE:
         title = title.replace(_, ' ')  # provide readability with space
-    return title[:40] + '.mp3'  # TODO - smart hunt
+    return title[:40] + ext  # TODO - smart hunt
 
 
 def html_unescape(text):
