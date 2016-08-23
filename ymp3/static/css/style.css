@@ -430,15 +430,36 @@ body{
 
 /* Position the content inside the overlay */
 #nav-overlay .overlay-content {
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 500px;
 	position: relative;
 	top: 25%; /* 25% from the top */
 	width: 100%; /* 100% width */
 	text-align: center; /* Centered text/links */
 	margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+	display: flex;
+	flex-direction: row;
 }
 
 #nav-overlay .overlay-content a.active{
 	color: rgba(244, 67, 54,0.75);
+}
+
+.overlay-content .about{
+	text-align: left;
+	flex: 1;
+	padding: 0 2rem;
+	font-size: 1.6rem;
+}
+
+.overlay-content .nav-links{
+	border-right: 5px solid rgba(244, 67, 54,0.75);
+	text-align: right;
+	padding: 0 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 	/* The navigation links inside the overlay */
