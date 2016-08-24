@@ -153,9 +153,11 @@
 <script>
   $(document).ready(function(){
     window.history.pushState("object or string", "Title", "/explore");//Removes get parameter from address bar
+
+//    Loads proper result according to data received from homepage
+//    Options:1.Search Result, 2.Playlist item
     var queryString = {{ query }}
     var playlist = {{ playlist }}
-    console.log(playlist);
     if(queryString.length){//Searches for keyword received through get param
       $('#search-preloader').show();
       $('#ymp3-search input').val(queryString);
