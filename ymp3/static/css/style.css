@@ -349,7 +349,7 @@ body{
 	background-color: transparent;
 }
 
-.card-image:hover .overlay,.card-image.dwn-ready-card .overlay{
+.card-image:hover .card-overlay,.card-image.dwn-ready-card .card-overlay{
 	background-color: rgba(244, 67, 54,0.75);
 }
 
