@@ -426,6 +426,9 @@ body{
 	background-color: white; /* Black w/opacity */
 	overflow-x: hidden; /* Disable horizontal scroll */
 	transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 /* Position the content inside the overlay */
@@ -433,13 +436,13 @@ body{
 	margin-right: auto;
 	margin-left: auto;
 	max-width: 500px;
-	position: relative;
 	top: 25%; /* 25% from the top */
 	width: 100%; /* 100% width */
 	text-align: center; /* Centered text/links */
-	margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
 	display: flex;
 	flex-direction: row;
+	justify-content:center;
+	align-items: center;
 }
 
 #nav-overlay .overlay-content a.active{
@@ -460,6 +463,7 @@ body{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	line-height: 1;
 }
 
 	/* The navigation links inside the overlay */
