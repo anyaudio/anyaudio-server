@@ -8,7 +8,11 @@ $('#searchBtn').click(function(){
 	search_temp = $('.search_result').first().clone();
 	// reset
 	search_temp.show();
+	// stop loading previous audio
+	// http://stackoverflow.com/questions/4071872/html5-video-force-abort-of-buffering
 	search_temp.find('audio').attr('src', '');
+	search_temp.find('audio').load();
+	// set other defaults
 	search_temp.find('.download').text('Get Link');
 	search_temp.find('.download').attr('href', '#');
 	search_temp.find('audio').hide();
