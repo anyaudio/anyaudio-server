@@ -8,7 +8,7 @@ from flask import jsonify, request, render_template, url_for, make_response, Mar
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
 
-from helpers.search import get_videos, get_video_attrs
+from helpers.search import get_videos, get_video_attrs, extends_length
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title, \
     record_request
 from helpers.encryption import get_key, encode_data, decode_data
@@ -73,6 +73,8 @@ def download_file():
         command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
         if download_format == 'mp3':
+            if extends_length(data['length'], 20 * 60):  # sound more than 20 mins
+                raise Exception()
             command = get_ffmpeg_path()
             command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
             call(command, shell=True)  # shell=True only works, return ret_code
@@ -118,7 +120,7 @@ def get_link():
         retval = check_output(command.split())
         retval = retval.strip()
         if not LOCAL:
-            retval = encode_data(get_key(), id=vid_id, title=title, url=retval)
+            retval = encode_data(get_key(), id=vid_id, title=title, url=retval, length=data['length'])
             retval = url_for('download_file', url=retval)
 
         ret_dict = {
