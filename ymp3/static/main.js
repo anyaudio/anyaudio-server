@@ -12,6 +12,7 @@ $('#searchBtn').click(function(){
 	search_temp.find('.download').text('Get Link');
 	search_temp.find('.download').attr('href', '#');
 	search_temp.find('audio').hide();
+	search_temp.find('.thumb').attr('src', 'http://placehold.it/480x360.png?text=MusicGenie');
 	search_temp.unbind('click');
 	// delete
 	$('.search_result').remove();
