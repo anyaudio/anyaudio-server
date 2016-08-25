@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="Mofid Ansari">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,400,600" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <title>Youtube MP3 Downloader</title>
+</head>
+<body>
+<div class="main-wrapper">
+  <!--Header-->
+  <header>
+    <!--Navbar-->
+    <div class="navbar-fixed">
+      <nav class="nav--custom nav-white">
+        <div class="nav-wrapper text-center">
+          <a href="/" class="brand-logo">MusicGenie</a>
+          <div class="search search--alt">
+          <form id="ymp3-search" class="search-wrapper">
+              <input type="text" class="search-btn" placeholder="Search Your Favourite Song" name="keyword">
+              <button class="btn-icon-only line-height-1" type="submit"><i class="fa fa-search line-height-1 height-auto"></i></button>
+            </form>
+          </div>
+          <div class="nav-addons">
+            <a href="/#home-trending" class="explore smooth-scroll">Explore</a>
+            <a href="#!" id="menu-bar" class="menu-bar float-left"><i class="fa fa-bars height-auto" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!--/Header-->
+
+  <!--Main Container-->
+  <div class="main-contents container">
+    <div class="white-space space-md"></div>
+    <!--Result Message-->
+    <div id="result-keyword" class="result-tag text-center">
+      <h4></h4>
+    </div>
+    <div class="white-space space-sm"></div>
+
+    <!--Preloader-->
+    <div id="search-preloader">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-red">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-yellow">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-green">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+        <div class="white-space space-sm"></div>
+      </div>
+    </div>
+
+    <!--Results-->
+    <div id="search-result" class="result row">
+        <!--Result is loaded dynamically Here-->
+    </div>
+    <!--/Results-->
+
+    <!--Nav Overlay-->
+    <div id="nav-overlay" class="overlay">
+
+      <!-- Button to close the overlay navigation -->
+      <a href="#!" class="closebtn">&times;</a>
+
+      <!-- Overlay content -->
+      <div class="overlay-content font-200">
+        <div class="nav-links">
+          <a class="active" href="/">Home</a>
+          <a class="active" href="/#home-trending">Explore</a>
+        </div>
+        <div class="about">
+          <p><b>MusicGenie</b> - The one stop for all your music needs, delivered in a few clicks.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--/Main Container-->
+
+  <!--Footer Wrapper-->
+  <div class="bg-color-primary overflow-hidden">
+    <footer class="footer container row">
+
+      <!--Sitmap-->
+      <div class="footer-site-map col s4">
+        <ul class="footer-site-map__links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/#home-trending" class="smooth-scroll">Explore</a></li>
+        </ul>
+      </div>
+
+      <!--Logo-->
+      <div class="footer-logo col s4">MusicGenie</div>
+
+      <!--Social-->
+      <div class="footer-social col s4">
+        <ul class="social__links">
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-github-alt valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-twitter valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-facebook valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-google-plus valign" aria-hidden="true"></i></a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- js -->
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+<script src="../static/js/main_new.js"></script>
+<script>
+  $(document).ready(function(){
+    window.history.pushState("object or string", "Title", "/explore");//Removes get parameter from address bar
+
+//    Loads proper result according to data received from homepage
+//    Options:1.Search Result, 2.Playlist item
+    var queryString = {{ query }}
+    var playlist = {{ playlist }}
+    if(queryString.length){//Searches for keyword received through get param
+      $('#search-preloader').show();
+      $('#ymp3-search input').val(queryString);
+      loadResult(queryString);
+    }
+    else if(playlist.length){//loads playlist item through get param
+      $('#search-preloader').show();
+      loadResult(playlist,1);
+    }
+  })
+</script>
+</body>
+</html>

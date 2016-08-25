@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="Mofid Ansari">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,400,600" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <title>Youtube MP3 Downloader</title>
+</head>
+<body>
+<!--Main Wrapper-->
+<div class="main-wrapper">
+
+  <!--Header-->
+  <header>
+    <div class="navbar-fixed">
+      <nav class="nav--custom nav--transparent">
+        <div class="nav-wrapper text-center">
+          <a href="/" class="brand-logo">MusicGenie</a>
+          <div class="nav-addons">
+            <a href="#!" id="menu-bar" class="float-left"><i class="fa fa-bars" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!--/Header-->
+
+    <!--Nav Overlay-->
+    <div id="nav-overlay" class="overlay">
+
+      <!-- Button to close the overlay navigation -->
+      <a href="#!" class="closebtn">&times;</a>
+
+      <!-- Overlay content -->
+      <div class="overlay-content font-200">
+        <div class="nav-links">
+          <a class="active" href="/">Home</a>
+        </div>
+        <div class="about">
+          <p><b>MusicGenie</b> - The one stop for all your music needs, delivered in a few clicks.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </header>
+
+  <!--Home Header Section-->
+  <div class="home-header">
+    <div class="container">
+      <div class="search-exp">
+        <!--Search form-->
+        <div class="search search--lg">
+          <form action="explore" class="search-wrapper">
+            <input type="text" class="search-btn" placeholder="Search Your Favourite Song" name="q">
+            <button class="btn-icon-only" type="submit"><i class="fa fa-2x fa-search"></i></button>
+          </form>
+        </div>
+        <div class="white-space space-sm"></div>
+        <div class="or text-center"><span>OR</span></div>
+        <div class="white-space space-sm"></div>
+        <!--Explore Button-->
+        <div class="exp text-center">
+          <a href="#home-trending" class="smooth-scroll no-shadow waves-effect waves-light btn white color-primary btn-large">Explore <i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/Home Header-->
+
+  <!--Trending List-->
+  <div id="home-trending" class="container">
+    <div class="white-space space-md"></div>
+    <h1 class="text-center title-deco font-200">
+      <span>Trending Music</span>
+    </h1>
+    <div class="white-space space-sm"></div>
+    <!--Results are laoded dynamically here-->
+  </div>
+
+  <!--Footer-->
+  <div class="bg-color-primary overflow-hidden">
+    <footer class="footer container row">
+      <div class="footer-site-map col s4">
+        <ul class="footer-site-map__links">
+          <li><a href="/">Home</a></li>
+          <li><a class="smooth-scroll" href="/#home-trending">Explore</a></li>
+        </ul>
+      </div>
+      <div class="footer-logo col s4">MusicGenie</div>
+      <div class="footer-social col s4">
+        <ul class="social__links">
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-github-alt valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-twitter valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-facebook valign" aria-hidden="true"></i></a></li>
+          <li><a href="#!" class="valign-wrapper"><i class="fa fa-google-plus valign" aria-hidden="true"></i></a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+<!-- js -->
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+<script src="../static/js/main_new.js"></script>
+<script>
+  $(function() {
+
+    var playlistCount = 5;
+
+//    Smooth scroll
+    $('a[href*="#"]:not([href="#"]).smooth-scroll').click(function() {
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: target.offset().top
+          }, 1000);
+          return false;
+        }
+      }
+    });
+
+//    Sticky Nav bar
+    var $navbar = $(".nav--custom"),
+            y_pos = $navbar.offset().top,
+            height = $navbar.height();
+
+    $(document).scroll(function() {
+      var scrollTop = $(this).scrollTop();
+
+      if (scrollTop > y_pos + height) {
+        $navbar.addClass("nav-white","nav-sticky").animate({
+          top: 0
+        });
+        $navbar.removeClass("nav--transparent");
+      } else if (scrollTop <= y_pos) {
+        $navbar.removeClass("nav-white","nav-sticky").clearQueue().animate({
+          top: "-80px"
+        }, 0);
+        $navbar.addClass("nav--transparent");
+      }
+    });
+
+//    Initialise trending playlist
+    trendingInit(playlistCount);
+
+  });
+</script>
+</body>
+</html>
