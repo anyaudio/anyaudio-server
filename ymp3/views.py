@@ -153,6 +153,7 @@ def search():
         search_term = request.args.get('q')
         link = 'https://www.youtube.com/results?search_query=%s' % search_term
         link += '&sp=EgIQAQ%253D%253D'  # for only video
+        link += '&gl=IN'
         raw_html = open_page(link)
         vids = get_videos(raw_html)
         ret_vids = []
