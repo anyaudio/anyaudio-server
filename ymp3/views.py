@@ -10,7 +10,7 @@ from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title, \
-    record_request
+    record_request, add_cover
 from helpers.encryption import get_key, encode_data, decode_data
 from helpers.data import trending_playlist
 from helpers.database import get_trending, get_api_log
@@ -70,17 +70,20 @@ def download_file():
         mp3_path = 'static/%s.mp3' % vid_id
         # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
         # download and convert
-        command = 'wget -O %s %s' % (m4a_path, url)
+        command = 'wget -q -O %s %s' % (m4a_path, url)
         check_output(command.split())
+        add_cover(m4a_path, vid_id)
         if download_format == 'mp3':
             command = get_ffmpeg_path()
             command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
             call(command, shell=True)  # shell=True only works, return ret_code
-            data = open(mp3_path, 'r').read()
+            with open(mp3_path, 'r') as f:
+                data = f.read()
             content_type = 'audio/mpeg'  # or audio/mpeg3'
             filename += '.mp3'
         else:
-            data = open(m4a_path, 'r').read()
+            with open(m4a_path, 'r') as f:
+                data = f.read()
             content_type = 'audio/mp4'
             filename += '.m4a'
         response = make_response(data)

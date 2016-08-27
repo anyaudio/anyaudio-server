@@ -5,3 +5,4 @@ gunicorn
 eventlet
 greenlet
 psycopg2
+mutagen

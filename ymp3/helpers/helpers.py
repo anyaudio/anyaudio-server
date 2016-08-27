@@ -5,6 +5,8 @@ from flask import request
 from youtube_dl import YoutubeDL
 from HTMLParser import HTMLParser
 from database import log_api_call
+from mutagen.mp4 import MP4, MP4Cover
+from networking import open_page
 
 
 FILENAME_EXCLUDE = '<>:"/\|?*;'
@@ -74,3 +76,13 @@ def record_request(func):
         log_api_call(request)
         return func(*args, **kwargs)
     return wrapper
+
+
+def add_cover(filename, video_id):
+    raw_image = open_page('http://img.youtube.com/vi/%s/0.jpg' % video_id)
+
+    audio = MP4(filename)
+    cover = MP4Cover(raw_image)
+
+    audio['covr'] = [cover]
+    audio.save()
