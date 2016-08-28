@@ -61,7 +61,7 @@ def download_file():
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
         except ValueError:
             abr = 128
-        download_album_art = request.args.get('album_art', 'false').lower()
+        download_album_art = request.args.get('cover', 'false').lower()
         # decode info from url
         data = decode_data(get_key(), url)
         vid_id = data['id']
