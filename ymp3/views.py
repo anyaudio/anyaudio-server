@@ -61,6 +61,7 @@ def download_file():
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
         except ValueError:
             abr = 128
+        download_album_art = request.args.get('album_art', 'false').lower()
         # decode info from url
         data = decode_data(get_key(), url)
         vid_id = data['id']
@@ -72,7 +73,8 @@ def download_file():
         # download and convert
         command = 'wget -q -O %s %s' % (m4a_path, url)
         check_output(command.split())
-        add_cover(m4a_path, vid_id)
+        if download_album_art == 'true':
+            add_cover(m4a_path, vid_id)
         if download_format == 'mp3':
             command = get_ffmpeg_path()
             command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
