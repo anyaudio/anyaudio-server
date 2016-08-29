@@ -61,6 +61,7 @@ def download_file():
             abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
         except ValueError:
             abr = 128
+        download_album_art = request.args.get('cover', 'false').lower()
         # decode info from url
         data = decode_data(get_key(), url)
         vid_id = data['id']
@@ -70,9 +71,10 @@ def download_file():
         mp3_path = 'static/%s.mp3' % vid_id
         # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
         # download and convert
-        command = 'wget -q -O %s %s' % (m4a_path, url)
+        command = 'wget -O %s %s' % (m4a_path, url)
         check_output(command.split())
-        add_cover(m4a_path, vid_id)
+        if download_album_art == 'true':
+            add_cover(m4a_path, vid_id)
         if download_format == 'mp3':
             if extends_length(data['length'], 20 * 60):  # sound more than 20 mins
                 raise Exception()
@@ -155,6 +157,7 @@ def search():
         search_term = request.args.get('q')
         link = 'https://www.youtube.com/results?search_query=%s' % search_term
         link += '&sp=EgIQAQ%253D%253D'  # for only video
+        link += '&gl=IN'
         raw_html = open_page(link)
         vids = get_videos(raw_html)
         ret_vids = []
