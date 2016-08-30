@@ -141,9 +141,9 @@ Example -
 
 	| Term | Explaination |
 	|------|--------------|
-	|`number`| Max number of results to get.|
-	|`type`| Type of playlist to get data from. Defaults to `popular`|
-	|`offset`| Number of items to skip before returning the results. Defaults to 0. |
+	|`number`| Max number of results to get in each playlist. Defaults to 25.|
+	|`type`| Playlist type names separated by comma(s). Defaults to `popular`.|
+	|`offset`| Number of items to skip before returning the results in each playlist. Defaults to 0. |
 
 	* **Response**
 
@@ -157,31 +157,55 @@ Example -
 	{
 		"metadata": {
 			"count": "2",
-			"type": "popular",
+			"type": "popular,indian",
 			"offset": "1"
 		},
-		"results" : [
-			{
-				"get_url": "/api/v1/g?url=fSRrZiQ8IiR1blBnZFE5W2tydSQuIiR2a3ZuZyQ8IiRQd2VuZ3tjIi8iRENVVSJUY3BrIi8iQ2NsYyJoZ2N2IkN4cGdndiJNand0b2siKGNvcj0iSXd0ayJJY3BpdXZjJH8=",
-				"id": "slNebO7Yips",
-				"length": "4:34",
-				"thumb": "http://img.youtube.com/vi/slNebO7Yips/0.jpg",
-				"title": "Nucleya - BASS Rani - Aaja feat Avneet Khurmi &amp; Guri Gangsta",
-				"uploader": "NUCLEYA",
-				"views": "1,078,918",
-				"description": "Some Description <strong>MAY</strong> contain HTML stuff"
-			},
-			{
-				"get_url": "/api/v1/g?url=fSRrZiQ8IiRmc1RJOFJbTXl6eSQuIiR2a3ZuZyQ8IiROY3dwaSJJY3ljZWpjIkh2IkN4cGdndiJNand0b2sifiJQV0VOR1tDIn4iRENVVSJUQ1BLIn4iSHdubiJDbmR3byR/",
-				"id": "dqRG6PYKwxw",
-				"length": "3:35",
-				"thumb": "http://img.youtube.com/vi/dqRG6PYKwxw/0.jpg",
-				"title": "Laung Gawacha Ft Avneet Khurmi | NUCLEYA | BASS RANI | Full Album",
-				"uploader": "Lyrics Arena",
-				"views": "575,811",
-				"description": "Some Description <strong>MAY</strong> contain HTML stuff"
-			},
-		]
+		"results" : {
+			"popular": [
+				{
+					"get_url": "/api/v1/g?url=fSRrZiQ8IiR1blBnZFE5W2tydSQuIiR2a3ZuZyQ8IiRQd2VuZ3tjIi8iRENVVSJUY3BrIi8iQ2NsYyJoZ2N2IkN4cGdndiJNand0b2siKGNvcj0iSXd0ayJJY3BpdXZjJH8=",
+					"id": "slNebO7Yips",
+					"length": "4:34",
+					"thumb": "http://img.youtube.com/vi/slNebO7Yips/0.jpg",
+					"title": "Nucleya - BASS Rani - Aaja feat Avneet Khurmi &amp; Guri Gangsta",
+					"uploader": "NUCLEYA",
+					"views": "1,078,918",
+					"description": "Some Description <strong>MAY</strong> contain HTML stuff"
+				},
+				{
+					"get_url": "/api/v1/g?url=fSRrZiQ8IiR1blBnZFE5W2tydSQuIiR2a3ZuZyQ8IiRQd2VuZ3tjIi8iRENVVSJUY3BrIi8iQ2NsYyJoZ2N2IkN4cGdndiJNand0b2siKGNvcj0iSXd0ayJJY3BpdXZjJH8=",
+					"id": "slNebO7Yips",
+					"length": "4:34",
+					"thumb": "http://img.youtube.com/vi/slNebO7Yips/0.jpg",
+					"title": "Nucleya - BASS Rani - Aaja feat Avneet Khurmi &amp; Guri Gangsta",
+					"uploader": "NUCLEYA",
+					"views": "1,078,918",
+					"description": "Some Description <strong>MAY</strong> contain HTML stuff"
+				}
+			],
+			"indian": [
+				{
+					"get_url": "/api/v1/g?url=fSRrZiQ8IiRmc1RJOFJbTXl6eSQuIiR2a3ZuZyQ8IiROY3dwaSJJY3ljZWpjIkh2IkN4cGdndiJNand0b2sifiJQV0VOR1tDIn4iRENVVSJUQ1BLIn4iSHdubiJDbmR3byR/",
+					"id": "dqRG6PYKwxw",
+					"length": "3:35",
+					"thumb": "http://img.youtube.com/vi/dqRG6PYKwxw/0.jpg",
+					"title": "Laung Gawacha Ft Avneet Khurmi | NUCLEYA | BASS RANI | Full Album",
+					"uploader": "Lyrics Arena",
+					"views": "575,811",
+					"description": "Some Description <strong>MAY</strong> contain HTML stuff"
+				},
+				{
+					"get_url": "/api/v1/g?url=fSRrZiQ8IiRmc1RJOFJbTXl6eSQuIiR2a3ZuZyQ8IiROY3dwaSJJY3ljZWpjIkh2IkN4cGdndiJNand0b2sifiJQV0VOR1tDIn4iRENVVSJUQ1BLIn4iSHdubiJDbmR3byR/",
+					"id": "dqRG6PYKwxw",
+					"length": "3:35",
+					"thumb": "http://img.youtube.com/vi/dqRG6PYKwxw/0.jpg",
+					"title": "Laung Gawacha Ft Avneet Khurmi | NUCLEYA | BASS RANI | Full Album",
+					"uploader": "Lyrics Arena",
+					"views": "575,811",
+					"description": "Some Description <strong>MAY</strong> contain HTML stuff"
+				}
+			]
+		}
 	}
 	```
 

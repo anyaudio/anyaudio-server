@@ -195,19 +195,26 @@ def get_latest():
     except ValueError:
         offset = 0
 
-    type = request.args.get('type', 'popular')
-    if type not in [_[0] for _ in trending_playlist]:
-        type = 'popular'
+    _type = request.args.get('type', 'popular').split(',')
 
-    ret_vids = get_trending(type, max_count, offset=offset, get_url_prefix='/api/v1/g?url=')
+    ret_meta = {
+        "count": max_count,
+        "offset": offset,
+        "type": ""
+    }
+
+    result_dict = {}
+    for i in _type:
+        if i in [_[0] for _ in trending_playlist]:
+            ret_meta["type"] += i + ","
+            result_dict[i] = get_trending(i, max_count, offset, get_url_prefix='/api/v1/g?url=')
+
+    if len(ret_meta) > 0:
+        ret_meta["type"] = ret_meta["type"][:-1]
 
     ret_dict = {
-        'metadata': {
-            'count': len(ret_vids),
-            'type': type,
-            'offset': offset
-        },
-        'results': ret_vids
+        'metadata': ret_meta,
+        'results': result_dict
     }
 
     return jsonify(ret_dict)
