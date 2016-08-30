@@ -76,6 +76,7 @@ def get_video_attrs(html):
         get_key(), id=result['id'],
         title=result['title'], length=result['length']
     )
+    result['stream_url'] = result['get_url'].replace('/g?', '/stream?', 1)
     return result
 
 

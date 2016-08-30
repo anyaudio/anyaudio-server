@@ -16,6 +16,8 @@ $('#searchBtn').click(function(){
 	search_temp.find('.download').text('Get Link');
 	search_temp.find('.download').attr('href', '#');
 	search_temp.find('audio').hide();
+	search_temp.find('.stream').show();
+	search_temp.find('.stream').text('Stream');
 	search_temp.find('.thumb').attr('src', 'http://placehold.it/480x360.png?text=MusicGenie');
 	search_temp.unbind('click');
 	// delete
@@ -37,6 +39,8 @@ $('#searchBtn').click(function(){
 			$(search_x).find('.views').text(data[i]['views'] + ' views');
 			$(search_x).find('.download').attr('data-get-url', data[i]['get_url']);
 			$(search_x).find('.download').click(get_download_link);
+			$(search_x).find('.stream').attr('data-stream-url', data[i]['stream_url']);
+			$(search_x).find('.stream').click(start_streaming);
 			// set d/l filename
 			$(search_x).find('.download').attr('download', data[i]['title']);
 			// console.log(search_x);
@@ -64,10 +68,26 @@ function get_download_link(event){
 		elem.click(download_start);
 		elem.attr('href', data['url']);
 		elem.attr('target', '_blank');
-		elem.siblings('audio').attr('src', data['url'].replace('/api/v1/d', 'api/v1/stream'));
-		elem.siblings('audio').show();
 		return false;
 	});
+}
+
+// starts the streaming
+function start_streaming(event){
+	event.preventDefault();
+	elem = $(event.target);
+	elem.text('Connecting...');
+	elem.unbind('click');
+	$.getJSON(elem.attr('data-stream-url'), success=function(data, textStatus, jqXHR){
+		if (data['status'] != 200){
+			elem.text('Failed');
+			return false;
+		}
+		elem.hide();
+		elem.siblings('audio').attr('src', data['url']);
+		elem.siblings('audio').show();
+	});
+	return false;
 }
 
 // after download button is clicked

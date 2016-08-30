@@ -1,6 +1,7 @@
 import os
 from functools import wraps
-from ymp3 import LOCAL
+from subprocess import check_output
+from ymp3 import LOCAL, logger
 from flask import request
 from youtube_dl import YoutubeDL
 from HTMLParser import HTMLParser
@@ -86,3 +87,13 @@ def add_cover(filename, video_id):
 
     audio['covr'] = [cover]
     audio.save()
+
+
+def get_download_link_youtube(vid_id, frmat):
+    """
+    gets the download link of a youtube video
+    """
+    command = 'youtube-dl https://www.youtube.com/watch?v=%s -f %s -g' % (vid_id, frmat)
+    logger.info(command)
+    retval = check_output(command.split())
+    return retval.strip()

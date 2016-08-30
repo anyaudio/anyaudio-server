@@ -10,7 +10,7 @@ from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs, extends_length
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title, \
-    record_request, add_cover
+    record_request, add_cover, get_download_link_youtube
 from helpers.encryption import get_key, encode_data, decode_data
 from helpers.data import trending_playlist
 from helpers.database import get_trending, get_api_log
@@ -119,11 +119,7 @@ def get_link():
         data = decode_data(get_key(), url)
         vid_id = data['id']
         title = data['title']
-        command = 'youtube-dl https://www.youtube.com/watch?v=%s -f m4a/bestaudio' % vid_id
-        command += ' -g'
-        logger.info(command)
-        retval = check_output(command.split())
-        retval = retval.strip()
+        retval = get_download_link_youtube(vid_id, 'm4a/bestaudio')
         if not LOCAL:
             retval = encode_data(get_key(), id=vid_id, title=title, url=retval, length=data['length'])
             retval = url_for('download_file', url=retval)
@@ -165,6 +161,7 @@ def search():
             temp = get_video_attrs(_)
             if temp:
                 temp['get_url'] = '/api/v1' + temp['get_url']
+                temp['stream_url'] = '/api/v1' + temp['stream_url']
                 ret_vids.append(temp)
 
         ret_dict = {
@@ -316,6 +313,27 @@ def get_playlists():
 @record_request
 def stream():
     url = request.args.get('url')
+    try:
+        vid_id = decode_data(get_key(), url)['id']
+        url = get_download_link_youtube(
+            vid_id,
+            'webm[abr<=64]/webm[abr<=80]/m4a[abr<=64]/[abr<=96]/m4a'
+        )
+    except Exception:
+        return jsonify(status=400)
+    return jsonify(
+        status=200,
+        url=url_for(
+            'stream_handler',
+            url=encode_data(get_key(), url=url)
+        )
+    )
+
+
+@app.route('/api/v1/stream_handler')
+@record_request
+def stream_handler():
+    url = request.args.get('url')
 
     try:
         url = decode_data(get_key(), url)['url']
@@ -324,8 +342,14 @@ def stream():
 
     def generate_data():
         r = requests.get(url, stream=True)
+        logger.info('Streaming.. %s (%s bytes)' % (
+            r.headers.get('content-type'),
+            r.headers.get('content-length')
+        ))
         for data_chunk in r.iter_content(chunk_size=2048):
             yield data_chunk
 
-    return Response(generate_data(), mimetype='audio/mp4')
-    # headers={'X-Content-Duration': 50}
+    mime = 'audio/mp4'
+    if url.find('mime=audio%2Fwebm') > -1:
+        mime = 'audio/webm'
+    return Response(generate_data(), mimetype=mime)
