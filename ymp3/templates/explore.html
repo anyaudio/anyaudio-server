@@ -21,9 +21,25 @@
         <div class="nav-wrapper text-center">
           <a href="/" class="brand-logo">MusicGenie</a>
           <div class="search search--alt">
-          <form id="ymp3-search" class="search-wrapper">
-              <input type="text" class="search-btn" placeholder="Search Your Favourite Song" name="keyword">
-              <button class="btn-icon-only line-height-1" type="submit"><i class="fa fa-search line-height-1 height-auto"></i></button>
+          <form id="ymp3-search" class="search-wrapper" autocomplete="off">
+            <input type="text" class="search-btn ymp3-search-input" placeholder="Search Your Favourite Song" name="keyword">
+            <div class="search-suggestions">
+              <ul class="search-suggestions-res">
+              </ul>
+              <div class="popular-suggestions">
+                <h4 class="popular-suggestions__title">Popular Playlist</h4>
+                <ul class="popular-suggestions_res">
+                  <li><a href="#!">popular</a></li>
+                  <li><a href="#!">latest</a></li>
+                  <li><a href="#!">pop</a></li>
+                  <li><a href="#!">electronic</a></li>
+                  <li><a href="#!">hiphop</a></li>
+                  <li><a href="#!">country</a></li>
+                  <li><a href="#!">india</a></li>
+                </ul>
+              </div>
+            </div>
+            <button class="btn-icon-only line-height-1" type="submit"><i class="fa fa-search line-height-1 height-auto"></i></button>
             </form>
           </div>
           <div class="nav-addons">
@@ -118,6 +134,7 @@
   </div>
   <!--/Main Container-->
 
+
   <!--Footer Wrapper-->
   <div class="bg-color-primary overflow-hidden">
     <footer class="footer container row">
@@ -162,6 +179,8 @@
       $('#search-preloader').show();
       $('#ymp3-search input').val(queryString);
       loadResult(queryString);
+      $('.search-suggestions').addClass('searching');
+      loadAutoSuggest(queryString);//Loads the auto suggest
     }
     else if(playlist.length){//loads playlist item through get param
       $('#search-preloader').show();

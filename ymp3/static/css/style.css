@@ -118,6 +118,14 @@ body{
 	justify-content: center;
 }
 
+ul.list-normal{
+	padding: 0;
+}
+
+ul.list-normal li{
+	list-style: none;
+}
+
 /**********************
 **Navbar Custom Style**
 ***********************/
@@ -188,6 +196,105 @@ body{
 	color: rgba(244, 67, 54,0.75);
 }
 
+.nav--custom form.search-wrapper{
+	position: relative;
+}
+
+input:focus ~ div.search-suggestions{
+	opacity: 1 !important;
+	display: block;
+}
+
+div.search-suggestions:hover{
+	opacity: 1 !important;
+	display: block;
+}
+
+.nav--custom .search-suggestions, .home-header .search-suggestions{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	background-color: whitesmoke;
+	top: 75px;
+	z-index: 998;
+	opacity: 0;
+	display: none;
+	transition: all 0.35s;
+}
+
+.home-header .search-suggestions{
+	top: 108px;
+	background-color: white;
+	height: 0;
+}
+
+.home-header .search-suggestions.searching{
+	height: auto;
+}
+
+.search-suggestions::before{
+	content: ' ';
+	position: absolute;
+	top: -25px;
+	margin-left: -15px;
+	width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-bottom: 25px solid whitesmoke;
+}
+.home-header .search-suggestions::before{
+	border-bottom: 25px solid white;
+	opacity:0;
+}
+
+.home-header .search-suggestions.searching::before{
+	opacity: 1;
+}
+.nav--custom div.search-suggestions li,.home-header div.search-suggestions li{
+	float: none;
+	line-height: 3;
+	text-align: left;
+}
+
+.home-header div.search-suggestions li{
+	padding-left: 2rem;
+		cursor: pointer;
+}
+
+.home-header div.search-suggestions li:hover{
+	background-color: whitesmoke;
+}
+
+div.search-suggestions li a{
+	text-transform: capitalize;
+	font-size: 1.75rem;
+	color: rgba(51,51,51,1);
+	padding: 0 2rem;
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.popular-suggestions .popular-suggestions__title{
+	margin-top: 2.5rem;
+	text-align: left;
+	padding-left: 1.5rem;
+}
+
+.search-suggestions.searching .popular-suggestions{
+	display: none;
+}
+
+.search-suggestions-res {
+	display: none;
+}
+
+.search-suggestions.searching .search-suggestions-res {
+	display: block;
+}
+
 /**********************
 **Home Header Style****
 ***********************/
@@ -223,6 +330,7 @@ body{
 	padding: 1rem 1.5rem;
 	color: rgba(244, 67, 54,0.75);
 	text-align: center;
+	position: relative;
 }
 
 .search--alt .search-wrapper{
@@ -400,7 +508,6 @@ body{
 	right: 0;
 	top: 0;
 	background-color: white; /* Black fallback color */
-	background-color: white; /* Black w/opacity */
 	overflow-x: hidden; /* Disable horizontal scroll */
 	transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 	display: flex;
