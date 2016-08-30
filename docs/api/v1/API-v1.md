@@ -236,6 +236,20 @@ Example -
 
 		| Term | Explaination |
 		|------|--------------|
-		|`url`| Encoded URL as recieved from `/api/v1/g`|
+		|`url`| Encoded URL as recieved from the search|
 
-	* **Response**: `m4a` audio stream or some error.
+	* **Response**:
+
+
+	| Term | Explaination |
+	|------|--------------|
+	|`status`| Status code |
+	|`url`| Url to stream from |
+
+	Example -
+	```json
+	{
+		"status": 200,
+		"url": "/api/v1/stream_handler?url=asfj2jJSAJDAJASKK898989"
+	}
+	```
