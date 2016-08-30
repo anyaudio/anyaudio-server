@@ -2,7 +2,7 @@ import os
 from functools import wraps
 from subprocess import check_output
 from ymp3 import LOCAL, logger
-from flask import request
+from flask import request, jsonify
 from youtube_dl import YoutubeDL
 from HTMLParser import HTMLParser
 from database import log_api_call
@@ -97,3 +97,16 @@ def get_download_link_youtube(vid_id, frmat):
     logger.info(command)
     retval = check_output(command.split())
     return retval.strip()
+
+
+def make_error_response(msg, endpoint, code=500):
+    """
+    returns the error Response
+    """
+    return jsonify({
+        'status': code,
+        'requestLocation': endpoint,
+        'developerMessage': msg,
+        'userMessage': 'Some error occurred',
+        'errorCode': '500-001'
+    }), code

@@ -10,7 +10,7 @@ from ymp3 import app, LOCAL
 
 from helpers.search import get_videos, get_video_attrs, extends_length
 from helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title, \
-    record_request, add_cover, get_download_link_youtube
+    record_request, add_cover, get_download_link_youtube, make_error_response
 from helpers.encryption import get_key, encode_data, decode_data
 from helpers.data import trending_playlist
 from helpers.database import get_trending, get_api_log
@@ -132,15 +132,7 @@ def get_link():
         return jsonify(ret_dict)
     except Exception as e:
         logger.info(traceback.format_exc())
-        return jsonify(
-            {
-                'status': 500,
-                'requestLocation': '/api/v1/g',
-                'developerMessage': str(e),
-                'userMessage': 'Some error occurred',
-                'errorCode': '500-001'
-            }
-        ), 500
+        return make_error_response(msg=str(e), endpoint='/api/v1/g')
 
 
 @app.route('/api/v1/search')
@@ -174,13 +166,7 @@ def search():
             'requestLocation': '/api/v1/search'
         }
     except Exception as e:
-        ret_dict = {
-            'status': 500,
-            'requestLocation': '/api/v1/search',
-            'developerMessage': str(e),
-            'userMessage': 'Some error occurred',
-            'errorCode': '500-001'
-        }
+        return make_error_response(msg=str(e), endpoint='/api/v1/search')
 
     return jsonify(ret_dict)
 
@@ -319,8 +305,8 @@ def stream():
             vid_id,
             'webm[abr<=64]/webm[abr<=80]/m4a[abr<=64]/[abr<=96]/m4a'
         )
-    except Exception:
-        return jsonify(status=400)
+    except Exception as e:
+        return make_error_response(msg=str(e), endpoint='api/v1/stream')
     return jsonify(
         status=200,
         url=url_for(
