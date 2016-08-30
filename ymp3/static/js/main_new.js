@@ -117,7 +117,7 @@ function loadResult(searchInput,resType){
 	/*Result Type
 	0:For Search
 	1:for PlayList*/
-	var resAPI = ['/api/v1/search?q=','/api/v1/trending?type='];
+	var resAPI = ['/api/v1/search?q=','/api/v1/trending?number=40&type='];
 
 	resType = typeof resType !=='undefined'?resType:0;
 
@@ -127,8 +127,15 @@ function loadResult(searchInput,resType){
 		var dataResult = data['results'];
 		//var searchKeyword = data['metadata']['q'];
 
-		if(!dataResult.length) {
-			$('#result-keyword h4').html('No <span class="color-primary">"result" </span>found');
+		if(!dataResult.length && resType == 0) {
+			$('#result-keyword h4').html('No results found');
+			$('#result-keyword').show();
+			$('#search-preloader').hide();
+			return false;
+		}
+
+		if(!dataResult[data["metadata"]["type"]].length && resType == 1) {
+			$('#result-keyword h4').html('No results found');
 			$('#result-keyword').show();
 			$('#search-preloader').hide();
 			return false;
@@ -140,10 +147,18 @@ function loadResult(searchInput,resType){
 		else
 			$('#result-keyword h4').html('Showing results for <span class="color-primary">"'+data['metadata']['q']+'"</span>');
 
-		dataResult.forEach(function(res){
-			var resHtml;
-			$('#search-result').append(getCardHtml(res));
-		});
+		if(resType == 1) {
+			dataResult[data["metadata"]["type"]].forEach(function(res){
+				var resHtml;
+				$('#search-result').append(getCardHtml(res));
+			});
+
+		} else {
+			dataResult.forEach(function(res){
+				var resHtml;
+				$('#search-result').append(getCardHtml(res));
+			});
+		}
 		$('#result-keyword').show();
 		$('#search-preloader').hide();
 	})
@@ -156,13 +171,16 @@ function loadResult(searchInput,resType){
 function loadTrending(type,number){
 	$.getJSON('/api/v1/trending?type=' + type+'&number='+number, success=function(data, textStatus, jqXHR){
 		var dataResult = data['results'];
-		var searchKeyword = data['metadata']['type'];
-		var trendingCard = '';
+		var searchKeywords = data['metadata']['type'].split(",");
 
-		dataResult.forEach(function(res){
-			trendingCard += getCardHtml(res);
+		searchKeywords.forEach(function (res) {
+			var trendingCard = '';
+			dataResult[res].forEach(function(res1){
+				trendingCard += getCardHtml(res1);
+			});
+			$('#home-trending').append(getTrendingHtml(trendingCard,res));
 		});
-		$('#home-trending').append(getTrendingHtml(trendingCard,type));
+
 	})
 }
 
@@ -170,12 +188,15 @@ function loadTrending(type,number){
 Loads Trending section on homepage
 @param:count{int} number of results to load
 */
-function trendingInit(count){
+function trendingInit(){
 	$.getJSON('/api/v1/playlists', success=function(data, textStatus, jqXHR){
 		var results = data['results'];
-		for (var i = 0;i<count;i++){
-			loadTrending(results[i]['playlist'],4);
+		var type_str = '';
+		for (var i = 0;i<data["metadata"]["count"];i++){
+			type_str += results[i]["playlist"] + ',';
 		}
+		type_str = type_str.substring(0, type_str.length - 1);
+		loadTrending(type_str, 8);
 	})
 }
 

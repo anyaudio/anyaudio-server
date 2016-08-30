@@ -209,7 +209,7 @@ def get_latest():
             ret_meta["type"] += i + ","
             result_dict[i] = get_trending(i, max_count, offset, get_url_prefix='/api/v1/g?url=')
 
-    if len(ret_meta) > 0:
+    if len(ret_meta["type"]) > 0:
         ret_meta["type"] = ret_meta["type"][:-1]
 
     ret_dict = {

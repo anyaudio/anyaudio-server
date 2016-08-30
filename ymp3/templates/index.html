@@ -127,8 +127,6 @@
 <script>
   $(function() {
 
-    var playlistCount = 5;
-
 //    Smooth scroll
     $('a[href*="#"]:not([href="#"]).smooth-scroll').click(function() {
       if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -165,7 +163,7 @@
     });
 
 //    Initialise trending playlist
-      trendingInit(playlistCount);
+      trendingInit();
 
   });
 </script>
