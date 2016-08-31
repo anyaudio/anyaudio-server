@@ -196,7 +196,7 @@ function trendingInit(){
 			type_str += results[i]["playlist"] + ',';
 		}
 		type_str = type_str.substring(0, type_str.length - 1);
-		loadTrending(type_str, 8);
+		loadTrending(type_str, 4);
 	})
 }
 
