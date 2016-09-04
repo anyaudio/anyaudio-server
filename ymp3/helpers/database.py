@@ -130,7 +130,7 @@ def log_api_call(obj):
 
 def get_api_log(number=10, offset=0):
     sql_logs = '''select args, access_route, base_url, path, method, user_agent, request_time at time zone 'IST'
-from api_log order by request_time desc limit %s offset %s'''
+    from api_log where user_agent <> \'Ruby\' order by request_time desc limit %s offset %s'''
 
     sql_day_path = '''select t1.path, count(*) from
     (select path from api_log where
