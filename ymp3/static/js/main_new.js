@@ -134,7 +134,7 @@ function loadResult(searchInput,resType){
 			return false;
 		}
 
-		if(!dataResult[data["metadata"]["type"]].length && resType == 1) {
+		if(!data["metadata"]["count"] && resType == 1) {
 			$('#result-keyword h4').html('No results found');
 			$('#result-keyword').show();
 			$('#search-preloader').hide();
