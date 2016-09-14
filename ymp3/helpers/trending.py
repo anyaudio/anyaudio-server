@@ -31,7 +31,10 @@ def get_trending_videos(html):
                     'uploader': raw_result[3].decode('utf8'),
                     'length': raw_result[4],
                     'views': get_views(html),
-                    'get_url': encode_data(get_key(), id=raw_result[0], title=raw_result[2].strip()),
+                    'get_url': encode_data(
+                        get_key(), id=raw_result[0],
+                        title=raw_result[2].strip(), length=raw_result[4]
+                    ),
                     'description': html_unescape(get_description(html))
                 }
             )
