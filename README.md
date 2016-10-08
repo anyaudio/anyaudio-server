@@ -18,7 +18,7 @@ bash run.sh
 
 ## API
 
-See [API v1 documentation.](docs/api/v1/API-v1.md)
+See [API v1 documentation](docs/api/v1/API-v1.md)
 
 
 ## Deployment on Openshift instructions
