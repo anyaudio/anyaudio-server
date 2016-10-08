@@ -150,7 +150,7 @@ def get_api_log(number=10, offset=0):
     sql_popular_query = '''select * from (select q[1] as query, count(*) as cnt from
 (select regexp_matches(args, 'q": \[\"(.*)\"') as q, request_time from api_log where
  path like '/api/v_/search') as d where (extract(epoch from CURRENT_TIMESTAMP ) -
- extract(epoch from request_time))/60/60/24 <= 1 group by q[1]) t2 order by cnt desc limit 9;'''
+ extract(epoch from request_time))/60/60/24/7 <= 1 group by q[1]) t2 order by cnt desc limit 9;'''
 
     con = psql_connection_pool.getconn()
     cur = con.cursor()
