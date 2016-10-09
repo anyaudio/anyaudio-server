@@ -71,7 +71,7 @@ def download_file():
         mp3_path = 'static/%s.mp3' % vid_id
         # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
         # download and convert
-        command = 'wget -O %s %s' % (m4a_path, url)
+        command = 'curl -o %s %s' % (m4a_path, url)
         check_output(command.split())
         if download_album_art == 'true':
             add_cover(m4a_path, vid_id)
