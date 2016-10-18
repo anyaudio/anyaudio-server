@@ -29,6 +29,12 @@ def home_beta():
     return render_template('/index.html')
 
 
+@app.route('/terms-of-use')
+@record_request
+def terms_of_use():
+    return render_template('/terms-of-use.html')
+
+
 @app.route('/explore')
 @record_request
 def explore():

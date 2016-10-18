@@ -551,7 +551,7 @@ div.search-suggestions li a{
 	align-items: center;
 }
 
-#nav-overlay .overlay-content a.active{
+#nav-overlay .overlay-content .nav-links a.active{
 	color: rgba(244, 67, 54,0.75);
 }
 
@@ -573,7 +573,7 @@ div.search-suggestions li a{
 }
 
 /* The navigation links inside the overlay */
-#nav-overlay.overlay a {
+#nav-overlay.overlay .nav-links a {
 	padding: 8px;
 	text-decoration: none;
 	font-size: 36px;
@@ -583,7 +583,7 @@ div.search-suggestions li a{
 }
 
 /* When you mouse over the navigation links, change their color */
-#nav-overlay.overlay a:hover,#nav-overlay.overlay a:focus {
+#nav-overlay.overlay .nav-links a:hover,#nav-overlay.overlay .nav-links a:focus {
 	color: rgba(244, 67, 54,1);
 }
 
@@ -593,6 +593,11 @@ div.search-suggestions li a{
 	top: 20px;
 	right: 45px;
 	font-size: 60px;
+	color: rgba(244, 67, 54,0.7);
+}
+
+#nav-overlay.overlay .closebtn:hover{
+	color: rgba(244, 67, 54,1);
 }
 
 /************************
@@ -799,13 +804,25 @@ input[type=range]+.thumb.active{
 	font-size: 1.25rem;
 	color: rgba(244, 67, 54,0.85);
 }
+
+.tandc-btn{
+	position: absolute;
+    bottom: 20px;
+    font-size: 1.8rem;
+    color: rgba(244, 67, 54,0.7);
+}
+
+.tandc-btn:hover{
+	color: rgb(244, 67, 54);
+}
+
 /************************
 ** Media Queries *********
 *************************/
 
 /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
 @media screen and (max-height: 450px) {
-	#nav-overlay .overlay a {font-size: 20px}
+	#nav-overlay .overlay .nav-links a {font-size: 20px}
 	#nav-overlay .overlay .closebtn {
 		font-size: 40px;
 		top: 15px;
