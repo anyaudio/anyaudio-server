@@ -17,13 +17,14 @@ from helpers.database import get_trending, get_api_log
 from helpers.networking import open_page
 
 
-@app.route('/')
+@app.route('/lite')
 @record_request
 def home():
     return render_template('/home.html')
 
 
 @app.route('/beta')
+@app.route('/')
 @record_request
 def home_beta():
     return render_template('/index.html')
