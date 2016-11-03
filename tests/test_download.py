@@ -1,4 +1,5 @@
 import unittest
+import requests
 from tests import YMP3TestCase
 
 
@@ -38,6 +39,16 @@ class TestDownload(YMP3TestCase):
         self.assertIn(
             '.m4a', resp.headers['Content-Disposition'], resp.headers['Content-Disposition']
         )
+
+
+class TestDownloadV2(YMP3TestCase):
+    def test_successful_download(self):
+        result = self._search_v2('Payphone Maroon 5', just_results=True)
+        get_url = result[0]['get_url']
+        # title = result[0]['title']
+        dl_url = self._get_dl_link(get_url, just_url=True)
+        resp = requests.get(dl_url)
+        self.assertTrue(len(resp.content) > 100000, resp)
 
 
 if __name__ == '__main__':
