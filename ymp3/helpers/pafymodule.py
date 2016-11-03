@@ -11,7 +11,7 @@ def get_download(url):
     audio_streams = vid.audiostreams
     return find_stream(
         audio_streams,
-        [['m4a', 128], ['m4a', 192], ['ogg', 128], ['ogg', 192], ['m4a', 256], ['*', 0]]
+        [['m4a', 128], ['m4a', 192], ['ogg', 128], ['ogg', 192], ['m4a', 300], ['*', 0]]
     )
 
 
@@ -25,7 +25,8 @@ def get_stream(url):
         audio_streams,
         [
             ['webm', 64], ['webm', 80], ['m4a', 64], ['webm', 128], ['webm', 192], ['m4a', 128],
-            ['webm', 256], ['m4a', 256], ['*', 0]
+            ['webm', 300], ['m4a', 300], ['*', 0]
+            # ^^ 300 used as bitrate sometimes varies slightly over 256, 300 has no side effects
         ]
     )
 
