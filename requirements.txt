@@ -6,3 +6,4 @@ eventlet
 greenlet
 psycopg2
 mutagen
+pafy
