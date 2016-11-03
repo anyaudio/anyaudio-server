@@ -1,5 +1,6 @@
 import unittest
 import json
+import requests
 from tests import YMP3TestCase
 
 
@@ -23,6 +24,20 @@ class TestStream(YMP3TestCase):
         """test the 5xx response in case of fake stream url"""
         resp = self.app.get('/api/v1/stream?url=somefalseurl')
         self.assertEqual(resp.status_code, 500)
+
+
+class TestStreamV2(YMP3TestCase):
+    def test_good_stream(self):
+        result = self._search_v2('Love Story', just_results=True)
+        stream_url = result[0]['stream_url']
+        self.assertIn('/v2/stream', stream_url, stream_url)
+        resp = self.app.get(stream_url)
+        self.assertNotIn('stream_handler', resp.data)
+        # stream and download audio
+        final_url = json.loads(resp.data)['url']
+        self.assertIn('googlevideo', final_url, final_url)
+        resp = requests.get(final_url)
+        self.assertTrue(len(resp.content) > 500 * 1000, resp)
 
 
 if __name__ == '__main__':
