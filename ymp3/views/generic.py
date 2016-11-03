@@ -1,5 +1,5 @@
 from flask import render_template, Markup, request
-from ymp3 import app, logger
+from ymp3 import app
 from ymp3.helpers.helpers import record_request
 
 

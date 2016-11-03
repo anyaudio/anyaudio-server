@@ -8,13 +8,13 @@ from flask import jsonify, request, render_template, url_for, make_response
 from subprocess import check_output, call
 from ymp3 import app, LOCAL
 
-from ymp3.helpers.search import get_videos, get_video_attrs, extends_length, get_suggestions
+from ymp3.helpers.search import get_videos, get_video_attrs, extends_length, get_suggestions, \
+    get_search_results_html, make_search_api_response
 from ymp3.helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title, \
     record_request, add_cover, get_download_link_youtube, make_error_response
 from ymp3.helpers.encryption import get_key, encode_data, decode_data
 from ymp3.helpers.data import trending_playlist
 from ymp3.helpers.database import get_trending, get_api_log
-from ymp3.helpers.networking import open_page
 
 
 @app.route('/api/v1/d')
@@ -114,30 +114,17 @@ def search():
     """
     try:
         search_term = request.args.get('q')
-        proxy_search_term = search_term + '(full song|remix|song|karaoke|instrumental|movie songs|album songs)'
-        link = 'https://www.youtube.com/results?search_query=%s' % proxy_search_term
-        link += '&sp=EgIQAQ%253D%253D'  # for only video
-        link += '&gl=IN'
-        raw_html = open_page(link)
+        raw_html = get_search_results_html(search_term)
         vids = get_videos(raw_html)
         ret_vids = []
         for _ in vids:
-            temp = get_video_attrs(_)
+            temp = get_video_attrs(_, removeLongResult=True)
             if temp:
                 temp['get_url'] = '/api/v1' + temp['get_url']
                 temp['stream_url'] = '/api/v1' + temp['stream_url']
                 temp['suggest_url'] = temp['get_url'].replace('/g?', '/suggest?', 1)
                 ret_vids.append(temp)
-
-        ret_dict = {
-            'metadata': {
-                'q': search_term,
-                'count': len(ret_vids)
-            },
-            'results': ret_vids,
-            'status': 200,
-            'requestLocation': '/api/v1/search'
-        }
+        ret_dict = make_search_api_response(search_term, ret_vids, '/api/v1/search')
     except Exception as e:
         return make_error_response(msg=str(e), endpoint='/api/v1/search')
 

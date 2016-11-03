@@ -3,6 +3,19 @@ from encryption import get_key, encode_data
 from .networking import open_page
 
 INF = float("inf")
+SEARCH_SUFFIX = ' (song|full song|remix|karaoke|instrumental)'
+
+
+def get_search_results_html(search_term):
+    """
+    gets search results html code for a search term
+    """
+    proxy_search_term = search_term + SEARCH_SUFFIX
+    link = 'https://www.youtube.com/results?search_query=%s' % proxy_search_term
+    link += '&sp=EgIQAQ%253D%253D'  # for only video
+    link += '&gl=IN'
+    raw_html = open_page(link)
+    return raw_html
 
 
 def get_videos(html):
@@ -23,7 +36,7 @@ def get_videos(html):
     return vid
 
 
-def get_video_attrs(html):
+def get_video_attrs(html, removeLongResult=True):
     """
     get video attributes from html
     """
@@ -69,7 +82,7 @@ def get_video_attrs(html):
     if len(result) != 8:
         return None
     # check length
-    if extends_length(result['length'], 20 * 60):
+    if removeLongResult and extends_length(result['length'], 20 * 60):
         return None
     # return
     result['get_url'] = '/g?url=' + encode_data(
@@ -135,3 +148,18 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
         )
 
     return ret_list
+
+
+def make_search_api_response(term, results, endpoint):
+    """
+    Returns the search API response given the above parameters
+    """
+    return {
+        'metadata': {
+            'q': term,
+            'count': len(results)
+        },
+        'results': results,
+        'status': 200,
+        'requestLocation': endpoint
+    }
