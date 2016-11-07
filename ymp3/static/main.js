@@ -18,12 +18,12 @@ $('#searchBtn').click(function(){
 	search_temp.find('audio').hide();
 	search_temp.find('.stream').show();
 	search_temp.find('.stream').text('Stream');
-	search_temp.find('.thumb').attr('src', 'http://placehold.it/480x360.png?text=MusicGenie');
+	search_temp.find('.thumb').attr('src', 'http://placehold.it/480x360.png?text=AnyAudio');
 	search_temp.unbind('click');
 	// delete
 	$('.search_result').remove();
 	// get new results
-	$.getJSON('/api/v1/search?q=' + search_text, success=function(data, textStatus, jqXHR){
+	$.getJSON('/api/v2/search?q=' + search_text, success=function(data, textStatus, jqXHR){
 		// create new
 		data = data['results'];
 		for (i=0; i<data.length; i++){
@@ -42,7 +42,7 @@ $('#searchBtn').click(function(){
 			$(search_x).find('.stream').attr('data-stream-url', data[i]['stream_url']);
 			$(search_x).find('.stream').click(start_streaming);
 			// set d/l filename
-			$(search_x).find('.download').attr('download', data[i]['title']);
+			$(search_x).find('.download').attr('download', data[i]['title'] + '.m4a');
 			// console.log(search_x);
 			$(search_x).addClass('flex_force'); // just flex doesn't work
 			search_x.appendTo('#container');
@@ -64,7 +64,7 @@ function get_download_link(event){
 			elem.removeAttr('href');
 			return false;
 		}
-		elem.text('Download');
+		elem.text('Download (Right click -> Save As)');
 		elem.click(download_start);
 		elem.attr('href', data['url']);
 		elem.attr('target', '_blank');
