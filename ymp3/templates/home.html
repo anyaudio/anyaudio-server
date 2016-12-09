@@ -45,9 +45,16 @@
       <span class="length">3:40</span><br><br>
       <a class="btn download" href="#" data-video="video_id">Get Link</a>
       <a class="btn stream" href="#">Stream</a>
-      <audio controls="controls" src="" preload="metadata" style="display: none; margin-left: 20px;">
-        Audio is not supported in your browser.
+
+      <audio controls style="display: none; margin-left: 20px;">
+        <source class="webm-audio" type="audio/webm">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats -->
+        <source class="m4a-audio" type="audio/mp4">
       </audio>
+
+     <!--  <audio controls="controls" src="" preload="metadata" style="display: none; margin-left: 20px;">
+        Audio is not supported in your browser.
+      </audio> -->
     </div>
   </div>
 

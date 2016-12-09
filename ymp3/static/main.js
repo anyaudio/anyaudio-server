@@ -10,7 +10,8 @@ $('#searchBtn').click(function(){
 	search_temp.show();
 	// stop loading previous audio
 	// http://stackoverflow.com/questions/4071872/html5-video-force-abort-of-buffering
-	search_temp.find('audio').attr('src', '');
+	search_temp.find('.webm-audio').attr('src', '');
+	search_temp.find('.m4a-audio').attr('src', '');
 	search_temp.find('audio').load();
 	// set other defaults
 	search_temp.find('.download').text('Get Link');
@@ -84,8 +85,15 @@ function start_streaming(event){
 			return false;
 		}
 		elem.hide();
-		elem.siblings('audio').attr('src', data['url']);
-		elem.siblings('audio').show();
+		var audio = elem.siblings('audio');
+		if (data['url'].search('audio%2Fwebm') > -1 || data['url'].search('audio/webm') > -1){
+			audio.find('.webm-audio').attr('src', data['url']);
+		} else {
+			audio.find('.m4a-audio').attr('src', data['url']);
+		}
+		audio.show();
+		audio.load();
+		audio[0].play();  // audio comes as array
 	});
 	return false;
 }
