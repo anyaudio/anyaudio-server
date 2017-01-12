@@ -16,6 +16,8 @@ $('#searchBtn').click(function(){
 	// set other defaults
 	search_temp.find('.download').text('Get Link');
 	search_temp.find('.download').attr('href', '#');
+	search_temp.find('.download_mp3').text('Download MP3');
+	search_temp.find('.download_mp3').attr('href', '#');
 	search_temp.find('audio').hide();
 	search_temp.find('.stream').show();
 	search_temp.find('.stream').text('Stream');
@@ -40,6 +42,11 @@ $('#searchBtn').click(function(){
 			$(search_x).find('.views').text(data[i]['views'] + ' views');
 			$(search_x).find('.download').attr('data-get-url', data[i]['get_url']);
 			$(search_x).find('.download').click(get_download_link);
+			$(search_x).find('.download_mp3').attr(
+				'data-api-link',
+				'http://www.youtubeinmp3.com/fetch/?format=JSON&video=http://www.youtube.com/watch?v=' + data[i]['id']
+			);
+			$(search_x).find('.download_mp3').click(start_mp3_download);
 			$(search_x).find('.stream').attr('data-stream-url', data[i]['stream_url']);
 			$(search_x).find('.stream').click(start_streaming);
 			// set d/l filename
@@ -94,6 +101,19 @@ function start_streaming(event){
 		audio.show();
 		audio.load();
 		audio[0].play();  // audio comes as array
+	});
+	return false;
+}
+
+// start mp3 download
+function start_mp3_download(event){
+	event.preventDefault();
+	elem = $(event.target);
+	elem.text('Please wait...');
+	elem.unbind('click');
+	$.getJSON(elem.attr('data-api-link'), success=function(data, textStatus, jqXHR){
+		elem.attr('href', data['link']);
+		elem.text('Click to download');
 	});
 	return false;
 }
