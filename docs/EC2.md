@@ -75,4 +75,5 @@ python scripts/run_ec2.sh
 
 #### Credits
 
+* https://gist.github.com/aviaryan/393fbb7d96b133d6dfbd430a21c5e73b
 * http://stackoverflow.com/questions/4632749/how-to-push-to-git-on-ec2
