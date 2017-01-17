@@ -13,9 +13,10 @@ do
     pkill -f gunicorn || true
     echo 'Killed old instance'
     # install ffmpeg (download at deploy because always use latest version)
-	bash scripts/set_ffmpeg.sh
+	# bash scripts/set_ffmpeg.sh
 	echo 'upgraded ffmpeg'
-    bash scripts/run_ec2.sh &
+	# http://stackoverflow.com/questions/7917324/git-post-commit-hook-as-a-background-task
+    nohup ./scripts/run_ec2.sh &>/dev/null &
     echo 'Server is live'
   fi
 done
