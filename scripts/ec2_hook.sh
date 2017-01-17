@@ -12,6 +12,10 @@ do
     echo 'Python requirements upgraded'
     pkill -f gunicorn || true
     echo 'Killed old instance'
+    # install ffmpeg (download at deploy because always use latest version)
+	bash scripts/set_ffmpeg.sh
+	echo 'upgraded ffmpeg'
+    bash scripts/run_ec2.sh &
     echo 'Server is live'
   fi
 done
