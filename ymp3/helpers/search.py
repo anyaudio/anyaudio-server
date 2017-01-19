@@ -122,6 +122,8 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
     ret_list = []
     for video in videos_html:
         _id = video[0]
+        if '&amp;list=' in _id:
+            continue
         title = video[1].strip('\n\t ')
         duration = video[2]
         uploader = video[3]
