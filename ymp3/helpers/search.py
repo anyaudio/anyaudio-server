@@ -1,5 +1,7 @@
 import re
 from encryption import get_key, encode_data
+
+from ymp3.helpers.helpers import html_unescape
 from .networking import open_page
 
 INF = float("inf")
@@ -47,7 +49,7 @@ def get_video_attrs(html, removeLongResult=True):
     temp = re.findall(regex, html)
     if len(temp) and len(temp[0]) == 2:
         result['id'] = temp[0][0]
-        result['title'] = temp[0][1]
+        result['title'] = temp[0][1].decode('utf-8')
     # length
     length_regex = 'video\-time.*?\>([^\<]+)'
     temp = re.findall(length_regex, html)
@@ -138,7 +140,7 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
         ret_list.append(
             {
                 "id": _id,
-                "title": title,
+                "title": html_unescape(title.decode('utf-8')),
                 "length": duration,
                 "uploader": uploader,
                 "thumb": 'http://img.youtube.com/vi/%s/0.jpg' % _id,
