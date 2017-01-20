@@ -10,54 +10,32 @@
   <meta name="author" content="Avi Aryan">
   <link rel="author" href="https://plus.google.com/u/0/+AviAryan/posts">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-  <title>Youtube Music Downloader</title>
+  <title>AnyAudio | Lite</title>
 </head>
 <body>
 
 <div class="header">
-  <h1>Youtube Music downloader</h1>
+  <h1>AnyAudio Lite</h1>
 </div>
 
 <div id="container">
     <div id="container" style="margin-bottom: 10px;">
         <a href="/">Switch to default version</a>
     </div>
-  <div id="search_group">
-    <input type="text" required="required" name="search" id="search" placeholder="Enter your search query" autocomplete="on" />
-    <button id="searchBtn">Go</button>
-  </div>
+
+    <form action="/lite/search" method="get">
+        <input type="text" name="q" placeholder="Enter your search query" autocomplete="on" style="width:80%;"/>
+        <input type="submit" value="GO" style="width: 10%;">
+    </form>
   <div id="terms_text">
     <small>By using this website, you agree to our <a href="/terms-of-use">Terms of Use</a></small>
   </div>
 
-  <div id="loading_text" style="display: none;">
-    Loading...
-  </div>
+    <h3>Popular Searches -</h3>
+    {% for item in searches %}
+        <a href="/lite/search?q={{ item.0 }}">{{ item.0 }}</a>
+    {% endfor %}
 
-  <div class="search_result" style="display: none;">
-    <div class="result_image">
-      <a class="thumb_link"><img src="http://placehold.it/480x360.png?text=MusicGenie" class="thumb"></a>
-    </div>
-    <div class="result_text">
-      <span class="title">Song Title</span><br>
-      <span class="uploader">SomeVEVO</span><br>
-      <span class="time">2 years ago</span> &middot; <span class="views">112,342 views</span><br>
-      <span class="length">3:40</span><br><br>
-      <a class="btn download" href="#" data-video="video_id">Get Link</a>
-      <a class="btn stream" href="#">Stream</a>
-      <a class="btn download_mp3" href="#" target="_blank">Download MP3</a>
-
-      <audio controls style="display: none; margin-left: 20px;">
-        <source class="webm-audio" type="audio/webm">
-        <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats -->
-        <source class="m4a-audio" type="audio/mp4">
-      </audio>
-
-     <!--  <audio controls="controls" src="" preload="metadata" style="display: none; margin-left: 20px;">
-        Audio is not supported in your browser.
-      </audio> -->
-    </div>
-  </div>
 
 </div>
 
