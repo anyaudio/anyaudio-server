@@ -130,6 +130,23 @@ def log_api_call(obj):
     psql_connection_pool.putconn(con)
 
 
+def get_popular_searches(cursor=None, number=10):
+    sql = '''select * from (select q[1] as query, count(*) as cnt from (
+select regexp_matches(args, 'q": \[\"(.*)\"') as q, request_time from api_log
+ where path like '/api/v_/search') as d where (extract(epoch from
+ CURRENT_TIMESTAMP ) - extract(epoch from request_time))/60/60/24/7 <= 1
+ group by q[1]) t2 order by cnt desc limit %s;'''
+    conn = None
+    if cursor is None:
+        conn = psql_connection_pool.getconn()
+        cursor = conn.cursor()
+    cursor.execute(sql, (number,))
+    rows = cursor.fetchall()
+    if conn:
+        conn.close()
+    return rows
+
+
 def get_api_log(number=10, offset=0):
     sql_logs = '''select args, access_route, base_url, path, method, user_agent, request_time at time zone 'IST'
     from api_log where user_agent <> \'Ruby\' order by request_time desc limit %s offset %s'''
@@ -148,11 +165,6 @@ def get_api_log(number=10, offset=0):
 
     sql_all_path = '''select path, count(*) from api_log group by path;'''
 
-    sql_popular_query = '''select * from (select q[1] as query, count(*) as cnt from
-(select regexp_matches(args, 'q": \[\"(.*)\"') as q, request_time from api_log where
- path like '/api/v_/search') as d where (extract(epoch from CURRENT_TIMESTAMP ) -
- extract(epoch from request_time))/60/60/24/7 <= 1 group by q[1]) t2 order by cnt desc limit 9;'''
-
     con = psql_connection_pool.getconn()
     cur = con.cursor()
 
@@ -165,8 +177,7 @@ def get_api_log(number=10, offset=0):
     cur.execute(sql_month_path)
     rows_month_path = cur.fetchall()
 
-    cur.execute(sql_popular_query)
-    rows_popular_query = cur.fetchall()
+    rows_popular_query = get_popular_searches(cursor=cur, number=10)
 
     cur.execute(sql_all_path)
     rows_all_path = cur.fetchall()
