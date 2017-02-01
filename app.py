@@ -2,7 +2,7 @@ from os import environ
 from subprocess import call
 
 from ymp3.helpers.database import init_databases
-from ymp3.schedulers import trending
+from ymp3.schedulers import trending, youtube_dl_upgrade
 
 
 if __name__ == '__main__':
@@ -13,6 +13,8 @@ if __name__ == '__main__':
     # Start schedulers
     trending_scheduler = trending.TrendingScheduler()
     trending_scheduler.start()
+    youtube_dl_upgrade_scheduler = youtube_dl_upgrade.YoutubeDLUpgrader()
+    youtube_dl_upgrade_scheduler.start()
 
     # http://docs.gunicorn.org/en/stable/settings.html
     cmd = 'gunicorn ymp3:app -w 4 --worker-class eventlet --reload --log-level info'
