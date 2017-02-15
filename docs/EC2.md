@@ -85,7 +85,7 @@ python scripts/run_ec2.sh
 * Create an elastic IP and associate it with EC2 instance. http://andnovar.tech/2014/05/03/pointing-godaddy-domain-aws-ec2-instance/
 * Now the EC2 url has changed so be sure to make the changes where necessary.
 * Change A record in your domain DNS tool to the elastic IP.
-* If you are using Cloudflare, change www to point to the IP.
+* If you are using Cloudflare, change www to point to the EC2 domain and change A record to IP.
 
 
 #### Credits
