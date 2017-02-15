@@ -9,4 +9,4 @@ export OPENSHIFT_POSTGRESQL_DB_USERNAME=aa
 export OPENSHIFT_POSTGRESQL_DB_PASSWORD=aa
 export POSTGRESQL_DB_NAME=anyaudio
 
-python app.py
+/home/ubuntu/miniconda2/bin/python app.py
