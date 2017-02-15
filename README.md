@@ -1,4 +1,4 @@
-# Youtube MP3 server
+# AnyAudio
 
 Download any song that this world ever heard, and that too in your favorite format MP3.
 

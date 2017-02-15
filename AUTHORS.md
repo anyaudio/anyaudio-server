@@ -1,4 +1,4 @@
-## List of Authors for Youtube MP3 Server
+## List of Authors for AnyAudio
 
 | Name | Github | EMail |
 |:----:|:------:|:-----:|
