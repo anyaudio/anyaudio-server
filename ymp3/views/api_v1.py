@@ -266,11 +266,18 @@ def get_playlists():
 @record_request
 def stream():
     url = request.args.get('url')
+    stream_settings = {
+        'lo': 'webm[abr<=64]/webm[abr<=80]/m4a[abr<=64]/[abr<=96]/m4a',
+        'md': 'webm[abr>=64][abr<=96]/[abr>=64][abr<=96]/webm[abr>=96][abr<=128]/webm/m4a',
+        'hi': 'webm/m4a'
+    }
     try:
-        vid_id = decode_data(get_key(), url)['id']
+        req = decode_data(get_key(), url)
+        vid_id = req['id']
+        quality = req.get('quality', 'md')
         url = get_download_link_youtube(
             vid_id,
-            'webm[abr<=64]/webm[abr<=80]/m4a[abr<=64]/[abr<=96]/m4a'
+            stream_settings[quality]
         )
     except Exception as e:
         return make_error_response(msg=str(e), endpoint='api/v1/stream')
