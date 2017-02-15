@@ -1,7 +1,8 @@
 ### Deploy on EC2
 
-* Create an EC2 instance.
+* Create an EC2 instance (ubuntu).
 * ssh into it.
+* apt-get update and upgrade
 
 * Then run the following commands.
 
