@@ -67,6 +67,12 @@ create user aa with password 'aa';
 create database anyaudio with owner aa;
 ```
 
+* To access server on port 80, run the following command. Also add it to `/etc/rc.local` without the sudo. ([Credits](http://stackoverflow.com/questions/16573668/))
+
+```
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 5000
+```
+
 * Now run the server manually. You can also `git push` to have server run trigerred.
 
 ```sh
