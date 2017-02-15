@@ -4,3 +4,4 @@
 *.mp3
 *.db
 .idea/
+.DS_Store
