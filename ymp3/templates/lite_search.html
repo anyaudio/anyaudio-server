@@ -46,7 +46,7 @@
             <div class="result_text">
                 <a href="/lite/music/{{ result['id'] }}">
                 <span class="title">{{ result['title'] }}</span></a><br>
-                <span class="uploader">{{ result['uploader'] }}</span><br>
+                <span class="uploader">{{ result['uploader'].decode('utf-8') }}</span><br>
                 <span class="time">{{ result['time'] }}</span> &middot; <span
                     class="views">{{ result['views'] }} views</span><br>
                 <span class="length">{{ result['length'] }}</span><br><br>
