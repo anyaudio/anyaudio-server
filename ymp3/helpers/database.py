@@ -151,19 +151,20 @@ def get_api_log(number=10, offset=0):
     sql_logs = '''select args, access_route, base_url, path, method, user_agent, request_time at time zone 'IST'
     from api_log where user_agent <> \'Ruby\' order by request_time desc limit %s offset %s'''
 
-    sql_day_path = '''select t1.path, count(*) from
+    sql_day_path = '''select t1.path, count(*) as cnt from
     (select path from api_log where
     (extract(epoch from current_timestamp) -
     extract(epoch from request_time))/60/60/24 <= 1)
-     as t1 group by t1.path;'''
+     as t1 group by t1.path order by cnt desc limit 20;'''
 
-    sql_month_path = '''select t1.path, count(*) from
+    sql_month_path = '''select t1.path, count(*) as cnt from
     (select path from api_log where
     (extract(epoch from current_timestamp) -
     extract(epoch from request_time))/60/60/24/30 <= 1)
-     as t1 group by t1.path;'''
+     as t1 group by t1.path order by cnt desc limit 20;'''
 
-    sql_all_path = '''select path, count(*) from api_log group by path;'''
+    sql_all_path = '''select path, count(*) as cnt from
+    api_log group by path order by cnt desc limit 30;'''
 
     con = psql_connection_pool.getconn()
     cur = con.cursor()
