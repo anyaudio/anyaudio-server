@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /api/v1/d
+Disallow: /api/v1/stream
+Disallow: /api/v1/stream_handler
