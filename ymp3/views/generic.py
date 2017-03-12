@@ -93,4 +93,4 @@ def download_app():
 
 @app.route('/robots.txt')
 def get_robots():
-    return render_template("robots.txt")
+    return render_template("robots.txt"), 200, {'Content-Type': 'text/text; charset=utf-8'}
