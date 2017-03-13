@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AnyAudio - Android App Download</title>
+</head>
+<body>
+Please wait while we process your download...
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $.getJSON("https://api.github.com/repos/zeseeit/AnyAudio/releases/latest").done(function (release) {
+            var asset = release.assets[0];
+            var download_link = asset.browser_download_url;
+            window.location.replace(download_link);
+        });
+    })
+</script>
+</body>
+</html>

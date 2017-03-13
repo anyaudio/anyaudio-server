@@ -86,9 +86,7 @@ def explore():
 @app.route('/app')
 @record_request
 def download_app():
-    # not the best solution as we will have to change the url time and again
-    # better use a customizable redirect link which allows changing its redirect
-    return redirect('https://github.com/zeseeit/AnyAudio/releases/download/v0.5.0-alpha/anyaudio_v0.5.0.apk')
+    return render_template('/app.html')
 
 
 @app.route('/robots.txt')
