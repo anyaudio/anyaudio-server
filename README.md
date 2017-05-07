@@ -4,6 +4,8 @@ Download any song that this world ever heard, and that too in your favorite form
 
 A rich public API is also included.
 
+[![Join the chat at https://gitter.im/Any-Audio/anyaudio-server](https://badges.gitter.im/iiitv/algos.svg)](https://gitter.im/Any-Audio/anyaudio-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [Android App](https://github.com/bxute/musicgenie)
 
 [![Launch on OpenShift](http://launch-shifter.rhcloud.com/button.svg)](https://openshift.redhat.com/app/console/application_type/custom?cartridges%5B%5D=python-2.7&initial_git_url=https%3A%2F%2Fgithub.com%2Faviaryan%2Fyoutube%2Dmp3%2Dserver.git&name=youtube%2Dmp3%2Dserver)
