@@ -40,6 +40,14 @@ script:
 addons:
   postgresql: "9.4"
 
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/087f782f596ba1c88c73
+    on_success: change
+    on_failure: always
+    on_start: never
+
 # https://docs.travis-ci.com/user/docker/#Using-Docker-Compose
 # before_install:
 #   - sudo apt-get update
