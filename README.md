@@ -5,6 +5,7 @@ Download any song that this world ever heard, and that too in your favorite form
 A rich public API is also included.
 
 [![Join the chat at https://gitter.im/Any-Audio/anyaudio-server](https://badges.gitter.im/iiitv/algos.svg)](https://gitter.im/Any-Audio/anyaudio-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/anyaudio/anyaudio-server.svg?branch=master)](https://travis-ci.org/anyaudio/anyaudio-server)
 
 [Android App](https://github.com/bxute/musicgenie)
 
