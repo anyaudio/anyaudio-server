@@ -79,6 +79,30 @@ sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-po
 python scripts/run_ec2.sh
 ```
 
+### (Optional) Setting up nginx
+
+* Install nginx
+
+```
+sudo apt-get install nginx
+sudo service nginx start
+```
+
+* Create conf script.
+
+```sh
+sudo nano /etc/nginx/conf.d/anyaudio.conf
+# ^^ copy anyaudio.site into it
+# doesnt work: sudo nano /etc/init/anyaudio.conf
+```
+
+* Test and restart nginx
+
+```sh
+sudo nginx -t
+sudo service nginx restart
+```
+
 
 ### Setting custom domain
 

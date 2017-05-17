@@ -1,0 +1,9 @@
+server {
+    listen 5000;
+    server_name 0.0.0.0;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/app/anyaudio.sock;
+    }
+}
