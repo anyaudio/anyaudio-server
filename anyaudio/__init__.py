@@ -1,9 +1,11 @@
 import logging
 from flask import Flask
 from os import environ
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['DEBUG'] = True
 
 DATABASE_PATH = 'SQLite.db'

@@ -1,4 +1,4 @@
-Flask
+flask
 youtube-dl
 requests
 gunicorn
@@ -7,3 +7,4 @@ greenlet
 psycopg2
 mutagen
 pafy
+flask-cors
