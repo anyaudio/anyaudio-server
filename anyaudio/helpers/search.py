@@ -14,7 +14,7 @@ videos_html_regex = re.compile(r'<li class=\"video-list-item.*?>(.*?)</li>', re.
 single_video_regex = {
     'id': re.compile(r'v\=(.*?)\"'),
     'title': re.compile(r'title=\"(.*?)\"', re.DOTALL),
-    'duration': re.compile(r'<span class=\"video-time\">(.*?)</span>', re.DOTALL),
+    'duration': re.compile(r'Duration: (.*?)\.', re.DOTALL),
     'uploader': re.compile(r'attribution\".<span.*?>(.*?)</span>', re.DOTALL),
     'views': re.compile(r'view-count\".(.*?)</span>', re.DOTALL)
 }
