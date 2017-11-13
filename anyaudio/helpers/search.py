@@ -7,6 +7,16 @@ from .networking import open_page
 INF = float("inf")
 SEARCH_SUFFIX = ' (song|full song|remix|karaoke|instrumental)'
 
+area_of_concern_regex = re.compile(r'<div .*? class=\"watch-sidebar\"(.*?)<div id="footer-container"', re.DOTALL)
+videos_html_regex = re.compile(r'<li class=\"video-list-item.*?>(.*?)</li>', re.DOTALL)
+single_video_regex = {
+    'id': re.compile(r'v\=(.*?)\"'),
+    'title': re.compile(r'title=\"(.*?)\"', re.DOTALL),
+    'duration': re.compile(r'<span class=\"video-time\">(.*?)</span>', re.DOTALL),
+    'uploader': re.compile(r'attribution\".<span.*?>(.*?)</span>', re.DOTALL),
+    'views': re.compile(r'view-count\".(.*?)</span>', re.DOTALL)
+}
+
 
 def get_search_results_html(search_term):
     """
@@ -113,23 +123,19 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
     url = "https://www.youtube.com/watch?v=" + vid_id
     raw_html = open_page(url)
 
-    area_of_concern_regex = r'<div class=\"watch-sidebar-section\"(.*?)<div id=\"watch7-hidden-extras\"'
-    area_of_concern = ' '.join(re.findall(area_of_concern_regex, raw_html, re.DOTALL))
+    area_of_concern = ' '.join(area_of_concern_regex.findall(raw_html, re.DOTALL))
 
-    videos_html_regex = r'class=\"video-list-item.*?a href=\"/watch\?v=(.*?)\" class.*? class=\"title.*?>(.*?)</span>' \
-                        r'.*?Duration: (.*?)\..*?<span class=\"g-hovercard.*?>(.*?)</span>.*?view-count\">(.*?) ' \
-                        r'views.*?<li '
-    videos_html = re.findall(videos_html_regex, area_of_concern, re.DOTALL)
+    videos_html = videos_html_regex.findall(area_of_concern, re.DOTALL)
 
     ret_list = []
     for video in videos_html:
-        _id = video[0]
+        _id = single_video_regex['id'].findall(video)[0]
         if '&amp;list=' in _id:
             continue
-        title = video[1].strip('\n\t ')
-        duration = video[2]
-        uploader = video[3]
-        views = video[4]
+        title = single_video_regex['title'].findall(video)[0]
+        duration = single_video_regex['duration'].findall(video)[0]
+        uploader = single_video_regex['uploader'].findall(video)[0]
+        views = single_video_regex['views'].findall(video)[0]
         get_url = get_url_prefix + '/g?url=' + encode_data(get_key(), id=_id, title=title, length=duration)
         stream_url = get_url.replace('/g?', '/stream?', 1)
         suggest_url = get_url.replace('/g?', '/suggest?', 1)
