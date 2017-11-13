@@ -1,4 +1,6 @@
 import re
+import traceback
+
 from encryption import get_key, encode_data
 
 from anyaudio.helpers.helpers import html_unescape
@@ -129,33 +131,37 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
 
     ret_list = []
     for video in videos_html:
-        _id = single_video_regex['id'].findall(video)[0]
-        if '&amp;list=' in _id:
-            continue
-        title = single_video_regex['title'].findall(video)[0]
-        duration = single_video_regex['duration'].findall(video)[0]
-        uploader = single_video_regex['uploader'].findall(video)[0]
-        views = single_video_regex['views'].findall(video)[0]
-        get_url = get_url_prefix + '/g?url=' + encode_data(get_key(), id=_id, title=title, length=duration)
-        stream_url = get_url.replace('/g?', '/stream?', 1)
-        suggest_url = get_url.replace('/g?', '/suggest?', 1)
+        try:
+            _id = single_video_regex['id'].findall(video)[0]
+            if '&amp;list=' in _id:
+                continue
+            title = single_video_regex['title'].findall(video)[0]
+            duration = single_video_regex['duration'].findall(video)[0]
+            uploader = single_video_regex['uploader'].findall(video)[0]
+            views = single_video_regex['views'].findall(video)[0]
+            get_url = get_url_prefix + '/g?url=' + encode_data(get_key(), id=_id, title=title, length=duration)
+            stream_url = get_url.replace('/g?', '/stream?', 1)
+            suggest_url = get_url.replace('/g?', '/suggest?', 1)
 
-        if extends_length(duration, 20*60):
-            continue
+            if extends_length(duration, 20*60):
+                continue
 
-        ret_list.append(
-            {
-                "id": _id,
-                "title": html_unescape(title.decode('utf-8')),
-                "length": duration,
-                "uploader": uploader,
-                "thumb": 'http://img.youtube.com/vi/%s/0.jpg' % _id,
-                "get_url": get_url,
-                "stream_url": stream_url,
-                "views": views,
-                "suggest_url": suggest_url
-            }
-        )
+            ret_list.append(
+                {
+                    "id": _id,
+                    "title": html_unescape(title.decode('utf-8')),
+                    "length": duration,
+                    "uploader": uploader,
+                    "thumb": 'http://img.youtube.com/vi/%s/0.jpg' % _id,
+                    "get_url": get_url,
+                    "stream_url": stream_url,
+                    "views": views,
+                    "suggest_url": suggest_url
+                }
+            )
+        except Exception as e:
+            print('Error while getting suggestion at video \n' + video)
+            traceback.print_exc()
 
     return ret_list
 
