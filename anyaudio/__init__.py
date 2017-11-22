@@ -23,4 +23,10 @@ logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Accept-Ranges', 'bytes')
+    return response
+
+
 import views
