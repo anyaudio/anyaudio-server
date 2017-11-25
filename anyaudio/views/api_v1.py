@@ -300,35 +300,31 @@ def stream_handler():
     except Exception:
         return 'Bad URL', 400
 
-    r = requests.get(url, stream=True)
     mime = 'audio/mp4'
     if url.find('mime=audio%2Fwebm') > -1:
         mime = 'audio/webm'
 
     range_header = request.headers.get('Range', None)
     if range_header:
-        size = int(r.headers.get('content-length'))
-        m = re.search('(\d+)-(\d*)', range_header)
-        g = m.groups()
-        byte1, byte2 = 0, None
-        if g[0]:
-            byte1 = int(g[0])
-        if g[1]:
-            byte2 = int(g[1])
-        length = size - byte1
-        if byte2 is not None:
-            length = byte2 + 1 - byte1
-        data = r.content[byte1: byte2]
+        from_bytes = range_header.replace('bytes=', '').split('-')[0]
+        until_bytes = range_header.split('-')[1]
+        if not until_bytes:
+            until_bytes = int(from_bytes) + 524288 * 2  # 512KB * 2 = 1MB
+        headers = {'Range': 'bytes=%s-%s' % (from_bytes, until_bytes)}
+        r = requests.get(url, headers=headers)
+        data = r.content
         rv = Response(data, 206, mimetype=mime, direct_passthrough=True)
-        rv.headers.add('Content-Range', 'bytes {0}-{1}/{2}'.format(byte1, byte1 + length - 1, size))
+        rv.headers.add('Content-Range', r.headers.get('Content-Range'))
         return rv
+
+    r = requests.get(url, stream=True)
 
     def generate_data():
         logger.info('Streaming.. %s (%s bytes)' % (
             r.headers.get('content-type'),
             r.headers.get('content-length')
         ))
-        for data_chunk in r.iter_content(chunk_size=2048):
+        for data_chunk in r.iter_content(chunk_size=2014):
             yield data_chunk
 
     return Response(generate_data(), mimetype=mime)
@@ -337,7 +333,6 @@ def stream_handler():
 @app.route('/api/v1/suggest')
 @record_request
 def suggest_songs():
-
     try:
         url = request.args.get('url')
 
