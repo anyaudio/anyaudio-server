@@ -306,8 +306,7 @@ def stream_handler():
 
     range_header = request.headers.get('Range', None)
     if range_header:
-        from_bytes = range_header.replace('bytes=', '').split('-')[0]
-        until_bytes = range_header.split('-')[1]
+        from_bytes, until_bytes = range_header.replace('bytes=', '').split('-')
         if not until_bytes:
             until_bytes = int(from_bytes) + int(1024 * 1024 * 1)  # 1MB * 1 = 1MB
         headers = {'Range': 'bytes=%s-%s' % (from_bytes, until_bytes)}
