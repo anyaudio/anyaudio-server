@@ -324,7 +324,7 @@ def stream_handler():
             r.headers.get('content-type'),
             r.headers.get('content-length')
         ))
-        for data_chunk in r.iter_content(chunk_size=2014):
+        for data_chunk in r.iter_content(chunk_size=2048):
             yield data_chunk
 
     return Response(generate_data(), mimetype=mime)
