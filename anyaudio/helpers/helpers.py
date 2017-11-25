@@ -45,16 +45,16 @@ def get_video_info_ydl(vid_id):
         return {}
 
 
-def get_filename_from_title(title, ext='.mp3'):
+def get_filename_from_title(title, ext='.m4a'):
     """
     Creates a filename from title
     """
     if not title:
-        return 'music.mp3'
+        return 'music' + ext
     title = HTMLParser().unescape(title)
     for _ in FILENAME_EXCLUDE:
         title = title.replace(_, ' ')  # provide readability with space
-    return title[:40] + ext  # TODO - smart hunt
+    return title + ext  # TODO - smart hunt
 
 
 def html_unescape(text):
@@ -110,3 +110,8 @@ def make_error_response(msg, endpoint, code=500):
         'userMessage': 'Some error occurred',
         'errorCode': '500-001'
     }), code
+
+
+def generate_data(resp, chunk=2048):
+    for data_chunk in resp.iter_content(chunk_size=chunk):
+        yield data_chunk

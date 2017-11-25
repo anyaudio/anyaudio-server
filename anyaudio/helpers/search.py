@@ -50,7 +50,7 @@ def get_videos(html):
     return vid
 
 
-def get_video_attrs(html, removeLongResult=True):
+def get_video_attrs(html):
     """
     get video attributes from html
     """
@@ -95,9 +95,6 @@ def get_video_attrs(html, removeLongResult=True):
     # check if all items present. If not present, usually some problem in parsing
     if len(result) != 8:
         return None
-    # check length
-    if removeLongResult and extends_length(result['length'], 20 * 60):
-        return None
     # return
     result['get_url'] = '/g?url=' + encode_data(
         get_key(), id=result['id'],
@@ -116,7 +113,7 @@ def extends_length(length, limit):
         secs = 0
         for metric in metrics:
             secs = 60 * secs + metric
-        return (secs > limit)
+        return secs > limit
     except Exception:
         return True
 
@@ -142,9 +139,6 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
             get_url = get_url_prefix + '/g?url=' + encode_data(get_key(), id=_id, title=title, length=duration)
             stream_url = get_url.replace('/g?', '/stream?', 1)
             suggest_url = get_url.replace('/g?', '/suggest?', 1)
-
-            if extends_length(duration, 20*60):
-                continue
 
             ret_list.append(
                 {

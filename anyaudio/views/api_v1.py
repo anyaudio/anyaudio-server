@@ -1,17 +1,15 @@
 import traceback
-import re
 import requests
 from flask import Response
 
 from anyaudio import logger
-from flask import jsonify, request, render_template, url_for, make_response
-from subprocess import check_output, call
+from flask import jsonify, request, render_template, url_for
 from anyaudio import app, LOCAL
 
-from anyaudio.helpers.search import get_videos, get_video_attrs, extends_length, get_suggestions, \
+from anyaudio.helpers.search import get_videos, get_video_attrs, get_suggestions, \
     get_search_results_html, make_search_api_response
-from anyaudio.helpers.helpers import delete_file, get_ffmpeg_path, get_filename_from_title, \
-    record_request, add_cover, get_download_link_youtube, make_error_response
+from anyaudio.helpers.helpers import get_filename_from_title, \
+    record_request, get_download_link_youtube, make_error_response, generate_data
 from anyaudio.helpers.encryption import get_key, encode_data, decode_data
 from anyaudio.helpers.data import trending_playlist
 from anyaudio.helpers.database import get_trending, get_api_log
@@ -26,51 +24,35 @@ def download_file():
     """
     try:
         url = request.args.get('url')
-        download_format = request.args.get('format', 'm4a')
-        try:
-            abr = int(request.args.get('bitrate', '128'))
-            abr = abr if abr >= 64 else 128  # Minimum bitrate is 128
-        except ValueError:
-            abr = 128
-        download_album_art = request.args.get('cover', 'false').lower()
         # decode info from url
         data = decode_data(get_key(), url)
         vid_id = data['id']
         url = data['url']
         filename = get_filename_from_title(data['title'], ext='')
         m4a_path = 'static/%s.m4a' % vid_id
-        mp3_path = 'static/%s.mp3' % vid_id
         # ^^ vid_id regex is filename friendly [a-zA-Z0-9_-]{11}
-        # download and convert
-        command = 'curl -o %s %s' % (m4a_path, url)
-        check_output(command.split())
-        if download_album_art == 'true':
-            add_cover(m4a_path, vid_id)
-        if download_format == 'mp3':
-            if extends_length(data['length'], 20 * 60):  # sound more than 20 mins
-                raise Exception()
-            command = get_ffmpeg_path()
-            command += ' -i %s -acodec libmp3lame -ab %sk %s -y' % (m4a_path, abr, mp3_path)
-            call(command, shell=True)  # shell=True only works, return ret_code
-            with open(mp3_path, 'r') as f:
-                data = f.read()
-            content_type = 'audio/mpeg'  # or audio/mpeg3'
-            filename += '.mp3'
-        else:
-            with open(m4a_path, 'r') as f:
-                data = f.read()
-            content_type = 'audio/mp4'
-            filename += '.m4a'
-        response = make_response(data)
+
+        # Handle partial request
+        range_header = request.headers.get('Range', None)
+        if range_header:
+            from_bytes, until_bytes = range_header.replace('bytes=', '').split('-')
+            if not until_bytes:
+                until_bytes = int(from_bytes) + int(1024 * 1024 * 1)  # 1MB * 1 = 1MB
+            headers = {'Range': 'bytes=%s-%s' % (from_bytes, until_bytes)}
+            resp = requests.get(url, headers=headers, stream=True)
+            rv = Response(generate_data(resp), 206, mimetype='audio/mp4', direct_passthrough=True)
+            rv.headers.add('Content-Range', resp.headers.get('Content-Range'))
+            rv.headers.add('Content-Disposition', 'attachment; filename="%s"' % filename)
+            rv.headers.add('Content-Length', resp.headers['Content-Length'])
+            return rv
+
+        resp = requests.get(url, stream=True)
+        filename += '.m4a'
+        response = Response(generate_data(resp), mimetype='audio/mp4')
         # set headers
         # http://stackoverflow.com/questions/93551/how-to-encode-the-filename-
-        response.headers['Content-Disposition'] = 'attachment; filename="%s"' % filename
-        response.headers['Content-Type'] = content_type
-        response.headers['Content-Length'] = str(len(data))
-        # remove files
-        delete_file(m4a_path)
-        delete_file(mp3_path)
-        # stream
+        response.headers.add('Content-Disposition', 'attachment; filename="%s"' % filename)
+        response.headers.add('Content-Length', resp.headers['Content-Length'])
         return response
     except Exception as e:
         logger.info('Error %s' % str(e))
@@ -118,7 +100,7 @@ def search():
         vids = get_videos(raw_html)
         ret_vids = []
         for _ in vids:
-            temp = get_video_attrs(_, removeLongResult=True)
+            temp = get_video_attrs(_)
             if temp:
                 temp['get_url'] = '/api/v1' + temp['get_url']
                 temp['stream_url'] = '/api/v1' + temp['stream_url']
@@ -318,15 +300,7 @@ def stream_handler():
 
     r = requests.get(url, stream=True)
 
-    def generate_data():
-        logger.info('Streaming.. %s (%s bytes)' % (
-            r.headers.get('content-type'),
-            r.headers.get('content-length')
-        ))
-        for data_chunk in r.iter_content(chunk_size=2048):
-            yield data_chunk
-
-    return Response(generate_data(), mimetype=mime)
+    return Response(generate_data(r), mimetype=mime)
 
 
 @app.route('/api/v1/suggest')
