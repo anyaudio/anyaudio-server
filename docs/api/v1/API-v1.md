@@ -224,11 +224,8 @@ Example -
 
 		| Term | Explanation |
 		|------|--------------|
-		|`bitrate`| Desired bitrate. Defaults to 128|
 		|`url` | Encrypted URL as recieved from `/api/v1/g`|
-		|`format` | Format in which the audio will be download. `mp3` or `m4a`|
-		|`cover`| An album art will be embedded if set to `true`|
-	* **Response**: Audio file or some error message.
+	* **Response**: Audio file.
 
 * ### Getting supported Playlists
 
