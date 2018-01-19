@@ -1,4 +1,6 @@
 from os import environ
+import threading
+
 from anyaudio import logger
 from . import Scheduler
 from ..helpers.data import trending_playlist
@@ -15,22 +17,32 @@ class TrendingScheduler(Scheduler):
         self.playlist = playlist[:int(environ.get('PLAYLIST_LIST_LIMIT', 1000))]
         self.connection_delay = connection_delay
 
+    def _worker(self, pl):
+        logger.info('Crawling playlist "%s"' % pl[0])
+
+        playlist_name = pl[0]
+        playlist_url = pl[1]
+
+        html = open_page(
+            url=playlist_url,
+            sleep_upper_limit=self.connection_delay,
+        )
+
+        song_data = get_trending_videos(html)
+
+        clear_trending(playlist_name)
+        save_trending_songs(playlist_name, song_data)
+        logger.info('Saved playlist "%s"' % pl[0])
+
     def run(self):
         """
         Run the trending crawler
         """
+        threads = []
         for pl in self.playlist:
-            logger.info('Crawling playlist "%s"' % pl[0])
+            thread = threading.Thread(target=self._worker, args=(pl, ))
+            thread.start()
+            threads.append(thread)
 
-            playlist_name = pl[0]
-            playlist_url = pl[1]
-
-            html = open_page(
-                url=playlist_url,
-                sleep_upper_limit=self.connection_delay,
-            )
-
-            song_data = get_trending_videos(html)
-
-            clear_trending(playlist_name)
-            save_trending_songs(playlist_name, song_data)
+        for thread in threads:
+            thread.join()

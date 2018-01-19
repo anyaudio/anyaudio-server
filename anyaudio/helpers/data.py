@@ -1,28 +1,17 @@
 import os
 
 trending_playlist = [
-    ('popular', 'https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI'),
-    ('latest', 'https://www.youtube.com/playlist?list=PLFgquLnL59akA2PflFpeQG9L01VFg90wS'),
-    ('india', 'https://www.youtube.com/playlist?list=PLFgquLnL59alF0GjxEs0V_XFCe7LM3ReH'),
-    ('weekly', 'https://www.youtube.com/playlist?list=PLFgquLnL59alW3xmYiWRaoz0oM3H17Lth'),
-    ('electronic', 'https://www.youtube.com/playlist?list=PLFPg_IUxqnZNnACUGsfn50DySIOVSkiKI'),
-    ('latin', 'https://www.youtube.com/playlist?list=PLcfQmtiAG0X-fmM85dPlql5wfYbmFumzQ'),
-    ('pop', 'https://www.youtube.com/playlist?list=PLDcnymzs18LWrKzHmzrGH1JzLBqrHi3xQ'),
-    ('hiphop', 'https://www.youtube.com/playlist?list=PLH6pfBXQXHEC2uDmDy5oi3tHW6X8kZ2Jo'),
-    ('reggae', 'https://www.youtube.com/playlist?list=PLYAYp5OI4lRLf_oZapf5T5RUZeUcF9eRO'),
-    ('rnb', 'https://www.youtube.com/playlist?list=PLFRSDckdQc1th9sUu8hpV1pIbjjBgRmDw'),
-    ('country', 'https://www.youtube.com/playlist?list=PLvLX2y1VZ-tFJCfRG7hi_OjIAyCriNUT2'),
-    ('poprock', 'https://www.youtube.com/playlist?list=PLr8RdoI29cXIlkmTAQDgOuwBhDh3yJDBQ'),
-    ('asian', 'https://www.youtube.com/playlist?list=PL0zQrw6ZA60Z6JT4lFH-lAq5AfDnO2-aE'),
-    ('mexican', 'https://www.youtube.com/playlist?list=PLXupg6NyTvTxw5-_rzIsBgqJ2tysQFYt5'),
-    ('soul', 'https://www.youtube.com/playlist?list=PLQog_FHUHAFUDDQPOTeAWSHwzFV1Zz5PZ'),
-    ('heavymetal', 'https://www.youtube.com/playlist?list=PLfY-m4YMsF-OM1zG80pMguej_Ufm8t0VC'),
-    ('blues', 'https://www.youtube.com/playlist?list=PLWNXn_iQ2yrKzFcUarHPdC4c_LPm-kjQy'),
-    ('christian', 'https://www.youtube.com/playlist?list=PLLMA7Sh3JsOQQFAtj1no-_keicrqjEZDm'),
-    ('hardrock', 'https://www.youtube.com/playlist?list=PL9NMEBQcQqlzwlwLWRz5DMowimCk88FJk'),
-    ('classical', 'https://www.youtube.com/playlist?list=PLVXq77mXV53-Np39jM456si2PeTrEm9Mj'),
-    ('edm', 'https://www.youtube.com/playlist?list=PLUg_BxrbJNY5gHrKsCsyon6vgJhxs72AH'),
-    ('qawwali', 'https://www.youtube.com/playlist?list=PLXYM8jyeq3cfzuIzL0x0rEYxuMCl3dRqh')
+    ('Popular', 'https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI'),
+    ('Latest', 'https://www.youtube.com/playlist?list=PLFgquLnL59akA2PflFpeQG9L01VFg90wS'),
+    ('India', 'https://www.youtube.com/playlist?list=PLFgquLnL59alF0GjxEs0V_XFCe7LM3ReH'),
+    ('Weekly', 'https://www.youtube.com/playlist?list=PLFgquLnL59alW3xmYiWRaoz0oM3H17Lth'),
+    ('Electronic', 'https://www.youtube.com/playlist?list=PLFPg_IUxqnZNnACUGsfn50DySIOVSkiKI'),
+    ('Popular Music Videos', 'https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI'),
+    ('New Music This Week', 'https://www.youtube.com/playlist?list=PLFgquLnL59alW3xmYiWRaoz0oM3H17Lth'),
+    ('Top Tracks', 'https://www.youtube.com/playlist?list=PLFgquLnL59alcyTM2lkWJU34KtfPXQDaX'),
+    ('Hip Hop and R&B Hotlist', 'https://www.youtube.com/playlist?list=PLFgquLnL59amBBTCULGWSotJu2CkioYkj'),
+    ('Pop Hotlist', 'https://www.youtube.com/playlist?list=PLFgquLnL59altZg1f_Kr1kGUYE6j-NE0M'),
+    ('Most Viewed', 'https://www.youtube.com/playlist?list=PL8A83124F1D79BD4F')
 ]
 
 user_agents = [
