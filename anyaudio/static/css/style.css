@@ -733,10 +733,6 @@ div.search-suggestions li a{
 	padding: 0 0 0 1rem;
 }
 
-.plyr__progress input[type=range]{
-	display: none;
-}
-
 /*************************
 ** Streaming Player Style**
 *************************/
