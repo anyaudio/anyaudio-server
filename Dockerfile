@@ -1,7 +1,7 @@
 FROM python:2-alpine
 MAINTAINER Avi Aryan <avi.aryan123@gmail.com>
 
-ENV INSTALL_PATH /ymp3
+ENV INSTALL_PATH /anyaudio
 RUN mkdir -p $INSTALL_PATH
 
 WORKDIR $INSTALL_PATH

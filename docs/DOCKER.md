@@ -31,7 +31,7 @@ docker-compose run postgres psql -h postgres -p 5432 -U postgres --password
 * When in psql shell, create the database and then exit using `\q`.
 
 ```sql
-create database ymp3;
+create database anyaudio;
 ```
 
 * Close the server and then start it again. Then navigate to `http://localhost` to view the app.

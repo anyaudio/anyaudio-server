@@ -2,7 +2,7 @@ version: '2'
 
 services:
   data:
-    image: postgres:9.5
+    image: postgres:9-alpine
     environment:
       POSTGRES_PASSWORD: 'test'
     volumes:
@@ -10,7 +10,7 @@ services:
     command: echo true
 
   postgres:
-    image: postgres:9.5
+    image: postgres:9-alpine
     environment:
       POSTGRES_PASSWORD: 'test'
     volumes_from:
@@ -28,7 +28,7 @@ services:
       OPENSHIFT_POSTGRESQL_DB_PORT: '5432'
       OPENSHIFT_POSTGRESQL_DB_USERNAME: postgres
       OPENSHIFT_POSTGRESQL_DB_PASSWORD: test
-      POSTGRESQL_DB_NAME: ymp3
+      POSTGRESQL_DB_NAME: anyaudio
     links:
       - postgres:postgres
     ports:
