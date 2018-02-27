@@ -231,7 +231,7 @@ function trendingInit(){
  **/
 function loadAutoSuggest(searchInput) {
 	//Fetches Auto Suggestion
-	$.getJSON("http://suggestqueries.google.com/complete/search?callback=?",
+	$.getJSON("https://suggestqueries.google.com/complete/search?callback=?",
 		{
 			"hl":"en", // Language
 			"ds":"yt", // Restrict lookup to youtube
