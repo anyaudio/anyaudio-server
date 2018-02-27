@@ -80,7 +80,7 @@ def get_video_attrs(html):
         result['views'] = temp[0][1]
     # thumbnail
     if 'id' in result:
-        thumb = 'http://img.youtube.com/vi/%s/0.jpg' % result['id']
+        thumb = 'https://img.youtube.com/vi/%s/0.jpg' % result['id']
         result['thumb'] = thumb
     else:
         return None
@@ -153,7 +153,7 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
                     "suggest_url": suggest_url
                 }
             )
-        except Exception as e:
+        except Exception:
             print('Error while getting suggestion at video \n' + video)
             traceback.print_exc()
 

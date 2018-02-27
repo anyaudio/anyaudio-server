@@ -80,7 +80,7 @@ def record_request(func):
 
 
 def add_cover(filename, video_id):
-    raw_image = open_page('http://img.youtube.com/vi/%s/0.jpg' % video_id)
+    raw_image = open_page('https://img.youtube.com/vi/%s/0.jpg' % video_id)
 
     audio = MP4(filename)
     cover = MP4Cover(raw_image)
