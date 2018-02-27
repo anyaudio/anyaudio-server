@@ -1,5 +1,6 @@
 export FFMPEG_PATH=ffmpeg;
 export OPENSHIFT_PYTHON_IP=0.0.0.0;
+export OPENSHIFT_PYTHON_PORT=80;
 
 # PSQL env vars
 export OPENSHIFT_POSTGRESQL_DB_HOST=0.0.0.0;
