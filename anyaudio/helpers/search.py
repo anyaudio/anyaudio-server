@@ -146,7 +146,7 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
                     "title": html_unescape(title.decode('utf-8')),
                     "length": duration,
                     "uploader": uploader,
-                    "thumb": 'http://img.youtube.com/vi/%s/0.jpg' % _id,
+                    "thumb": 'https://img.youtube.com/vi/%s/0.jpg' % _id,
                     "get_url": get_url,
                     "stream_url": stream_url,
                     "views": views,
