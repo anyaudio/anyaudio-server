@@ -39,15 +39,3 @@ user_agents = [
 table_creation_sqlite_statements = [
     '''create table if not exists trending_songs(id_ text, title_ text, thumb_ text, uploader_ text, length_ text, views_ text, get_url_ text, playlist_ text, description text)''',
 ]
-
-table_creation_psql_statements = [
-    '''create table if not exists api_log(args VARCHAR(8192), access_route varchar(8192), base_url varchar(5120), path varchar(5120), method VARCHAR(4), user_agent varchar(256), request_time TIMESTAMP WITH TIME zone default now())''',
-]
-
-psql_data = {
-    'db_name': os.environ.get('POSTGRESQL_DB_NAME', 'ymp3'),
-    'username': os.environ.get('OPENSHIFT_POSTGRESQL_DB_USERNAME', 'ymp3'),
-    'password': os.environ.get('OPENSHIFT_POSTGRESQL_DB_PASSWORD', 'ymp3'),
-    'host': os.environ.get('OPENSHIFT_POSTGRESQL_DB_HOST', '0.0.0.0'),
-    'port': int(os.environ.get('OPENSHIFT_POSTGRESQL_DB_PORT', '5432'))
-}

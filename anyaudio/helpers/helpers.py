@@ -5,7 +5,6 @@ from anyaudio import LOCAL, logger
 from flask import request, jsonify
 from youtube_dl import YoutubeDL
 from HTMLParser import HTMLParser
-from database import log_api_call
 from mutagen.mp4 import MP4, MP4Cover
 from networking import open_page
 
@@ -74,7 +73,7 @@ def record_request(func):
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        log_api_call(request)
+        # TODO: Implement logging to some source
         return func(*args, **kwargs)
     return wrapper
 

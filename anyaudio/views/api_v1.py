@@ -12,7 +12,7 @@ from anyaudio.helpers.helpers import get_filename_from_title, \
     record_request, get_download_link_youtube, make_error_response, generate_data
 from anyaudio.helpers.encryption import get_key, encode_data, decode_data
 from anyaudio.helpers.data import trending_playlist
-from anyaudio.helpers.database import get_trending, get_api_log
+from anyaudio.helpers.database import get_trending
 
 
 @app.route('/api/v1/d')
@@ -160,64 +160,6 @@ def get_latest():
     }
 
     return jsonify(ret_dict)
-
-
-@app.route('/logs')
-def get_log_page():
-    """
-    View application logs
-    """
-    user_key = request.args.get('key')
-
-    if not user_key or user_key != get_key():
-        return render_template('/unauthorized.html')
-
-    try:
-        offset = int(request.args.get('offset', '0'))
-        if offset < 0:
-            offset = 0
-    except Exception:
-        offset = 0
-
-    try:
-        number = int(request.args.get('number', '10'))
-        if number < 1:
-            number = 1
-    except Exception:
-        number = 0
-
-    result = get_api_log(number, offset)
-
-    if offset - number < 0:
-        prev_link = None
-    else:
-        prev_link = '/logs?key={0}&number={1}&offset={2}'.format(
-            user_key,
-            number,
-            offset - number
-        )
-
-    next_link = '/logs?key={0}&number={1}&offset={2}'.format(
-        user_key,
-        number,
-        offset + number
-    )
-
-    day_path = result['day_path']
-    day_sum = sum([x[1] for x in day_path])
-
-    month_path = result['month_path']
-    month_sum = sum([x[1] for x in month_path])
-
-    all_path = result['all_path']
-    all_sum = sum([x[1] for x in all_path])
-
-    return render_template(
-        '/log_page.html', logs=result['logs'], number=number, offset=offset, prev_link=prev_link, next_link=next_link,
-        day_path=day_path, day_sum=day_sum, month_path=month_path, month_sum=month_sum, all_path=result['all_path'],
-        all_sum=all_sum, popular_queries=result['popular_query']
-
-    )
 
 
 @app.route('/api/v1/playlists')
