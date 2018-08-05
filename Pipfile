@@ -18,6 +18,7 @@ Flask-Cors = "*"
 request = "*"
 youtube_dl = "*"
 htmlparser = "*"
+redis = "*"
 
 [requires]
 python_version = "3.5"

@@ -14,6 +14,7 @@ from anyaudio.helpers.helpers import get_filename_from_title, \
 from anyaudio.helpers.encryption import get_key, encode_data, decode_data
 from anyaudio.helpers.data import trending_playlist
 from anyaudio.helpers.database import get_trending
+from anyaudio.helpers.redis_utils import get_or_create_video_download_link
 
 
 @app.route('/api/v1/d')
@@ -72,7 +73,12 @@ def get_link():
         data = decode_data(get_key(), url)
         vid_id = data['id']
         title = data['title']
-        retval = get_download_link_youtube(vid_id, 'm4a/bestaudio')
+        format = 'm4a/bestaudio'
+        retval = get_or_create_video_download_link(
+            vid_id,
+            format,
+            get_download_link_youtube
+        )
         if not LOCAL:
             retval = encode_data(get_key(), id=vid_id, title=title, url=retval, length=data['length'])
             retval = url_for('download_file', url=retval)
@@ -200,9 +206,10 @@ def stream():
         req = decode_data(get_key(), url)
         vid_id = req['id']
         quality = req.get('quality', 'md')
-        url = get_download_link_youtube(
+        url = get_or_create_video_download_link(
             vid_id,
-            stream_settings[quality]
+            stream_settings[quality],
+            get_download_link_youtube
         )
     except Exception as e:
         logger.info(traceback.format_exc())
