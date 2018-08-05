@@ -14,10 +14,8 @@ A rich public API is also included.
 ## Running
 
 ```
-pip install -r requirements.txt
-bash run.sh
+pipenv run app
 ```
-**Note**: Set `FFMPEG_PATH` to path to your `ffmpeg` binary.
 
 ## API
 
