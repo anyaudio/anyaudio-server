@@ -1,7 +1,7 @@
 import re
 import traceback
 
-from encryption import get_key, encode_data
+from anyaudio.helpers.encryption import get_key, encode_data
 
 from anyaudio.helpers.helpers import html_unescape
 from .networking import open_page
@@ -61,7 +61,7 @@ def get_video_attrs(html):
     temp = re.findall(regex, html)
     if len(temp) and len(temp[0]) == 2:
         result['id'] = temp[0][0]
-        result['title'] = html_unescape(temp[0][1].decode('utf-8'))
+        result['title'] = html_unescape(temp[0][1])
     # length
     length_regex = 'video\-time.*?\>([^\<]+)'
     temp = re.findall(length_regex, html)
@@ -99,7 +99,7 @@ def get_video_attrs(html):
     result['get_url'] = '/g?url=' + encode_data(
         get_key(), id=result['id'],
         title=result['title'], length=result['length']
-    )
+    ).decode('utf-8')
     result['stream_url'] = result['get_url'].replace('/g?', '/stream?', 1)
     return result
 
@@ -136,14 +136,15 @@ def get_suggestions(vid_id, get_url_prefix='/api/v1'):
             duration = single_video_regex['duration'].findall(video)[0]
             uploader = single_video_regex['uploader'].findall(video)[0]
             views = single_video_regex['views'].findall(video)[0]
-            get_url = get_url_prefix + '/g?url=' + encode_data(get_key(), id=_id, title=title, length=duration)
+            encoded_data = encode_data(get_key(), id=_id, title=title, length=duration).decode('utf-8')
+            get_url = get_url_prefix + '/g?url=' + encoded_data
             stream_url = get_url.replace('/g?', '/stream?', 1)
             suggest_url = get_url.replace('/g?', '/suggest?', 1)
 
             ret_list.append(
                 {
                     "id": _id,
-                    "title": html_unescape(title.decode('utf-8')),
+                    "title": html_unescape(title),
                     "length": duration,
                     "uploader": uploader,
                     "thumb": 'https://img.youtube.com/vi/%s/0.jpg' % _id,

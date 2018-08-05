@@ -4,9 +4,9 @@ from subprocess import check_output
 from anyaudio import LOCAL, logger
 from flask import request, jsonify
 from youtube_dl import YoutubeDL
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 from mutagen.mp4 import MP4, MP4Cover
-from networking import open_page
+from anyaudio.helpers.networking import open_page
 
 
 FILENAME_EXCLUDE = '<>:"/\|?*;'
@@ -95,7 +95,7 @@ def get_download_link_youtube(vid_id, frmat):
     command = 'youtube-dl https://www.youtube.com/watch?v=%s -f %s -g' % (vid_id, frmat)
     logger.info(command)
     retval = check_output(command.split())
-    return retval.strip()
+    return retval.strip().decode('utf-8')
 
 
 def make_error_response(msg, endpoint, code=500):

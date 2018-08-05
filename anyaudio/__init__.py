@@ -29,4 +29,4 @@ def after_request(response):
     return response
 
 
-import views
+import anyaudio.views

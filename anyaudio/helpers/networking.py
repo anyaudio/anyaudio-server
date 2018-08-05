@@ -1,4 +1,4 @@
-from data import user_agents
+from anyaudio.helpers.data import user_agents
 
 import requests
 
@@ -66,6 +66,6 @@ def open_page(url, user_agent=get_user_agent(), sleep_lower_limit=0, sleep_upper
                 allow_redirects,
                 data
             )
-        return ret
+        return ret.decode('utf-8')
     except Exception:
         print_exc()

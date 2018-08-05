@@ -1,6 +1,6 @@
 export FFMPEG_PATH=ffmpeg;
 export OPENSHIFT_PYTHON_IP=0.0.0.0;
-export OPENSHIFT_PYTHON_PORT=80;
+# export OPENSHIFT_PYTHON_PORT=80;
 
 # PSQL env vars
 export OPENSHIFT_POSTGRESQL_DB_HOST=0.0.0.0;
@@ -12,6 +12,3 @@ export POSTGRESQL_DB_NAME=ymp3;
 # Dev configs
 export PLAYLIST_VIDEOS_LIMIT=40;
 # export PLAYLIST_LIST_LIMIT=5;
-
-# Run
-python app.py;

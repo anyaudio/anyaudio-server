@@ -7,7 +7,7 @@ def encode(key, clear):
     st = ''
     incr = get_key_hash(key)
     for _ in clear:
-        st += unichr(incr + ord(_))
+        st += chr(incr + ord(_))
     return base64.urlsafe_b64encode(st.encode('utf-8'))
 
 
@@ -17,7 +17,7 @@ def decode(key, enc):
     enc = base64.b64decode(enc)  # dont know why urlsafe decode doesn't work
     incr = get_key_hash(key)
     for _ in enc:
-        st += unichr(ord(_) - incr)
+        st += chr(_ - incr)
     return st
 
 
@@ -33,7 +33,7 @@ def get_key_hash(key):
 
 
 def encode_data(key, **kwargs):
-    data = json.dumps(kwargs, ensure_ascii=False, indent=None)
+    data = json.dumps(kwargs)
     return encode(key, data)
 
 

@@ -16,6 +16,8 @@ if __name__ == '__main__':
     youtube_dl_upgrade_scheduler = youtube_dl_upgrade.YoutubeDLUpgrader()
     youtube_dl_upgrade_scheduler.start()
 
+    call(['bash', 'run.sh'])
+
     # http://docs.gunicorn.org/en/stable/settings.html
     cmd = 'gunicorn anyaudio:app -w 4'
     # Comment following line on CentOS due to bug in eventlet

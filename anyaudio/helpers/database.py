@@ -40,7 +40,7 @@ def save_trending_songs(playlist_name, songs):
                 song['views'],
                 song['get_url'],
                 playlist_name,
-                song['description'].decode('utf-8')
+                song['description']
             ) for song in songs
         ]
 
@@ -63,6 +63,8 @@ def get_trending(type='popular', count=25, offset=0, get_url_prefix=''):
 
     vids = []
     for row in rows:
+        row = list(row)
+        row[6] = row[6].decode('utf-8')
         vids.append(
             {
                 'id': row[0],

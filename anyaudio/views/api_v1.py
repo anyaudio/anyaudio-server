@@ -1,5 +1,6 @@
 import traceback
 import requests
+import flask
 from flask import Response
 
 from anyaudio import logger
@@ -55,7 +56,6 @@ def download_file():
         response.headers.add('Content-Length', resp.headers['Content-Length'])
         return response
     except Exception as e:
-        logger.info('Error %s' % str(e))
         logger.info(traceback.format_exc())
         return 'Bad things have happened', 500
 
@@ -108,6 +108,7 @@ def search():
                 ret_vids.append(temp)
         ret_dict = make_search_api_response(search_term, ret_vids, '/api/v1/search')
     except Exception as e:
+        logger.info(traceback.format_exc())
         return make_error_response(msg=str(e), endpoint='/api/v1/search')
 
     return jsonify(ret_dict)
@@ -159,7 +160,7 @@ def get_latest():
         'results': result_dict
     }
 
-    return jsonify(ret_dict)
+    return flask.json.dumps(ret_dict)
 
 
 @app.route('/api/v1/playlists')
@@ -204,6 +205,7 @@ def stream():
             stream_settings[quality]
         )
     except Exception as e:
+        logger.info(traceback.format_exc())
         return make_error_response(msg=str(e), endpoint='api/v1/stream')
     return jsonify(
         status=200,
@@ -255,6 +257,8 @@ def suggest_songs():
 
         vid_id = decoded_data["id"]
 
+        print(vid_id)
+
         vids = get_suggestions(vid_id)
 
         count = len(vids)
@@ -271,4 +275,5 @@ def suggest_songs():
         )
 
     except Exception as e:
+        logger.info(traceback.format_exc())
         return make_error_response(msg=str(e), endpoint='/api/v1/suggest')

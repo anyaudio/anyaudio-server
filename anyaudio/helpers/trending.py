@@ -1,9 +1,9 @@
 import re
 from os import environ
 from anyaudio import logger
-from networking import open_page
-from encryption import get_key, encode_data
-from helpers import html_unescape
+from anyaudio.helpers.networking import open_page
+from anyaudio.helpers.encryption import get_key, encode_data
+from anyaudio.helpers.helpers import html_unescape
 
 
 def get_trending_videos(html):
@@ -27,8 +27,8 @@ def get_trending_videos(html):
                 {
                     'id': raw_result[0],
                     'thumb': 'https://img.youtube.com/vi/{0}/0.jpg'.format(raw_result[0]),
-                    'title': html_unescape(raw_result[2].strip().decode('utf-8')),
-                    'uploader': raw_result[3].decode('utf8'),
+                    'title': html_unescape(raw_result[2].strip()),
+                    'uploader': raw_result[3],
                     'length': raw_result[4],
                     'views': get_views(html),
                     'get_url': encode_data(

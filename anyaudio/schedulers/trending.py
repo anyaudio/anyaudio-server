@@ -29,9 +29,12 @@ class TrendingScheduler(Scheduler):
         )
 
         song_data = get_trending_videos(html)
+        print('Fetched song data')
 
         clear_trending(playlist_name)
+        print('Cleared playlist')
         save_trending_songs(playlist_name, song_data)
+        print('Saved trending')
         logger.info('Saved playlist "%s"' % pl[0])
 
     def run(self):
