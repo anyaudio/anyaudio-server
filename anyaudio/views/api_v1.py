@@ -257,8 +257,6 @@ def suggest_songs():
 
         vid_id = decoded_data["id"]
 
-        print(vid_id)
-
         vids = get_suggestions(vid_id)
 
         count = len(vids)
