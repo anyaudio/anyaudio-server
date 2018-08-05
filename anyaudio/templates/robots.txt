@@ -1,5 +1,3 @@
 User-agent: *
 Crawl-delay: 10
-Disallow: /api/v1/d
-Disallow: /api/v1/stream
-Disallow: /api/v1/stream_handler
+Disallow: /
